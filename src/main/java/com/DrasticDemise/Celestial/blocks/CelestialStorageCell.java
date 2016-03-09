@@ -53,16 +53,16 @@ public class CelestialStorageCell extends Block implements ITileEntityProvider{
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             // We only count on the server side.
-        	if(getTE(world, pos).getCurrentCelestialPower() >= 5000){
+        	player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "CP: " + getTE(world, pos).getCurrentCelestialPower()));
+        	
+        	/*if(getTE(world, pos).getCurrentCelestialPower() >= 5000){
 	            player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "CP: " + getTE(world, pos).getCurrentCelestialPower()));
-        	}
-            
+        	}*/
         }
         // Return true also on the client to make sure that MC knows we handled this and will not try to place
         // a block on the client
         return true;
     }
-
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         world.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
