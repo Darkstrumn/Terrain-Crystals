@@ -7,6 +7,7 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -28,6 +29,9 @@ public class CelestialStorageCell extends Block implements ITileEntityProvider{
 		super(Material.rock);
 		setUnlocalizedName("celestialstorageblock");
 		setRegistryName("celestialstorageblock");
+		setCreativeTab(CreativeTabs.tabBlock);
+		setHarvestLevel("stone", 0);
+		setHardness(5.0F);
         GameRegistry.registerBlock(this);
         GameRegistry.registerTileEntity(CStorageCellTileEntity.class, "celestialstorageblock");
 	}
@@ -49,17 +53,10 @@ public class CelestialStorageCell extends Block implements ITileEntityProvider{
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             // We only count on the server side.
-        	/*
-            if (side == state.getValue(FACING)) {
-                int counter;
-                if (hitY < .5f) {
-                    counter = getTE(world, pos).decrement();
-                } else {
-                    counter = getTE(world, pos).increment();
-                }
-                player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Counter: " + counter));
-            }
-            */
+        	if(getTE(world, pos).getCurrentCelestialPower() >= 5000){
+	            player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + "CP: " + getTE(world, pos).getCurrentCelestialPower()));
+        	}
+            
         }
         // Return true also on the client to make sure that MC knows we handled this and will not try to place
         // a block on the client

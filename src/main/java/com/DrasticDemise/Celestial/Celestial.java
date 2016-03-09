@@ -38,12 +38,12 @@ public class Celestial {
 	public static class CommonProxy {
 		public void preInit(FMLPreInitializationEvent e){
 			//Initialization of Blocks and Items
-			//ModBlocks.init();
-			dustItems.init();
+			InitBlocks.init();
+			InitItems.init();
 			//ModCrafting.init();
 		}
 		public void init(FMLInitializationEvent e){
-			dustItems.oreRegistration();
+			InitItems.oreRegistration();
 		}
 		public void postInit(FMLPostInitializationEvent e){
 			

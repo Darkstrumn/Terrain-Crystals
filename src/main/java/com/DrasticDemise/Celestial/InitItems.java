@@ -2,7 +2,7 @@ package com.DrasticDemise.Celestial;
 
 import net.minecraftforge.oredict.OreDictionary;
 
-public class dustItems {
+public class InitItems {
 	
 	//Creates dust objects
 	//public static IronDust ironDust;

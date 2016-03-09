@@ -3,7 +3,7 @@ package com.DrasticDemise.Celestial.api.celestialPower;
 /*
  * Blocks that implement this can receive CP
  */
-public interface ICelestialReceiver extends ICelestialBlock{
+public interface ICelestialReciever extends ICelestialBlock{
 	/*
 	 * Returns if the block is full. If full, can no longer receive CP
 	 */
