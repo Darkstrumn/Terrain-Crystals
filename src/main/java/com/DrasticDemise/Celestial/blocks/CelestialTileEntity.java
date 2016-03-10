@@ -7,6 +7,10 @@ public abstract class CelestialTileEntity extends TileEntity{
 	protected int celestialSendRate = 50;
 	protected int maxCelestialPower = 5000;
 	
+	public int getCurrentCelestialPower() {
+		return this.currentCelestialPower;
+	}
+	
 	public int getMaxCelestialPower(){
 		return this.maxCelestialPower;
 	}
@@ -15,24 +19,26 @@ public abstract class CelestialTileEntity extends TileEntity{
 	 * @param CelestialPower
 	 */
 	public boolean addedCelestialPowerSuccessfully(int CelestialPower){
-		if(canReceivePower()){
+		if(this.canReceivePower()){
 			int spareValue = getAvailableSpace();
-			if(getAvailableSpace() < CelestialPower){
-				this.currentCelestialPower = this.currentCelestialPower + spareValue;
+			if(getAvailableSpace() > CelestialPower){
+				this.currentCelestialPower = this.currentCelestialPower + CelestialPower;
 				markDirty();
 				return true;
 			}
 			else{
-				this.currentCelestialPower = this.currentCelestialPower + CelestialPower;
+				this.currentCelestialPower = this.currentCelestialPower + spareValue;
 				markDirty();
 				return true;
 			}
 		}
 		return false;
 	}
+	
 	public boolean removedCelestialPowerSuccessfully(int CelestialPower){
 		if(CelestialPower <= this.currentCelestialPower){
 			this.currentCelestialPower = this.currentCelestialPower - CelestialPower;
+			markDirty();
 			return true;
 		}
 		return false;
@@ -46,7 +52,8 @@ public abstract class CelestialTileEntity extends TileEntity{
 	 * @return Returns the status if the block has enough room
 	 */
 	public boolean canReceivePower(){
-		if(this.currentCelestialPower < this.maxCelestialPower){
+		System.out.println("Entered RECEIVEPOWER");
+		if(currentCelestialPower < maxCelestialPower){
 			return true;
 		}
 		return false;

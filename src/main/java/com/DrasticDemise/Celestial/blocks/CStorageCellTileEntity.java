@@ -9,10 +9,6 @@ import net.minecraft.util.ITickable;
 
 public class CStorageCellTileEntity extends CelestialTileEntity implements ICelestialPowerProvider, ITickable{
 	private int counter = 0;
-	@Override
-	public int getCurrentCelestialPower() {
-		return this.currentCelestialPower;
-	}
 
 	@Override
 	public boolean isFull() {
@@ -22,13 +18,6 @@ public class CStorageCellTileEntity extends CelestialTileEntity implements ICele
 		return false;
 	}
 
-	@Override
-	public void addedCelestialPowerSuccessfully(int Celestial) {
-		if(this.currentCelestialPower < this.currentCelestialPower){
-			this.currentCelestialPower = this.currentCelestialPower + Celestial;
-		}
-		markDirty();
-	}
 
 	@Override
 	public boolean hasEnoughPower() {
@@ -56,27 +45,24 @@ public class CStorageCellTileEntity extends CelestialTileEntity implements ICele
         if (!worldObj.isRemote) {
             //Stored server side
             counter++;
-            if (counter > 400){
+            if (counter > 200){//default 400
                 counter = 0;      // This is 20 seconds.
                 addedCelestialPowerSuccessfully(30);
                // worldObj.markBlockRangeForRenderUpdate(getPos(), getPos());
             }
         }
     }
+
+
 	@Override
 	public void removeCelestialPower(int Celestial) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public boolean canSendPower() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
-	public boolean canReceivePower() {
+	public boolean canSendPower() {
 		// TODO Auto-generated method stub
 		return false;
 	}

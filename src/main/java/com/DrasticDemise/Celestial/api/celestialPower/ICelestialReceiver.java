@@ -16,12 +16,6 @@ public interface ICelestialReceiver extends ICelestialBlock{
 	
 
 	/**
-	 * Adds celestial power to the block
-	 * @param Celestial Takes the amount of power going to be added
-	 */
-	public void addedCelestialPowerSuccessfully(int Celestial);
-	
-	/**
 	 * Removes celestial power from the block
 	 * @param Celestial Takes the amount of power going to be removed from current levels.
 	 */
