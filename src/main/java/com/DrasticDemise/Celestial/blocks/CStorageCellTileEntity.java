@@ -8,26 +8,24 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
 public class CStorageCellTileEntity extends CelestialTileEntity implements ICelestialPowerProvider, ITickable{
-	int celestialPower = 0;
-	int maxCelestialPower = 5000;
-	int counter = 0;
+	private int counter = 0;
 	@Override
 	public int getCurrentCelestialPower() {
-		return this.celestialPower;
+		return this.currentCelestialPower;
 	}
 
 	@Override
 	public boolean isFull() {
-		if(this.celestialPower == this.maxCelestialPower){
+		if(this.currentCelestialPower == this.maxCelestialPower){
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public void addCelestialPower(int Celestial) {
-		if(this.celestialPower < this.celestialPower){
-			this.celestialPower = this.celestialPower + Celestial;
+	public void addedCelestialPowerSuccessfully(int Celestial) {
+		if(this.currentCelestialPower < this.currentCelestialPower){
+			this.currentCelestialPower = this.currentCelestialPower + Celestial;
 		}
 		markDirty();
 	}
@@ -41,14 +39,14 @@ public class CStorageCellTileEntity extends CelestialTileEntity implements ICele
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         //Needs the key
-        celestialPower = compound.getInteger("CP");
+        this.currentCelestialPower = compound.getInteger("CP");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         //CP is the key
-        compound.setInteger("CP", celestialPower);
+        compound.setInteger("CP", this.currentCelestialPower);
     }
 
     @Override
@@ -60,7 +58,7 @@ public class CStorageCellTileEntity extends CelestialTileEntity implements ICele
             counter++;
             if (counter > 400){
                 counter = 0;      // This is 20 seconds.
-                addCelestialPower(30);
+                addedCelestialPowerSuccessfully(30);
                // worldObj.markBlockRangeForRenderUpdate(getPos(), getPos());
             }
         }

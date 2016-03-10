@@ -3,9 +3,9 @@ package com.DrasticDemise.Celestial.blocks;
 import net.minecraft.tileentity.TileEntity;
 
 public abstract class CelestialTileEntity extends TileEntity{
-	private int celestialPower;
-	private int celestialSendRate;
-	private int maxCelestialPower;
+	protected int currentCelestialPower = 0;
+	protected int celestialSendRate = 50;
+	protected int maxCelestialPower = 5000;
 	
 	public int getMaxCelestialPower(){
 		return this.maxCelestialPower;
@@ -14,27 +14,39 @@ public abstract class CelestialTileEntity extends TileEntity{
 	 * Adds a designated amount of celestial power to the cap
 	 * @param CelestialPower
 	 */
-	public void addCelestialPower(int CelestialPower){
+	public boolean addedCelestialPowerSuccessfully(int CelestialPower){
 		if(canReceivePower()){
 			int spareValue = getAvailableSpace();
 			if(getAvailableSpace() < CelestialPower){
-				this.celestialPower = this.celestialPower + spareValue;
+				this.currentCelestialPower = this.currentCelestialPower + spareValue;
+				markDirty();
+				return true;
 			}
 			else{
-				this.celestialPower = this.celestialPower + CelestialPower;
+				this.currentCelestialPower = this.currentCelestialPower + CelestialPower;
+				markDirty();
+				return true;
 			}
-			markDirty();
 		}
+		return false;
+	}
+	public boolean removedCelestialPowerSuccessfully(int CelestialPower){
+		if(CelestialPower <= this.currentCelestialPower){
+			this.currentCelestialPower = this.currentCelestialPower - CelestialPower;
+			return true;
+		}
+		return false;
 	}
 	public void setMaxSendRate(int modifyRate){
 		this.celestialSendRate = modifyRate;
+		markDirty();
 	}
 	/**
 	 * Checks if there is enough room in the block to receive power
 	 * @return Returns the status if the block has enough room
 	 */
 	public boolean canReceivePower(){
-		if(this.celestialPower < this.maxCelestialPower){
+		if(this.currentCelestialPower < this.maxCelestialPower){
 			return true;
 		}
 		return false;
@@ -44,6 +56,6 @@ public abstract class CelestialTileEntity extends TileEntity{
 	 * Returns the amount of space from the cap
 	 */
 	public int getAvailableSpace(){
-		return this.maxCelestialPower - this.celestialPower;
+		return this.maxCelestialPower - this.currentCelestialPower;
 	}
 }
