@@ -1,12 +1,22 @@
 package com.DrasticDemise.Celestial.Items;
 
 import com.DrasticDemise.Celestial.blocks.CStorageCellTileEntity;
+import com.mojang.realmsclient.dto.PlayerInfo;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.WorldInfo;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalDirt extends Item{
@@ -20,7 +30,37 @@ public class TerrainCrystalDirt extends Item{
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
     {
-		System.out.println("Invoking onItemRightClick");
+	//	placeDirt(playerIn, worldIn);
+		for(int i = 0; i < 5; i++){
+			placeDirt(playerIn, worldIn, itemStackIn, EnumFacing.DOWN);
+		}
         return itemStackIn;
     }
+	
+	private void placeDirt(EntityPlayer playerIn, World worldIn, ItemStack itemStackIn, EnumFacing side){
+		int posX = MathHelper.floor_double(playerIn.posX);
+		int posY = MathHelper.floor_double(playerIn.posY);
+		int posZ = MathHelper.floor_double(playerIn.posZ);
+		BlockPos pos = new BlockPos(posX, posY -1, posZ);
+		ItemStack dirt = new ItemStack(Blocks.dirt);
+		dirt.onItemUse(playerIn, worldIn, pos, side, posX, posY, posZ);
+		
+	}
+	
+	//Causes the item to place a dirt block.
+	/*@Override
+	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, BlockPos pos, EnumFacing side, float par8, float par9, float par10) {
+		return placeDirt(par1ItemStack, par2EntityPlayer, par3World, pos, side, par8, par9, par10, Blocks.dirt, 0.35F, 0.2F, 0.05F);
+	}
+	private boolean placeDirt(ItemStack par1ItemStack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float par8, float par9, float par10, Block dirt2, float f, float g, float h) {
+		int posX = MathHelper.floor_double(playerIn.posX);
+		int posY = MathHelper.floor_double(playerIn.posY);;
+		int posZ = MathHelper.floor_double(playerIn.posZ);;
+		System.out.println("Getting user location XYZ: " + posX +" " + posY + " " + posZ);
+		BlockPos blockPosition = new BlockPos(posX, posY, posZ);
+		ItemStack stackToPlace = new ItemStack(Blocks.dirt);
+		stackToPlace.onItemUse(playerIn, worldIn, pos, side, par8, par9, par10);
+		return true;
+	}
+	*/
 }
