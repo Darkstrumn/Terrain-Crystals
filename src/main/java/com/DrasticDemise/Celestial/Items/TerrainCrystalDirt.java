@@ -31,20 +31,76 @@ public class TerrainCrystalDirt extends Item{
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
     {
 	//	placeDirt(playerIn, worldIn);
-		for(int i = 0; i < 5; i++){
-			placeDirt(playerIn, worldIn, itemStackIn, EnumFacing.DOWN);
+		int modifyY = 16; //offset by 1 to place under the player
+		int shiftAxisSecondary = 0;
+		int shiftAxis = 0;
+		for(shiftAxis = 0; shiftAxis < 12; shiftAxis++){
+			if(shiftAxis == 11){
+				placeDirtForward(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis-2, modifyY);
+				placeDirtRight(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis-2, modifyY);
+				placeDirtLeft(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis-2, modifyY);
+				placeDirtBackwards(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis- 2, modifyY);
+			}else{
+				placeDirtForward(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
+				placeDirtRight(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
+				placeDirtLeft(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
+				placeDirtBackwards(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
+			}
+			modifyY--;
+			modifyY--;
+			modifyY--;
+			shiftAxis++;
 		}
+		/*
+		for(int shiftAxis = 0; shiftAxis < 10; shiftAxis++){
+			placeDirtForward(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
+			placeDirtRight(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
+			placeDirtLeft(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
+			placeDirtBackwards(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
+			//Increasing downwards
+			for(modifyY = 1; modifyY < 10; modifyY++){
+				placeDirtForward(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis - modifyY, modifyY);
+				placeDirtRight(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis - modifyY, modifyY);
+				placeDirtLeft(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis - modifyY, modifyY);
+				placeDirtBackwards(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis - modifyY, modifyY);
+			}
+		}*/
         return itemStackIn;
     }
-	
-	private void placeDirt(EntityPlayer playerIn, World worldIn, ItemStack itemStackIn, EnumFacing side){
+	//
+	private void placeDirtLeft(EntityPlayer playerIn, World worldIn, ItemStack itemStackIn, EnumFacing side,
+			int modifyZAxis, int modifyY) {
 		int posX = MathHelper.floor_double(playerIn.posX);
 		int posY = MathHelper.floor_double(playerIn.posY);
 		int posZ = MathHelper.floor_double(playerIn.posZ);
-		BlockPos pos = new BlockPos(posX, posY -1, posZ);
+		BlockPos pos = new BlockPos(posX, posY - modifyY, posZ - modifyZAxis);
 		ItemStack dirt = new ItemStack(Blocks.dirt);
 		dirt.onItemUse(playerIn, worldIn, pos, side, posX, posY, posZ);
-		
+	}
+	private void placeDirtRight(EntityPlayer playerIn, World worldIn, ItemStack itemStackIn, EnumFacing side,
+			int modifyZAxis, int modifyY) {
+		int posX = MathHelper.floor_double(playerIn.posX);
+		int posY = MathHelper.floor_double(playerIn.posY);
+		int posZ = MathHelper.floor_double(playerIn.posZ);
+		BlockPos pos = new BlockPos(posX, posY - modifyY, posZ + modifyZAxis);
+		ItemStack dirt = new ItemStack(Blocks.dirt);
+		dirt.onItemUse(playerIn, worldIn, pos, side, posX, posY, posZ);
+	}
+	private void placeDirtForward(EntityPlayer playerIn, World worldIn, ItemStack itemStackIn, EnumFacing side, int modifyXAxis, int modifyY){
+		int posX = MathHelper.floor_double(playerIn.posX);
+		int posY = MathHelper.floor_double(playerIn.posY);
+		int posZ = MathHelper.floor_double(playerIn.posZ);
+		BlockPos pos = new BlockPos(posX + modifyXAxis, posY - modifyY, posZ);
+		ItemStack dirt = new ItemStack(Blocks.dirt);
+		dirt.onItemUse(playerIn, worldIn, pos, side, posX, posY, posZ);
+	}
+	private void placeDirtBackwards(EntityPlayer playerIn, World worldIn, ItemStack itemStackIn, EnumFacing side, int modifyXAxis, int modifyY){
+		int posX = MathHelper.floor_double(playerIn.posX);
+		int posY = MathHelper.floor_double(playerIn.posY);
+		int posZ = MathHelper.floor_double(playerIn.posZ);
+		BlockPos pos = new BlockPos(posX - modifyXAxis, posY - modifyY, posZ);
+		ItemStack dirt = new ItemStack(Blocks.dirt);
+		dirt.onItemUse(playerIn, worldIn, pos, side, posX, posY, posZ);
 	}
 	
 	//Causes the item to place a dirt block.
