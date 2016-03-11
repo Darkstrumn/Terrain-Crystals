@@ -34,8 +34,9 @@ public class TerrainCrystalDirt extends Item{
 		int modifyY = 16; //offset by 1 to place under the player
 		int shiftAxisSecondary = 0;
 		int shiftAxis = 0;
-		for(shiftAxis = 0; shiftAxis < 12; shiftAxis++){
-			if(shiftAxis == 11){
+		for(shiftAxis = 0; shiftAxis < 8; shiftAxis++){
+			if(shiftAxis == 8){
+				System.out.println("Entering customShift");
 				placeDirtForward(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis-2, modifyY);
 				placeDirtRight(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis-2, modifyY);
 				placeDirtLeft(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis-2, modifyY);
@@ -49,8 +50,9 @@ public class TerrainCrystalDirt extends Item{
 			modifyY--;
 			modifyY--;
 			modifyY--;
-			shiftAxis++;
+
 		}
+		//
 		/*
 		for(int shiftAxis = 0; shiftAxis < 10; shiftAxis++){
 			placeDirtForward(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
