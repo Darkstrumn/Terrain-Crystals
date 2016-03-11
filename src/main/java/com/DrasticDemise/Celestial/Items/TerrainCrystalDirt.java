@@ -4,6 +4,7 @@ import com.DrasticDemise.Celestial.blocks.CStorageCellTileEntity;
 import com.mojang.realmsclient.dto.PlayerInfo;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -27,11 +28,64 @@ public class TerrainCrystalDirt extends Item{
 		setHarvestLevel("stone", 0);
         GameRegistry.registerItem(this);
 	}
+	
+	//Rewrite using blockstates
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
     {
+		if(!worldIn.isRemote){
+			int posX = MathHelper.floor_double(playerIn.posX);
+			int posY = MathHelper.floor_double(playerIn.posY);
+			int posZ = MathHelper.floor_double(playerIn.posZ);
+			//BlockPos pos = new BlockPos(posX, posY-1, posZ);
+			int xShiftUp = 0;
+			int yShiftDown = -1;
+			int zShiftUp = 0;
+			//generateBlock(pos, worldIn);
+			for(int i = 0; i < 6; i++){
+				//TopLayer1.0 - Generates the first row
+				BlockPos pos1 = new BlockPos(posX - i, posY-1, posZ);
+				worldIn.setBlockState(pos1, Blocks.dirt.getDefaultState());
+				BlockPos pos2 = new BlockPos(posX + i, posY-1, posZ);
+				worldIn.setBlockState(pos2, Blocks.dirt.getDefaultState());
+				
+				//Toplayer1.1 -- If facing north, this generates the row behind you.
+				BlockPos pos3 = new BlockPos(posX + i -1, posY-1, posZ + 1);
+				worldIn.setBlockState(pos3, Blocks.dirt.getDefaultState());
+				BlockPos pos4 = new BlockPos(posX - i +1, posY-1, posZ + 1);
+				worldIn.setBlockState(pos4, Blocks.dirt.getDefaultState());
+				//TopLayer1.2 -- If facing north, this generates the row in front of you.
+				BlockPos pos5 = new BlockPos(posX + i -1, posY-1, posZ - 1);
+				worldIn.setBlockState(pos5, Blocks.dirt.getDefaultState());
+				BlockPos pos6 = new BlockPos(posX - i +1, posY-1, posZ - 1);
+				worldIn.setBlockState(pos6, Blocks.dirt.getDefaultState());
+				
+				//Toplayer1.3 -- If facing north, this generates the row behind you.
+				BlockPos pos7 = new BlockPos(posX + i -2, posY-1, posZ + 2);
+				worldIn.setBlockState(pos7, Blocks.dirt.getDefaultState());
+				BlockPos pos8 = new BlockPos(posX - i + 2, posY-1, posZ + 2);
+				worldIn.setBlockState(pos8, Blocks.dirt.getDefaultState());
+				
+				//TopLayer1.4 -- If facing north, this generates the row in front of you.
+				BlockPos pos9 = new BlockPos(posX + i -2, posY-1, posZ - 2);
+				worldIn.setBlockState(pos9, Blocks.dirt.getDefaultState());
+				BlockPos pos10 = new BlockPos(posX - i +2, posY-1, posZ - 2);
+				worldIn.setBlockState(pos10, Blocks.dirt.getDefaultState());
+			}
+			//System.out.println(" ");
+			//worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		}
 	//	placeDirt(playerIn, worldIn);
-		int modifyY = 16; //offset by 1 to place under the player
+		/*int modifyY = 16; //offset by 1 to place under the player
 		int shiftAxisSecondary = 0;
 		int shiftAxis = 0;
 		for(shiftAxis = 0; shiftAxis < 8; shiftAxis++){
@@ -51,24 +105,15 @@ public class TerrainCrystalDirt extends Item{
 			modifyY--;
 			modifyY--;
 
-		}
-		//
-		/*
-		for(int shiftAxis = 0; shiftAxis < 10; shiftAxis++){
-			placeDirtForward(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
-			placeDirtRight(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
-			placeDirtLeft(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
-			placeDirtBackwards(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis, modifyY);
-			//Increasing downwards
-			for(modifyY = 1; modifyY < 10; modifyY++){
-				placeDirtForward(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis - modifyY, modifyY);
-				placeDirtRight(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis - modifyY, modifyY);
-				placeDirtLeft(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis - modifyY, modifyY);
-				placeDirtBackwards(playerIn, worldIn, itemStackIn, EnumFacing.DOWN, shiftAxis - modifyY, modifyY);
-			}
-		}*/
+		*/
         return itemStackIn;
     }
+	
+	public void generateBlock(BlockPos pos, World worldIn){
+		worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+	}
+	
+	
 	//
 	private void placeDirtLeft(EntityPlayer playerIn, World worldIn, ItemStack itemStackIn, EnumFacing side,
 			int modifyZAxis, int modifyY) {
@@ -105,20 +150,4 @@ public class TerrainCrystalDirt extends Item{
 		dirt.onItemUse(playerIn, worldIn, pos, side, posX, posY, posZ);
 	}
 	
-	//Causes the item to place a dirt block.
-	/*@Override
-	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, BlockPos pos, EnumFacing side, float par8, float par9, float par10) {
-		return placeDirt(par1ItemStack, par2EntityPlayer, par3World, pos, side, par8, par9, par10, Blocks.dirt, 0.35F, 0.2F, 0.05F);
-	}
-	private boolean placeDirt(ItemStack par1ItemStack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float par8, float par9, float par10, Block dirt2, float f, float g, float h) {
-		int posX = MathHelper.floor_double(playerIn.posX);
-		int posY = MathHelper.floor_double(playerIn.posY);;
-		int posZ = MathHelper.floor_double(playerIn.posZ);;
-		System.out.println("Getting user location XYZ: " + posX +" " + posY + " " + posZ);
-		BlockPos blockPosition = new BlockPos(posX, posY, posZ);
-		ItemStack stackToPlace = new ItemStack(Blocks.dirt);
-		stackToPlace.onItemUse(playerIn, worldIn, pos, side, par8, par9, par10);
-		return true;
-	}
-	*/
 }
