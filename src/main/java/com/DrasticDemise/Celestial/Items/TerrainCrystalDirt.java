@@ -61,13 +61,9 @@ public class TerrainCrystalDirt extends Item{
 			ArrayList<BlockPos> posList = new ArrayList<BlockPos>(50);
 			for(int layer = 0; layer < diameter; layer++){
 				for(int shrinkCircle = 0; shrinkCircle < diameter; shrinkCircle++){
-					int point1CurrentBlock = 1;
-					int point1posX = modifiedposX;
-					int point1posZ = posZ;
-					int point2posX = modifiedposX;
-					int point2posZ = posZ;
 					
-					int point2CurrentBlock = 1;
+					int point1CurrentBlock = 1; int point1posX = modifiedposX; int point1posZ = posZ;
+					int point2posX = modifiedposX; int point2posZ = posZ; int point2CurrentBlock = 1;
 					//Once the block position changes, this searches to complete the circle.
 					for(int expandLines = 0; expandLines < center; expandLines++){
 						//Generates and adds point 1
@@ -85,8 +81,11 @@ public class TerrainCrystalDirt extends Item{
 						for(int findMoreLocationsBeneathBlock = 1; findMoreLocationsBeneathBlock < point2CurrentBlock; findMoreLocationsBeneathBlock++){
 							posList.add(new BlockPos (point2posX + center*2 , modifiedposY, point2posZ - findMoreLocationsBeneathBlock));
 						}
-						
-						BlockPos centerPoint = new BlockPos(posX + i, modifiedposY, posZ + i);
+						//Increment Z to close the circle
+						BlockPos centerPoint = new BlockPos(posX, modifiedposY, modifiedposZ);
+						for(int findMoreLocationsBeneathBlock = 0; findMoreLocationsBeneathBlock < diameter; findMoreLocationsBeneathBlock++){
+							posList.add(new BlockPos(posX, modifiedposY, modifiedposZ + findMoreLocationsBeneathBlock));
+						}
 						posList.add(centerPoint);
 						point1posX++; point1posZ++;
 						point2posX--; point2posZ++;
