@@ -60,40 +60,39 @@ public class TerrainCrystalDirt extends Item{
 			int modifiedposY = posY - 1;
 			ArrayList<BlockPos> posList = new ArrayList<BlockPos>(50);
 			for(int layer = 0; layer < diameter; layer++){
-				for(int shrinkCircle = 0; shrinkCircle < diameter; shrinkCircle++){
+
+				int point1CurrentBlock = 1; int point1posX = modifiedposX; int point1posZ = posZ;
+				int point2posX = modifiedposX; int point2posZ = posZ; int point2CurrentBlock = 1;
+				//Once the block position changes, this searches to complete the circle.
+				for(int expandLines = 0; expandLines < center; expandLines++){
+					//Generates and adds point 1
+					//sideX1
+					//This side needs to increase on the X and decrement Z
+					posList.add(new BlockPos(point1posX, modifiedposY, point1posZ));
 					
-					int point1CurrentBlock = 1; int point1posX = modifiedposX; int point1posZ = posZ;
-					int point2posX = modifiedposX; int point2posZ = posZ; int point2CurrentBlock = 1;
-					//Once the block position changes, this searches to complete the circle.
-					for(int expandLines = 0; expandLines < center; expandLines++){
-						//Generates and adds point 1
-						//sideX1
-						//This side needs to increase on the X and decrement Z
-						posList.add(new BlockPos(point1posX, modifiedposY, point1posZ));
-						
-						for(int findMoreLocationsBeneathBlock = 1; findMoreLocationsBeneathBlock < point1CurrentBlock; findMoreLocationsBeneathBlock++){
-						    posList.add(new BlockPos (point1posX , modifiedposY, point1posZ - findMoreLocationsBeneathBlock));
-						}
-						//Generates point 2 which is one diameter from point 1.
-						//sideX2
-						//DECREASE ON THE X
-						posList.add(new BlockPos(point2posX + center*2, modifiedposY, point2posZ));
-						for(int findMoreLocationsBeneathBlock = 1; findMoreLocationsBeneathBlock < point2CurrentBlock; findMoreLocationsBeneathBlock++){
-							posList.add(new BlockPos (point2posX + center*2 , modifiedposY, point2posZ - findMoreLocationsBeneathBlock));
-						}
-						//Increment Z to close the circle
-						BlockPos centerPoint = new BlockPos(posX, modifiedposY, modifiedposZ);
-						for(int findMoreLocationsBeneathBlock = 0; findMoreLocationsBeneathBlock < diameter; findMoreLocationsBeneathBlock++){
-							posList.add(new BlockPos(posX, modifiedposY, modifiedposZ + findMoreLocationsBeneathBlock));
-						}
-						posList.add(centerPoint);
-						point1posX++; point1posZ++;
-						point2posX--; point2posZ++;
-						point1CurrentBlock = point1CurrentBlock + 2;
-						point2CurrentBlock = point2CurrentBlock + 2;
+					for(int findMoreLocationsBeneathBlock = 1; findMoreLocationsBeneathBlock < point1CurrentBlock; findMoreLocationsBeneathBlock++){
+					    posList.add(new BlockPos (point1posX , modifiedposY, point1posZ - findMoreLocationsBeneathBlock));
 					}
+					//Generates point 2 which is one diameter from point 1.
+					//sideX2
+					//DECREASE ON THE X
+					posList.add(new BlockPos(point2posX + center*2, modifiedposY, point2posZ));
+					for(int findMoreLocationsBeneathBlock = 1; findMoreLocationsBeneathBlock < point2CurrentBlock; findMoreLocationsBeneathBlock++){
+						posList.add(new BlockPos (point2posX + center*2 , modifiedposY, point2posZ - findMoreLocationsBeneathBlock));
+					}
+					//CENTER POINT - No need to change this. Will create the center column.
+					posList.add(new BlockPos(posX, modifiedposY, modifiedposZ));
+					//Increment Z to close the circle
+					for(int findMoreLocationsBeneathBlock = 0; findMoreLocationsBeneathBlock < diameter; findMoreLocationsBeneathBlock++){
+						posList.add(new BlockPos(posX, modifiedposY, modifiedposZ + findMoreLocationsBeneathBlock - layer));
+					}
+					//Increments and decrements in order to complete the circle from the initial outline
+					point1posX++; point1posZ++;
+					point2posX--; point2posZ++;
+					point1CurrentBlock = point1CurrentBlock + 2;
+					point2CurrentBlock = point2CurrentBlock + 2;
 				}
-				//modifiedposY--;
+				modifiedposY--;
 			}
 			for(BlockPos p : posList){
 				generateBlock(p, worldIn);
