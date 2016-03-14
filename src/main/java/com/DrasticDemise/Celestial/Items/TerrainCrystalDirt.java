@@ -30,78 +30,59 @@ public class TerrainCrystalDirt extends Item{
 		setHarvestLevel("stone", 0);
         GameRegistry.registerItem(this);
 	}
-	
-	//Rewrite using blockstates
 	@Override
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
-    {
-		if(!worldIn.isRemote){
-			int posX = MathHelper.floor_double(playerIn.posX);
-			int posY = MathHelper.floor_double(playerIn.posY);
-			int posZ = MathHelper.floor_double(playerIn.posZ);
-			//BlockPos pos = new BlockPos(posX, posY-1, posZ);
-			int xShiftUp = 0;
-			int yShiftDown = -1;
-			int zShiftUp = 0;
-			int yShift = 1; //Y must be shifted one extra or spawns on player
-			int xOffset = 1;
-			int zShift = 1;
-			//generateBlock(pos, worldIn);
-			int center;
-			double diameter = 11;
-			double radius = diameter/2.0;
-			if(diameter%2 != 0){
-				center = (int) (radius - 0.5);
-			}else{
-				center = (int) radius;
-			}
-			int modifiedposX = (int) (posX - center);
-			int modifiedposZ = (int) (posZ - center) ;
-			int modifiedposY = posY - 1;
-			ArrayList<BlockPos> posList = new ArrayList<BlockPos>(50);
-			for(int layer = 0; layer < diameter; layer++){
-
-				int point1CurrentBlock = 1; int point1posX = modifiedposX; int point1posZ = posZ;
-				int point2posX = modifiedposX; int point2posZ = posZ; int point2CurrentBlock = 1;
-				//Once the block position changes, this searches to complete the circle.
-				for(int expandLines = 0; expandLines < center; expandLines++){
-					//Generates and adds point 1
-					//sideX1
-					//This side needs to increase on the X and decrement Z
-					posList.add(new BlockPos(point1posX, modifiedposY, point1posZ));
-					
-					for(int findMoreLocationsBeneathBlock = 1; findMoreLocationsBeneathBlock < point1CurrentBlock; findMoreLocationsBeneathBlock++){
-					    posList.add(new BlockPos (point1posX , modifiedposY, point1posZ - findMoreLocationsBeneathBlock));
-					}
-					//Generates point 2 which is one diameter from point 1.
-					//sideX2
-					//DECREASE ON THE X
-					posList.add(new BlockPos(point2posX + center*2, modifiedposY, point2posZ));
-					for(int findMoreLocationsBeneathBlock = 1; findMoreLocationsBeneathBlock < point2CurrentBlock; findMoreLocationsBeneathBlock++){
-						posList.add(new BlockPos (point2posX + center*2 , modifiedposY, point2posZ - findMoreLocationsBeneathBlock));
-					}
-					//CENTER POINT - No need to change this. Will create the center column.
-					posList.add(new BlockPos(posX, modifiedposY, modifiedposZ));
-					//Increment Z to close the circle
-					for(int findMoreLocationsBeneathBlock = 0; findMoreLocationsBeneathBlock < diameter; findMoreLocationsBeneathBlock++){
-						posList.add(new BlockPos(posX, modifiedposY, modifiedposZ + findMoreLocationsBeneathBlock - layer));
-					}
-					//Increments and decrements in order to complete the circle from the initial outline
-					point1posX++; point1posZ++;
-					point2posX--; point2posZ++;
-					point1CurrentBlock = point1CurrentBlock + 2;
-					point2CurrentBlock = point2CurrentBlock + 2;
-				}
-				modifiedposY--;
-			}
-			for(BlockPos p : posList){
-				generateBlock(p, worldIn);
+	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
+		int posX = MathHelper.floor_double(playerIn.posX);
+		int posY = MathHelper.floor_double(playerIn.posY);
+		int posZ = MathHelper.floor_double(playerIn.posZ);
+		int center;
+		int diameter = 11;
+		double radius = diameter/2.0;
+		if(diameter%2 != 0){
+			center = (int) (radius + 0.5);
+		}else{
+			center = (int) (radius);
+		}
+		int offsetXFirstHalf = (int) (posX + radius);
+		//Not sure why this has to be offset by 1 extra, but it does.
+		int offsetXSecondHalf = (int) (posX - radius + 1);
+		System.out.println(offsetXFirstHalf + " "  + offsetXSecondHalf);
+		//Generates the first half
+		for(int i = 0; i < (center); i ++){
+			//Creates the outline of the circle
+			//Each shell is respective to its quadrant
+			BlockPos shellOne = new BlockPos(offsetXFirstHalf - i, posY-1, posZ - i);
+			BlockPos shellTwo = new BlockPos(offsetXFirstHalf - i, posY - 1, posZ + i);
+			generateBlock(shellOne, worldIn);
+			generateBlock(shellTwo, worldIn);
+			for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
+				//Fills across the circle
+				BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY - 1, posZ - i + placeInwards);
+				BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY - 1, posZ + i - placeInwards);
+				generateBlock(fillShellOne, worldIn);
+				generateBlock(fillShellTwo, worldIn);
 			}
 		}
-        return itemStackIn;
-    }
-	
+		//Generates the second half
+		for(int i = 0; i < (center); i ++){
+			//BlockPos shellThree = new BlockPos(offsetXFirstHalf - i - center, posY - 1, posZ -i + center - 2);
+			//BlockPos shellFour = new BlockPos(offsetXFirstHalf  - i - center, posY - 1, posZ + i - center + 2);
+			BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i);
+			BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i);
+			generateBlock(shellThree, worldIn);
+			generateBlock(shellFour, worldIn);
+			for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
+				BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards);
+				BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards);
+				generateBlock(fillShellThree, worldIn);
+				generateBlock(fillShellFour, worldIn);
+			}
+		}
+		return itemStackIn;
+	}
 	public void generateBlock(BlockPos pos, World worldIn){
+		if(worldIn.getBlockState(pos).getBlock() == Blocks.air){
 		worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+		}
 	}
 }
