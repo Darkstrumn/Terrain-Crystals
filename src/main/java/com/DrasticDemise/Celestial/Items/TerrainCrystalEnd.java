@@ -128,8 +128,111 @@ public class TerrainCrystalEnd extends Item{
 			return blocksGenerated;
 		}
 		private void decorateEnd(World worldIn, BlockPos pos){
-			if(Math.random() < .2){
+			//Chance to create a pillar
+			if(Math.random() < .02){
 				worldIn.setBlockState(pos, Blocks.obsidian.getDefaultState());
+				worldIn.setBlockState(pos.up(), Blocks.obsidian.getDefaultState());
+				if(Math.random() < .9){
+					worldIn.setBlockState(pos.up(2), Blocks.obsidian.getDefaultState());
+					if(Math.random() < 0.9){
+						worldIn.setBlockState(pos.up(3), Blocks.obsidian.getDefaultState());
+						if(Math.random() < 0.7){
+							worldIn.setBlockState(pos.up(4), Blocks.obsidian.getDefaultState());
+							if(Math.random() < .75){
+								worldIn.setBlockState(pos.up(4).north(), Blocks.obsidian.getDefaultState());
+							}
+							if(Math.random() < .75){
+								worldIn.setBlockState(pos.up(4).east(), Blocks.obsidian.getDefaultState());
+							}
+							if(Math.random() < .75){
+								worldIn.setBlockState(pos.up(4).south(), Blocks.obsidian.getDefaultState());
+							}
+							if(Math.random() < .75){
+								worldIn.setBlockState(pos.up(4).west(), Blocks.obsidian.getDefaultState());
+							}
+							if(Math.random() < .25){
+								worldIn.setBlockState(pos.up(5), Blocks.obsidian.getDefaultState());
+								worldIn.setBlockState(pos.up(6), Blocks.obsidian.getDefaultState());
+								if(Math.random() < .50){
+									if(Math.random() < .75){
+										worldIn.setBlockState(pos.up(5).north(), Blocks.obsidian.getDefaultState());
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).north(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).east(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).south(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).west(), Blocks.obsidian.getDefaultState());
+										}
+									}
+									if(Math.random() < .75){
+										worldIn.setBlockState(pos.up(5).east(), Blocks.obsidian.getDefaultState());
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).north(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).east(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).south(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).west(), Blocks.obsidian.getDefaultState());
+										}
+									}
+									if(Math.random() < .75){
+										worldIn.setBlockState(pos.up(5).south(), Blocks.obsidian.getDefaultState());
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).north(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).east(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).south(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).west(), Blocks.obsidian.getDefaultState());
+										}
+									}
+									if(Math.random() < .75){
+										worldIn.setBlockState(pos.up(5).west(), Blocks.obsidian.getDefaultState());
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).north(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).east(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).south(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).west(), Blocks.obsidian.getDefaultState());
+										}
+									}
+									if(Math.random() < .5){
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).north(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).east(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).south(), Blocks.obsidian.getDefaultState());
+										}
+										if(Math.random() < .75){
+											worldIn.setBlockState(pos.up(6).west(), Blocks.obsidian.getDefaultState());
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
