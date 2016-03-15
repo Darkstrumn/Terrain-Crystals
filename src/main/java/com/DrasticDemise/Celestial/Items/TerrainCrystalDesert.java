@@ -1,10 +1,7 @@
 package com.DrasticDemise.Celestial.Items;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -15,10 +12,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class TerrainCrystalNether extends Item{
-	public TerrainCrystalNether(){
-		setUnlocalizedName("terrainCrystalNether");
-		setRegistryName("terrainCrystalNether");
+public class TerrainCrystalDesert extends Item{
+	public TerrainCrystalDesert(){
+		setUnlocalizedName("terrainCrystalDesert");
+		setRegistryName("terrainCrystalDesert");
 		setCreativeTab(CreativeTabs.tabBlock);
 		setHarvestLevel("stone", 0);
         GameRegistry.registerItem(this);
@@ -115,33 +112,34 @@ public class TerrainCrystalNether extends Item{
 		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()){
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
-				if(Math.random() < .9){
-					worldIn.setBlockState(pos, Blocks.netherrack.getDefaultState());
-					netherDecoration(worldIn, pos);
-				}else if (Math.random() < 0.3){
-					worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
-					netherDecoration(worldIn, pos);
+				if(Math.random() < .7){
+					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
+					desertDecoration(worldIn, pos);
 				}else{
-					worldIn.setBlockState(pos, Blocks.gravel.getDefaultState());
+					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
 				}
 			}else{
 				if(Math.random() < .9){
-					worldIn.setBlockState(pos, Blocks.netherrack.getDefaultState());
-				}else if (Math.random() < 0.3){
-					worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
+					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
 				}else{
-					worldIn.setBlockState(pos, Blocks.gravel.getDefaultState());
+					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
 				}
 			}
 		}
 	}
-	private void netherDecoration(World worldIn, BlockPos pos){
-		if(Blocks.brown_mushroom.canPlaceBlockAt(worldIn, pos.up())){
+	private void desertDecoration(World worldIn, BlockPos pos){
+		if(Blocks.cactus.canPlaceBlockAt(worldIn, pos.up())){
 			if(Math.random() < .10){
 				if(Math.random() < .5){
-					worldIn.setBlockState(pos.up(), Blocks.brown_mushroom.getDefaultState());
+					worldIn.setBlockState(pos.up(), Blocks.cactus.getDefaultState());
+					if(Math.random() < .5){
+						worldIn.setBlockState(pos.up(2), Blocks.cactus.getDefaultState());
+						if(Math.random() < .5){
+							worldIn.setBlockState(pos.up(3), Blocks.cactus.getDefaultState());
+						}
+					}
 				}else{
-					worldIn.setBlockState(pos.up(), Blocks.red_mushroom.getDefaultState());
+					worldIn.setBlockState(pos.up(), Blocks.deadbush.getDefaultState());
 				}
 			}
 		}
