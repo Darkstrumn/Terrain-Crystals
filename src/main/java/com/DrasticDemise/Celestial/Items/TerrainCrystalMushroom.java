@@ -1,7 +1,9 @@
 package com.DrasticDemise.Celestial.Items;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import net.minecraft.block.IGrowable;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -12,13 +14,14 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class TerrainCrystalMesa extends Item{
-	public TerrainCrystalMesa(){
-		setUnlocalizedName("terrainCrystalMesa");
-		setRegistryName("terrainCrystalMesa");
+public class TerrainCrystalMushroom extends Item{
+	
+	public TerrainCrystalMushroom(){
+		setUnlocalizedName("terrainCrystalMushroom");
+		setRegistryName("terrainCrystalMushroom");
 		setCreativeTab(CreativeTabs.tabBlock);
 		setHarvestLevel("stone", 0);
-        GameRegistry.registerItem(this);
+	    GameRegistry.registerItem(this);
 	}
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
@@ -79,7 +82,6 @@ public class TerrainCrystalMesa extends Item{
 	}
 	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated){
 		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
-		int blocksSpawned = 0;
 		for(BlockPos pos : posList){
 			int surroundingBlocks = 0;
 			
@@ -114,61 +116,36 @@ public class TerrainCrystalMesa extends Item{
 	private int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated){
 		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()){
 			int posY = MathHelper.floor_double(playerIn.posY);
-			int getMetaFromPlayerDistance = posY - pos.getY();
 			if(posY - pos.getY() == 1){
-				if(Math.random() < .7){
-					worldIn.setBlockState(pos, Blocks.sand.getStateFromMeta(1));
-					mesaDecoration(worldIn, pos);
-				}else{
-					if(Math.random() < .50){
-						worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
-					}else{
-						worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(1));
-					}
-				}
+				worldIn.setBlockState(pos, Blocks.mycelium.getDefaultState());
+				mushroomDecoration(worldIn, pos);
 			}else{
-				if(getMetaFromPlayerDistance == 2){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance - 1));
-				}else if (getMetaFromPlayerDistance == 3 || getMetaFromPlayerDistance == 4){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(4));
-				}else if (getMetaFromPlayerDistance == 5 || getMetaFromPlayerDistance == 6){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(5));
-				}else if (getMetaFromPlayerDistance == 7 || getMetaFromPlayerDistance == 8){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(7));
-				}else if (getMetaFromPlayerDistance == 9 || getMetaFromPlayerDistance == 10){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(8));
-				}else if (getMetaFromPlayerDistance == 11){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
-				}else if (getMetaFromPlayerDistance == 12){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
-				}else if (getMetaFromPlayerDistance == 13){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
-				}else if (getMetaFromPlayerDistance == 14){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
-				}else{
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(1));
-				}
+				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
 			}
 			blocksGenerated++;
 		}
 		return blocksGenerated;
 	}
-	private void mesaDecoration(World worldIn, BlockPos pos){
-		if(Blocks.cactus.canPlaceBlockAt(worldIn, pos.up())){
-			if(Math.random() < .08){
-				//Reds
+	private void mushroomDecoration(World worldIn, BlockPos pos){
+		if(Blocks.brown_mushroom.canPlaceBlockAt(worldIn, pos.up())){
+			if(Math.random() < .10){
 				if(Math.random() < .5){
-					worldIn.setBlockState(pos.up(), Blocks.cactus.getDefaultState());
-					if(Math.random() < .5){
-						worldIn.setBlockState(pos.up(2), Blocks.cactus.getDefaultState());
-						if(Math.random() < .5){
-							worldIn.setBlockState(pos.up(3), Blocks.cactus.getDefaultState());
-						}
+					worldIn.setBlockState(pos.up(), Blocks.brown_mushroom.getDefaultState());
+					if(Math.random() < 0.1){
+						IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
+						Random rand = new Random();
+						growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos));
 					}
 				}else{
-					worldIn.setBlockState(pos.up(), Blocks.deadbush.getDefaultState());
+					worldIn.setBlockState(pos.up(), Blocks.red_mushroom.getDefaultState());
+					if(Math.random() < 0.1){
+						IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
+						Random rand = new Random();
+						growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos));
+					}
 				}
 			}
 		}
 	}
 }
+

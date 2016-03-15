@@ -25,6 +25,7 @@ public class TerrainCrystalNether extends Item{
 	}
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
+		int blocksGenerated = 0;
 		if(!worldIn.isRemote){
 			int posX = MathHelper.floor_double(playerIn.posX);
 			int posY = MathHelper.floor_double(playerIn.posY);
@@ -73,18 +74,19 @@ public class TerrainCrystalNether extends Item{
 				}
 			}
 			for(BlockPos p : posList){
-				generateSpike(posList, worldIn, playerIn);
+				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated);
 			}
 		}
+		System.out.println(blocksGenerated);
 		return itemStackIn;
 	}
-	public void generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn){
+	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated){
 		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
 		int blocksSpawned = 0;
 		for(BlockPos pos : posList){
 			int surroundingBlocks = 0;
 			
-				generateInWorld(pos, worldIn, playerIn);
+				blocksGenerated = generateInWorld(pos, worldIn, playerIn, blocksGenerated);
 				
 				if(worldIn.getBlockState(pos.north()) != Blocks.air.getDefaultState()){
 					//System.out.println("entered northCheck");
@@ -103,15 +105,16 @@ public class TerrainCrystalNether extends Item{
 					surroundingBlocks++;
 				}
 				if(surroundingBlocks >= 3 || Math.random() < 0.05){
-					generateInWorld(pos.down(), worldIn, playerIn);
+					blocksGenerated = generateInWorld(pos.down(), worldIn, playerIn, blocksGenerated);
 					recursiveList.add(pos.down());
 				}
 			}
 		if(!recursiveList.isEmpty()){
-			generateSpike(recursiveList, worldIn, playerIn);
+			blocksGenerated = generateSpike(recursiveList, worldIn, playerIn, blocksGenerated);
 		}
+		return blocksGenerated;
 	}
-	private void generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn){
+	private int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated){
 		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()){
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
@@ -133,7 +136,9 @@ public class TerrainCrystalNether extends Item{
 					worldIn.setBlockState(pos, Blocks.gravel.getDefaultState());
 				}
 			}
+			blocksGenerated++;
 		}
+		return blocksGenerated;
 	}
 	private void netherDecoration(World worldIn, BlockPos pos){
 		if(Blocks.brown_mushroom.canPlaceBlockAt(worldIn, pos.up())){

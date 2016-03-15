@@ -35,6 +35,7 @@ public class TerrainCrystalPlains extends Item{
 	}
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
+		int blocksGenerated = 0;
 		if(!worldIn.isRemote){
 			int posX = MathHelper.floor_double(playerIn.posX);
 			int posY = MathHelper.floor_double(playerIn.posY);
@@ -83,18 +84,18 @@ public class TerrainCrystalPlains extends Item{
 				}
 			}
 			for(BlockPos p : posList){
-				generateSpike(posList, worldIn, playerIn);
+				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated);
 			}
 		}
+		//System.out.println(blocksGenerated);
 		return itemStackIn;
 	}
-	public void generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn){
+	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated){
 		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
-		int blocksSpawned = 0;
 		for(BlockPos pos : posList){
 			int surroundingBlocks = 0;
 			
-				generateInWorld(pos, worldIn, playerIn);
+				blocksGenerated = generateInWorld(pos, worldIn, playerIn, blocksGenerated);
 				
 				if(worldIn.getBlockState(pos.north()) != Blocks.air.getDefaultState()){
 					//System.out.println("entered northCheck");
@@ -113,44 +114,63 @@ public class TerrainCrystalPlains extends Item{
 					surroundingBlocks++;
 				}
 				if(surroundingBlocks >= 3 || Math.random() < 0.05){
-					generateInWorld(pos.down(), worldIn, playerIn);
+					blocksGenerated = generateInWorld(pos.down(), worldIn, playerIn, blocksGenerated);
 					recursiveList.add(pos.down());
 				}
 			}
 		if(!recursiveList.isEmpty()){
-			generateSpike(recursiveList, worldIn, playerIn);
+			blocksGenerated = generateSpike(recursiveList, worldIn, playerIn, blocksGenerated);
 		}
+		return blocksGenerated;
 	}
-	private void generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn){
+	private int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated){
 		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()){
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
 				worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
 				boneMeal(worldIn, pos);
+				blocksGenerated++;
 			}else{
 				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+				blocksGenerated++;
 			}
 		}
+		return blocksGenerated;
 	}
 	//Code taken from Lumien's Random Things Nature Core tile entity
 	private void boneMeal(World worldIn, BlockPos pos){
 		IBlockState state = worldIn.getBlockState(pos);
 		Random rand = new Random();
-		if(Math.random() < 0.10){
-			if (state.getBlock() instanceof IGrowable)
-			{
-				IGrowable growable = (IGrowable) state.getBlock();
-				if (growable.canGrow(worldIn, pos, state, worldIn.isRemote))
+			if(Math.random() < 0.10){
+				if (state.getBlock() instanceof IGrowable)
 				{
-					worldIn.playAuxSFX(2005, pos, 0);
-					growable.grow(worldIn, rand, pos, state);
-					if(Math.random() <= 0.3){
-						if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
-							//TODO Find a way to make it bonemeal the sapling. Calling grow with pos.up does not work.
-							worldIn.setBlockState(pos.up(), Blocks.sapling.getDefaultState());
+					IGrowable growable = (IGrowable) state.getBlock();
+					if (growable.canGrow(worldIn, pos, state, worldIn.isRemote))
+					{
+						worldIn.playAuxSFX(2005, pos, 0);
+						growable.grow(worldIn, rand, pos, state);
+						if(Math.random() <= 0.1){
+							growTree(worldIn, pos);
 						}
 					}
 				}
+			}
+		}
+	private void growTree(World worldIn, BlockPos pos){
+		if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
+			//TODO Find a way to make it bonemeal the sapling. Calling grow with pos.up does not work.
+			if(Math.random() < .5){
+				worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(2));
+			}else{
+				worldIn.setBlockState(pos.up(), Blocks.sapling.getDefaultState());
+			}
+			//worldIn.setBlockState(pos.up(), Blocks.sapling.getDefaultState());
+			IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
+			Random rand = new Random();	
+			System.out.println("X: " + pos.getX() + " " + pos.up().getY());
+			while(worldIn.getBlockState(pos.up()) != Blocks.log.getDefaultState()){
+				System.out.println("Attempting to grow at y: " + pos.up().getY());
+				growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
 			}
 		}
 	}
