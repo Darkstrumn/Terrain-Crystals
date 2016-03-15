@@ -46,43 +46,88 @@ public class TerrainCrystalDirt extends Item{
 		int offsetXFirstHalf = (int) (posX + radius);
 		//Not sure why this has to be offset by 1 extra, but it does.
 		int offsetXSecondHalf = (int) (posX - radius + 1);
-		System.out.println(offsetXFirstHalf + " "  + offsetXSecondHalf);
 		//Generates the first half
-		for(int i = 0; i < (center); i ++){
+		int yDown = 1;
+		int fakeCenter = center;
+		ArrayList<BlockPos> posList = new ArrayList<BlockPos>(68);
+		for(int i = 0; i < (fakeCenter); i ++){
 			//Creates the outline of the circle
 			//Each shell is respective to its quadrant
-			BlockPos shellOne = new BlockPos(offsetXFirstHalf - i, posY-1, posZ - i);
-			BlockPos shellTwo = new BlockPos(offsetXFirstHalf - i, posY - 1, posZ + i);
-			generateBlock(shellOne, worldIn);
-			generateBlock(shellTwo, worldIn);
+			//These are added in the loop already
+			//BlockPos shellOne = new BlockPos(offsetXFirstHalf - i, posY-yDown, posZ - i);
+			//BlockPos shellTwo = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ + i);
 			for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
 				//Fills across the circle
-				BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY - 1, posZ - i + placeInwards);
-				BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY - 1, posZ + i - placeInwards);
-				generateBlock(fillShellOne, worldIn);
-				generateBlock(fillShellTwo, worldIn);
+				BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ - i + placeInwards);
+				posList.add(fillShellOne);
+				BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ + i - placeInwards);
+				posList.add(fillShellTwo);
 			}
 		}
 		//Generates the second half
 		for(int i = 0; i < (center); i ++){
-			//BlockPos shellThree = new BlockPos(offsetXFirstHalf - i - center, posY - 1, posZ -i + center - 2);
-			//BlockPos shellFour = new BlockPos(offsetXFirstHalf  - i - center, posY - 1, posZ + i - center + 2);
 			BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i);
 			BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i);
-			generateBlock(shellThree, worldIn);
-			generateBlock(shellFour, worldIn);
+			posList.add(shellThree); 
+			posList.add(shellFour);
+			
 			for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
 				BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards);
 				BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards);
-				generateBlock(fillShellThree, worldIn);
-				generateBlock(fillShellFour, worldIn);
+				posList.add(fillShellThree);
+				posList.add(fillShellFour);
 			}
+		}
+		for(BlockPos p : posList){
+			generateSpike(posList, worldIn, playerIn);
 		}
 		return itemStackIn;
 	}
-	public void generateBlock(BlockPos pos, World worldIn){
-		if(worldIn.getBlockState(pos).getBlock() == Blocks.air){
-		worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+	public void generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn){
+		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
+		int blocksSpawned = 0;
+		for(BlockPos pos : posList){
+			int surroundingBlocks = 0;
+			
+				generateInWorld(pos, worldIn, playerIn);
+				
+				if(worldIn.getBlockState(pos.north()) != Blocks.air.getDefaultState()){
+					//System.out.println("entered northCheck");
+					surroundingBlocks++;
+				}
+				
+				if(worldIn.getBlockState(pos.east()) != Blocks.air.getDefaultState()){
+					surroundingBlocks++;
+				}
+				
+				if(worldIn.getBlockState(pos.south()) != Blocks.air.getDefaultState()){
+					surroundingBlocks++;
+				}
+				
+				if(worldIn.getBlockState(pos.west()) != Blocks.air.getDefaultState()){
+					surroundingBlocks++;
+				}
+				System.out.println(surroundingBlocks);
+				if(surroundingBlocks >= 3 || Math.random() < 0.05){
+					generateInWorld(pos.down(), worldIn, playerIn);
+					recursiveList.add(pos.down());
+				}
+			}
+		if(!recursiveList.isEmpty()){
+			generateSpike(recursiveList, worldIn, playerIn);
 		}
+	}
+	private void generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn){
+		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()){
+			int posY = MathHelper.floor_double(playerIn.posY);
+			if(posY - pos.getY() == 1){
+				worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
+			}else{
+				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+			}
+		}
+	}
+	private void boneMeal(World worldIn){
+		
 	}
 }
