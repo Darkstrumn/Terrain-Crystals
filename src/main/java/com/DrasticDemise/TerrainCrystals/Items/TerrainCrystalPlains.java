@@ -101,7 +101,9 @@ public class TerrainCrystalPlains extends Item{
 		return itemStackIn;
 	}
 	 public boolean setBiome(World worldIn, BlockPos position) {
-	        Chunk chunk = worldIn.getChunkFromChunkCoords(position.getX(), position.getZ());
+		 int x = 1;
+		 int z = 1;
+	        Chunk chunk = worldIn.getChunkFromBlockCoords(position);
 	        if ((chunk != null) && (chunk.isLoaded())) {
 	        	//chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) BiomeGenBase.beach.biomeID;
 	        	byte[]biomeArray = chunk.getBiomeArray();
