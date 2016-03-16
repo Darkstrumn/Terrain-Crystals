@@ -1,7 +1,7 @@
-package com.DrasticDemise.Celestial.blocks;
+package com.DrasticDemise.TerrainCrystals.blocks;
 
-import com.DrasticDemise.Celestial.api.celestialPower.ICelestialPowerProvider;
-import com.DrasticDemise.Celestial.api.celestialPower.ICelestialReceiver;
+import com.DrasticDemise.TerrainCrystals.api.celestialPower.ICelestialPowerProvider;
+import com.DrasticDemise.TerrainCrystals.api.celestialPower.ICelestialReceiver;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

@@ -1,4 +1,4 @@
-package com.DrasticDemise.Celestial.api.celestialPower;
+package com.DrasticDemise.TerrainCrystals.api.celestialPower;
 /**
  * Blocks of this type are typically going to provide power to nearby blocks instead of having its own
  * functionality.

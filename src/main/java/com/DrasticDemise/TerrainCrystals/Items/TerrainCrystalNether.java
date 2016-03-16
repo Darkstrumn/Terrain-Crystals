@@ -1,7 +1,10 @@
-package com.DrasticDemise.Celestial.Items;
+package com.DrasticDemise.TerrainCrystals.Items;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import net.minecraft.block.IGrowable;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,10 +19,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TerrainCrystalMesa extends Item{
-	public TerrainCrystalMesa(){
-		setUnlocalizedName("terrainCrystalMesa");
-		setRegistryName("terrainCrystalMesa");
+public class TerrainCrystalNether extends Item{
+	public TerrainCrystalNether(){
+		setUnlocalizedName("terrainCrystalNether");
+		setRegistryName("terrainCrystalNether");
 		setCreativeTab(CreativeTabs.tabBlock);
 		setHarvestLevel("stone", 0);
         GameRegistry.registerItem(this);
@@ -118,59 +121,36 @@ public class TerrainCrystalMesa extends Item{
 	private int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated){
 		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()){
 			int posY = MathHelper.floor_double(playerIn.posY);
-			int getMetaFromPlayerDistance = posY - pos.getY();
 			if(posY - pos.getY() == 1){
-				if(Math.random() < .7){
-					worldIn.setBlockState(pos, Blocks.sand.getStateFromMeta(1));
-					mesaDecoration(worldIn, pos);
+				if(Math.random() < .9){
+					worldIn.setBlockState(pos, Blocks.netherrack.getDefaultState());
+					netherDecoration(worldIn, pos);
+				}else if (Math.random() < 0.3){
+					worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
+					netherDecoration(worldIn, pos);
 				}else{
-					if(Math.random() < .50){
-						worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
-					}else{
-						worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(1));
-					}
+					worldIn.setBlockState(pos, Blocks.gravel.getDefaultState());
 				}
 			}else{
-				if(getMetaFromPlayerDistance == 2){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance - 1));
-				}else if (getMetaFromPlayerDistance == 3 || getMetaFromPlayerDistance == 4){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(4));
-				}else if (getMetaFromPlayerDistance == 5 || getMetaFromPlayerDistance == 6){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(5));
-				}else if (getMetaFromPlayerDistance == 7 || getMetaFromPlayerDistance == 8){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(7));
-				}else if (getMetaFromPlayerDistance == 9 || getMetaFromPlayerDistance == 10){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(8));
-				}else if (getMetaFromPlayerDistance == 11){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
-				}else if (getMetaFromPlayerDistance == 12){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
-				}else if (getMetaFromPlayerDistance == 13){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
-				}else if (getMetaFromPlayerDistance == 14){
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
+				if(Math.random() < .9){
+					worldIn.setBlockState(pos, Blocks.netherrack.getDefaultState());
+				}else if (Math.random() < 0.3){
+					worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
 				}else{
-					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(1));
+					worldIn.setBlockState(pos, Blocks.gravel.getDefaultState());
 				}
 			}
 			blocksGenerated++;
 		}
 		return blocksGenerated;
 	}
-	private void mesaDecoration(World worldIn, BlockPos pos){
-		if(Blocks.cactus.canPlaceBlockAt(worldIn, pos.up())){
-			if(Math.random() < .08){
-				//Reds
+	private void netherDecoration(World worldIn, BlockPos pos){
+		if(Blocks.brown_mushroom.canPlaceBlockAt(worldIn, pos.up())){
+			if(Math.random() < .10){
 				if(Math.random() < .5){
-					worldIn.setBlockState(pos.up(), Blocks.cactus.getDefaultState());
-					if(Math.random() < .5){
-						worldIn.setBlockState(pos.up(2), Blocks.cactus.getDefaultState());
-						if(Math.random() < .5){
-							worldIn.setBlockState(pos.up(3), Blocks.cactus.getDefaultState());
-						}
-					}
+					worldIn.setBlockState(pos.up(), Blocks.brown_mushroom.getDefaultState());
 				}else{
-					worldIn.setBlockState(pos.up(), Blocks.deadbush.getDefaultState());
+					worldIn.setBlockState(pos.up(), Blocks.red_mushroom.getDefaultState());
 				}
 			}
 		}

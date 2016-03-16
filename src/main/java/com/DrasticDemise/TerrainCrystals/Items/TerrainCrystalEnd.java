@@ -1,4 +1,4 @@
-package com.DrasticDemise.Celestial.Items;
+package com.DrasticDemise.TerrainCrystals.Items;
 
 import java.util.ArrayList;
 import java.util.Random;

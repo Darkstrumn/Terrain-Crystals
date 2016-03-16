@@ -1,4 +1,4 @@
-package com.DrasticDemise.Celestial;
+package com.DrasticDemise.TerrainCrystals;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -6,10 +6,10 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Celestial.MODID, name = Celestial.MODNAME, useMetadata = true)
+@Mod(modid = TerrainCrystals.MODID, name = TerrainCrystals.MODNAME, useMetadata = true)
 
 
-public class Celestial {
+public class TerrainCrystals {
 	public static final String MODID = "tc";
 	public static final String MODNAME = "Celestial";
 
@@ -17,7 +17,7 @@ public class Celestial {
 	public static CommonProxy proxy;
 	
 	@Mod.Instance
-	public static Celestial instance;
+	public static TerrainCrystals instance;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event){

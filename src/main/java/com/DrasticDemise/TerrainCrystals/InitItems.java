@@ -1,11 +1,11 @@
-package com.DrasticDemise.Celestial;
+package com.DrasticDemise.TerrainCrystals;
 
-import com.DrasticDemise.Celestial.Items.TerrainCrystalDesert;
-import com.DrasticDemise.Celestial.Items.TerrainCrystalEnd;
-import com.DrasticDemise.Celestial.Items.TerrainCrystalMesa;
-import com.DrasticDemise.Celestial.Items.TerrainCrystalMushroom;
-import com.DrasticDemise.Celestial.Items.TerrainCrystalNether;
-import com.DrasticDemise.Celestial.Items.TerrainCrystalPlains;
+import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalDesert;
+import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalEnd;
+import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalMesa;
+import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalMushroom;
+import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalNether;
+import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalPlains;
 
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;

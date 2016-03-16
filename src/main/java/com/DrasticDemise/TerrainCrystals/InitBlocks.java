@@ -1,6 +1,6 @@
-package com.DrasticDemise.Celestial;
+package com.DrasticDemise.TerrainCrystals;
 
-import com.DrasticDemise.Celestial.blocks.CelestialStorageCell;
+import com.DrasticDemise.TerrainCrystals.blocks.CelestialStorageCell;
 
 public class InitBlocks {
 

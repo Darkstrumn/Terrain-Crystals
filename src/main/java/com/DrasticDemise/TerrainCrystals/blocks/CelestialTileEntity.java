@@ -1,4 +1,4 @@
-package com.DrasticDemise.Celestial.blocks;
+package com.DrasticDemise.TerrainCrystals.blocks;
 
 import net.minecraft.tileentity.TileEntity;
 

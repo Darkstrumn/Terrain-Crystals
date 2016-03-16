@@ -1,7 +1,9 @@
-package com.DrasticDemise.Celestial.Items;
+package com.DrasticDemise.TerrainCrystals.Items;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import net.minecraft.block.IGrowable;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,13 +18,14 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TerrainCrystalDesert extends Item{
-	public TerrainCrystalDesert(){
-		setUnlocalizedName("terrainCrystalDesert");
-		setRegistryName("terrainCrystalDesert");
+public class TerrainCrystalMushroom extends Item{
+	
+	public TerrainCrystalMushroom(){
+		setUnlocalizedName("terrainCrystalMushroom");
+		setRegistryName("terrainCrystalMushroom");
 		setCreativeTab(CreativeTabs.tabBlock);
 		setHarvestLevel("stone", 0);
-        GameRegistry.registerItem(this);
+	    GameRegistry.registerItem(this);
 	}
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
@@ -118,36 +121,32 @@ public class TerrainCrystalDesert extends Item{
 		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()){
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
-				if(Math.random() < .7){
-					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
-					desertDecoration(worldIn, pos);
-				}else{
-					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
-				}
+				worldIn.setBlockState(pos, Blocks.mycelium.getDefaultState());
+				mushroomDecoration(worldIn, pos);
 			}else{
-				if(Math.random() < .9){
-					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
-				}else{
-					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
-				}
+				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
 			}
 			blocksGenerated++;
 		}
 		return blocksGenerated;
 	}
-	private void desertDecoration(World worldIn, BlockPos pos){
-		if(Blocks.cactus.canPlaceBlockAt(worldIn, pos.up())){
+	private void mushroomDecoration(World worldIn, BlockPos pos){
+		if(Blocks.brown_mushroom.canPlaceBlockAt(worldIn, pos.up())){
 			if(Math.random() < .10){
 				if(Math.random() < .5){
-					worldIn.setBlockState(pos.up(), Blocks.cactus.getDefaultState());
-					if(Math.random() < .5){
-						worldIn.setBlockState(pos.up(2), Blocks.cactus.getDefaultState());
-						if(Math.random() < .5){
-							worldIn.setBlockState(pos.up(3), Blocks.cactus.getDefaultState());
-						}
+					worldIn.setBlockState(pos.up(), Blocks.brown_mushroom.getDefaultState());
+					if(Math.random() < 0.1){
+						IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
+						Random rand = new Random();
+						growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos));
 					}
 				}else{
-					worldIn.setBlockState(pos.up(), Blocks.deadbush.getDefaultState());
+					worldIn.setBlockState(pos.up(), Blocks.red_mushroom.getDefaultState());
+					if(Math.random() < 0.1){
+						IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
+						Random rand = new Random();
+						growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos));
+					}
 				}
 			}
 		}
@@ -157,3 +156,4 @@ public class TerrainCrystalDesert extends Item{
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 }
+

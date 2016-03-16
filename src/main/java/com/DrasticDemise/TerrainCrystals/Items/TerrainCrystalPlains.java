@@ -1,28 +1,40 @@
-package com.DrasticDemise.Celestial.Items;
+package com.DrasticDemise.TerrainCrystals.Items;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.DrasticDemise.TerrainCrystals.blocks.CStorageCellTileEntity;
+import com.mojang.realmsclient.dto.PlayerInfo;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSapling;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.WorldChunkManager;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.storage.WorldInfo;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TerrainCrystalNether extends Item{
-	public TerrainCrystalNether(){
-		setUnlocalizedName("terrainCrystalNether");
-		setRegistryName("terrainCrystalNether");
+public class TerrainCrystalPlains extends Item{
+	public TerrainCrystalPlains(){
+		setUnlocalizedName("terrainCrystalPlains");
+		setRegistryName("terrainCrystalPlains");
 		setCreativeTab(CreativeTabs.tabBlock);
 		setHarvestLevel("stone", 0);
         GameRegistry.registerItem(this);
@@ -81,12 +93,11 @@ public class TerrainCrystalNether extends Item{
 				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated);
 			}
 		}
-		System.out.println(blocksGenerated);
+		//System.out.println(blocksGenerated);
 		return itemStackIn;
 	}
 	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated){
 		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
-		int blocksSpawned = 0;
 		for(BlockPos pos : posList){
 			int surroundingBlocks = 0;
 			
@@ -122,36 +133,52 @@ public class TerrainCrystalNether extends Item{
 		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()){
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
-				if(Math.random() < .9){
-					worldIn.setBlockState(pos, Blocks.netherrack.getDefaultState());
-					netherDecoration(worldIn, pos);
-				}else if (Math.random() < 0.3){
-					worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
-					netherDecoration(worldIn, pos);
-				}else{
-					worldIn.setBlockState(pos, Blocks.gravel.getDefaultState());
-				}
+				worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
+				boneMeal(worldIn, pos);
+				blocksGenerated++;
 			}else{
-				if(Math.random() < .9){
-					worldIn.setBlockState(pos, Blocks.netherrack.getDefaultState());
-				}else if (Math.random() < 0.3){
-					worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
-				}else{
-					worldIn.setBlockState(pos, Blocks.gravel.getDefaultState());
-				}
+				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+				blocksGenerated++;
 			}
-			blocksGenerated++;
 		}
+		String desert = worldIn.getBiomeGenForCoords(pos).getBiome(2).biomeName;
+		worldIn.getBiomeGenForCoords(pos).setBiomeName(desert);
 		return blocksGenerated;
 	}
-	private void netherDecoration(World worldIn, BlockPos pos){
-		if(Blocks.brown_mushroom.canPlaceBlockAt(worldIn, pos.up())){
-			if(Math.random() < .10){
-				if(Math.random() < .5){
-					worldIn.setBlockState(pos.up(), Blocks.brown_mushroom.getDefaultState());
-				}else{
-					worldIn.setBlockState(pos.up(), Blocks.red_mushroom.getDefaultState());
+	//Code taken from Lumien's Random Things Nature Core tile entity
+	private void boneMeal(World worldIn, BlockPos pos){
+		IBlockState state = worldIn.getBlockState(pos);
+		Random rand = new Random();
+			if(Math.random() < 0.10){
+				if (state.getBlock() instanceof IGrowable)
+				{
+					IGrowable growable = (IGrowable) state.getBlock();
+					if (growable.canGrow(worldIn, pos, state, worldIn.isRemote))
+					{
+						worldIn.playAuxSFX(2005, pos, 0);
+						growable.grow(worldIn, rand, pos, state);
+						if(Math.random() <= 0.1){
+							growTree(worldIn, pos);
+						}
+					}
 				}
+			}
+		}
+	private void growTree(World worldIn, BlockPos pos){
+		if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
+			//TODO Find a way to make it bonemeal the sapling. Calling grow with pos.up does not work.
+			if(Math.random() < .5){
+				worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(2));
+			}else{
+				worldIn.setBlockState(pos.up(), Blocks.sapling.getDefaultState());
+			}
+			//worldIn.setBlockState(pos.up(), Blocks.sapling.getDefaultState());
+			IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
+			Random rand = new Random();	
+			System.out.println("X: " + pos.getX() + " " + pos.up().getY());
+			while(worldIn.getBlockState(pos.up()) != Blocks.log.getDefaultState()){
+				System.out.println("Attempting to grow at y: " + pos.up().getY());
+				growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
 			}
 		}
 	}

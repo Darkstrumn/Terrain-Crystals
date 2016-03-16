@@ -1,4 +1,4 @@
-package com.DrasticDemise.Celestial.api.celestialPower;
+package com.DrasticDemise.TerrainCrystals.api.celestialPower;
 
 
 /**
