@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 
 public class Celestial {
-	public static final String MODID = "celestial";
+	public static final String MODID = "tc";
 	public static final String MODNAME = "Celestial";
 
 	@SidedProxy
@@ -40,6 +40,7 @@ public class Celestial {
 			//Initialization of Blocks and Items
 			InitBlocks.init();
 			InitItems.init();
+			//InitItems.initModels();
 			//ModCrafting.init();
 		}
 		public void init(FMLInitializationEvent e){
@@ -56,6 +57,7 @@ public class Celestial {
 			super.preInit(e);
 			//Initialization of models
 			//ModRenderers.preInit();
+			InitItems.initModels();
 		}
 
 	}
