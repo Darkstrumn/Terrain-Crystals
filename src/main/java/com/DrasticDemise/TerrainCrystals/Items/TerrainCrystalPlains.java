@@ -23,10 +23,12 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.WorldInfo;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -49,6 +51,8 @@ public class TerrainCrystalPlains extends Item{
 			int center;
 			int diameter = 11;
 			double radius = diameter/2.0;
+			BlockPos playerLocation = new BlockPos(posX, posY, posZ);
+			setBiome(worldIn, playerLocation);
 			if(diameter%2 != 0){
 				center = (int) (radius + 0.5);
 			}else{
@@ -96,6 +100,30 @@ public class TerrainCrystalPlains extends Item{
 		//System.out.println(blocksGenerated);
 		return itemStackIn;
 	}
+	 public boolean setBiome(World worldIn, BlockPos position) {
+	        Chunk chunk = worldIn.getChunkFromChunkCoords(position.getX(), position.getZ());
+	        if ((chunk != null) && (chunk.isLoaded())) {
+	        	//chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) BiomeGenBase.beach.biomeID;
+	        	byte[]biomeArray = chunk.getBiomeArray();
+	        	System.out.println(chunk.getBiome(position, worldIn.getWorldChunkManager()).biomeID);
+	        	//System.out.println("Get array1 at posX: " + position.getX() + " and posZ: " + position.getZ() + "Chunk coored int pair: " + chunk.getChunkCoordIntPair());
+	        	//System.out.println("");
+	        	for(byte b : biomeArray){
+	        //		System.out.print(b);
+	        	}
+	            biomeArray[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) BiomeGenBase.desert.biomeID;
+	            chunk.setBiomeArray(biomeArray);
+	            //System.out.println(" ");
+	           // System.out.println("Get array2 at posX: " + position.getX() + " and posZ: " + position.getZ() + "Chunk coored int pair: " + chunk.getChunkCoordIntPair());
+	            System.out.println(chunk.getBiome(position, worldIn.getWorldChunkManager()).biomeID);
+	            for(byte b : biomeArray){
+	        	//	System.out.print(b);
+	        	}
+	            chunk.needsSaving(true);
+	            return true;
+	        }
+	        return false;
+	    }
 	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated){
 		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
 		for(BlockPos pos : posList){
@@ -141,14 +169,14 @@ public class TerrainCrystalPlains extends Item{
 				blocksGenerated++;
 			}
 		}
-		String desert = worldIn.getBiomeGenForCoords(pos).getBiome(2).biomeName;
-		worldIn.getBiomeGenForCoords(pos).setBiomeName(desert);
 		return blocksGenerated;
 	}
 	//Code taken from Lumien's Random Things Nature Core tile entity
 	private void boneMeal(World worldIn, BlockPos pos){
 		IBlockState state = worldIn.getBlockState(pos);
 		Random rand = new Random();
+		//Try-catching our worries away!
+		try{
 			if(Math.random() < 0.10){
 				if (state.getBlock() instanceof IGrowable)
 				{
@@ -163,10 +191,13 @@ public class TerrainCrystalPlains extends Item{
 					}
 				}
 			}
+		}catch(IllegalArgumentException e){
+			//System.out.println("Caught an error in tree growing! Tossing it out, goodbye chunk error!");
+			return;
+		}
 		}
 	private void growTree(World worldIn, BlockPos pos){
 		if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
-			//TODO Find a way to make it bonemeal the sapling. Calling grow with pos.up does not work.
 			if(Math.random() < .5){
 				worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(2));
 			}else{
@@ -175,9 +206,9 @@ public class TerrainCrystalPlains extends Item{
 			//worldIn.setBlockState(pos.up(), Blocks.sapling.getDefaultState());
 			IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
 			Random rand = new Random();	
-			System.out.println("X: " + pos.getX() + " " + pos.up().getY());
+			//System.out.println("X: " + pos.getX() + " " + pos.up().getY());
 			while(worldIn.getBlockState(pos.up()) != Blocks.log.getDefaultState()){
-				System.out.println("Attempting to grow at y: " + pos.up().getY());
+				//System.out.println("Attempting to grow at y: " + pos.up().getY());
 				growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
 			}
 		}
