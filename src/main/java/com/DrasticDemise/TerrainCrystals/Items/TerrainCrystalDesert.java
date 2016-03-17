@@ -167,7 +167,7 @@ public class TerrainCrystalDesert extends Item{
 	//https://goo.gl/iEi0oU
 	public boolean setBiome(World worldIn, BlockPos position) {
         Chunk chunk = worldIn.getChunkFromBlockCoords(position);
-        BiomeGenBase desiredBiome = BiomeGenBase.plains;
+        BiomeGenBase desiredBiome = BiomeGenBase.desert;
         if ((chunk != null) && (chunk.isLoaded())) {
         	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getWorldChunkManager()).biomeID != desiredBiome.biomeID){
         		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;

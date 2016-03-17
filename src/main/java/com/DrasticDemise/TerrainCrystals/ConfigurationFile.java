@@ -17,7 +17,7 @@ public class ConfigurationFile {
 		boolean propPlainsCrystalGenerateTallGrass = config.getBoolean("Plains Crystal generate tall grass", Configuration.CATEGORY_GENERAL, true, "Should platforms have a bonemeal effect on the surface?");
 		plainsCrystalGenerateTallGrass = propPlainsCrystalGenerateTallGrass;
 		//This needs tested
-		boolean propPlainsCrystalGenerateTrees = config.get(Configuration.CATEGORY_GENERAL, "plainsCrystalGenerateTrees", true, "Enable tree spawning when used? Must have tall grass generation enabled.").getBoolean();
+		boolean propPlainsCrystalGenerateTrees = config.getBoolean("Plains Crystal Spawns Trees", Configuration.CATEGORY_GENERAL, true, "Should the plains biome have a chance to spawn trees? Tall Grass must be enabled.");
 		plainsCrystalGenerateTrees = propPlainsCrystalGenerateTrees;
 		
 		boolean propPlainsCrystalChangesBiome = config.getBoolean("Plains Crystal Turns Other Biomes Plains", Configuration.CATEGORY_GENERAL, true, "Should the plains biome change biomes? Changes biomes in each location of a spawned surface block.");
@@ -75,6 +75,18 @@ public class ConfigurationFile {
 		endCrystalChangesBiome = propEndCrystalChangesBiome;
 		
 		
+		int propTaigaCrystalDurability = config.getInt("Taiga Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+		taigaCrystalDurability = propTaigaCrystalDurability;
+		
+		int propTaigaCrystalDiameter = config.getInt("Taiga Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+		taigaCrystalDiameter = propTaigaCrystalDiameter;
+		
+		boolean propTaigaCrystalGeneratesTrees = config.getBoolean("Taiga Crystal Generates Trees", Configuration.CATEGORY_GENERAL, true, "Should platform have spruce trees on it?");
+		taigaCrystalGeneratesTrees = propTaigaCrystalGeneratesTrees;
+		
+		boolean propTaigaCrystalChangesBiome = config.getBoolean("Taiga Crystal Turns Other Biomes Desert", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
+		taigaCrystalChangesBiome = propTaigaCrystalChangesBiome;
+		
 		if(config.hasChanged()){
 			config.save();
 		}
@@ -107,4 +119,9 @@ public class ConfigurationFile {
     public static int netherCrystalDurability;
 	public static int netherCrystalDiameter;
     public static boolean netherCrystalChangesBiome;
+    //Taiga
+    public static int taigaCrystalDurability;
+    public static int taigaCrystalDiameter;
+    public static boolean taigaCrystalGeneratesTrees;
+    public static boolean taigaCrystalChangesBiome;
 }

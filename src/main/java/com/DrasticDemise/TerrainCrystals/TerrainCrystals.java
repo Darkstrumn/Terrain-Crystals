@@ -44,6 +44,7 @@ public class TerrainCrystals {
 			//Initialization of Blocks and Items
 			InitBlocks.init();
 			InitItems.init();
+			InitItems.recipes();
 			//InitItems.initModels();
 			//ModCrafting.init();
 		}
