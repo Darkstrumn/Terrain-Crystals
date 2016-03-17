@@ -1,7 +1,7 @@
 {
   "parent": "builtin/generated",
   "textures": {
-    "layer0": "tc:items/crystalFullPlains"
+    "layer0": "terrainCrystals:items/crystalFullDesert"
   },
   "display": {
     "thirdperson": {

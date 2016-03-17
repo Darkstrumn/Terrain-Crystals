@@ -1,7 +1,7 @@
 {
   "parent": "builtin/generated",
   "textures": {
-    "layer0": "tc:items/crystalFullNether"
+    "layer0": "terrainCrystals:items/crystalFullNether"
   },
   "display": {
     "thirdperson": {

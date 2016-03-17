@@ -100,29 +100,20 @@ public class TerrainCrystalPlains extends Item{
 		//System.out.println(blocksGenerated);
 		return itemStackIn;
 	}
+	//Code taken from World Edit by Skq89
+		//https://goo.gl/iEi0oU
 	 public boolean setBiome(World worldIn, BlockPos position) {
-		 int x = 1;
-		 int z = 1;
 	        Chunk chunk = worldIn.getChunkFromBlockCoords(position);
+	        BiomeGenBase desiredBiome = BiomeGenBase.plains;
 	        if ((chunk != null) && (chunk.isLoaded())) {
-	        	//chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) BiomeGenBase.beach.biomeID;
-	        	byte[]biomeArray = chunk.getBiomeArray();
-	        	System.out.println(chunk.getBiome(position, worldIn.getWorldChunkManager()).biomeID);
-	        	//System.out.println("Get array1 at posX: " + position.getX() + " and posZ: " + position.getZ() + "Chunk coored int pair: " + chunk.getChunkCoordIntPair());
-	        	//System.out.println("");
-	        	for(byte b : biomeArray){
-	        //		System.out.print(b);
+	        	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getWorldChunkManager()).biomeID != desiredBiome.biomeID){
+		        	//chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) BiomeGenBase.beach.biomeID;
+		        	byte[]biomeArray = chunk.getBiomeArray();
+		            biomeArray[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;
+		            chunk.setBiomeArray(biomeArray);
+		           // chunk.needsSaving(true);
+		            return true;
 	        	}
-	            biomeArray[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) BiomeGenBase.desert.biomeID;
-	            chunk.setBiomeArray(biomeArray);
-	            //System.out.println(" ");
-	           // System.out.println("Get array2 at posX: " + position.getX() + " and posZ: " + position.getZ() + "Chunk coored int pair: " + chunk.getChunkCoordIntPair());
-	            System.out.println(chunk.getBiome(position, worldIn.getWorldChunkManager()).biomeID);
-	            for(byte b : biomeArray){
-	        	//	System.out.print(b);
-	        	}
-	            chunk.needsSaving(true);
-	            return true;
 	        }
 	        return false;
 	    }
@@ -165,6 +156,7 @@ public class TerrainCrystalPlains extends Item{
 			if(posY - pos.getY() == 1){
 				worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
 				boneMeal(worldIn, pos);
+				setBiome(worldIn, pos);
 				blocksGenerated++;
 			}else{
 				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
@@ -187,6 +179,7 @@ public class TerrainCrystalPlains extends Item{
 					{
 						worldIn.playAuxSFX(2005, pos, 0);
 						growable.grow(worldIn, rand, pos, state);
+						
 						if(Math.random() <= 0.1){
 							growTree(worldIn, pos);
 						}
@@ -197,7 +190,7 @@ public class TerrainCrystalPlains extends Item{
 			//System.out.println("Caught an error in tree growing! Tossing it out, goodbye chunk error!");
 			return;
 		}
-		}
+	}
 	private void growTree(World worldIn, BlockPos pos){
 		if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
 			if(Math.random() < .5){
@@ -205,12 +198,9 @@ public class TerrainCrystalPlains extends Item{
 			}else{
 				worldIn.setBlockState(pos.up(), Blocks.sapling.getDefaultState());
 			}
-			//worldIn.setBlockState(pos.up(), Blocks.sapling.getDefaultState());
 			IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
 			Random rand = new Random();	
-			//System.out.println("X: " + pos.getX() + " " + pos.up().getY());
 			while(worldIn.getBlockState(pos.up()) != Blocks.log.getDefaultState()){
-				//System.out.println("Attempting to grow at y: " + pos.up().getY());
 				growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
 			}
 		}
