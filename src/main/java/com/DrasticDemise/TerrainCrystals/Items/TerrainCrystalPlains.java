@@ -3,6 +3,7 @@ package com.DrasticDemise.TerrainCrystals.Items;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
 import com.DrasticDemise.TerrainCrystals.blocks.CStorageCellTileEntity;
 import com.mojang.realmsclient.dto.PlayerInfo;
 
@@ -39,6 +40,8 @@ public class TerrainCrystalPlains extends Item{
 		setRegistryName("terrainCrystalPlains");
 		setCreativeTab(CreativeTabs.tabBlock);
 		setHarvestLevel("stone", 0);
+		setMaxStackSize(1);
+		setMaxDamage(ConfigurationFile.plainsCrystalDurability);
         GameRegistry.registerItem(this);
 	}
 	@Override
@@ -98,6 +101,7 @@ public class TerrainCrystalPlains extends Item{
 			}
 		}
 		//System.out.println(blocksGenerated);
+		itemStackIn.damageItem(blocksGenerated, playerIn);
 		return itemStackIn;
 	}
 	//Code taken from World Edit by Skq89
@@ -111,7 +115,6 @@ public class TerrainCrystalPlains extends Item{
 		        	byte[]biomeArray = chunk.getBiomeArray();
 		            biomeArray[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;
 		            chunk.setBiomeArray(biomeArray);
-		           // chunk.needsSaving(true);
 		            return true;
 	        	}
 	        }

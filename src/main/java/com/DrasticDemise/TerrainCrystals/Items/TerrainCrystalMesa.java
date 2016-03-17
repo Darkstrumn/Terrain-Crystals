@@ -2,6 +2,8 @@ package com.DrasticDemise.TerrainCrystals.Items;
 
 import java.util.ArrayList;
 
+import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
+
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +24,8 @@ public class TerrainCrystalMesa extends Item{
 		setRegistryName("terrainCrystalMesa");
 		setCreativeTab(CreativeTabs.tabBlock);
 		setHarvestLevel("stone", 0);
+		setMaxStackSize(1);
+		setMaxDamage(ConfigurationFile.mesaCrystalDurability);
         GameRegistry.registerItem(this);
 	}
 	@Override
@@ -78,7 +82,8 @@ public class TerrainCrystalMesa extends Item{
 				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated);
 			}
 		}
-		System.out.println(blocksGenerated);
+		//System.out.println(blocksGenerated);
+		itemStackIn.damageItem(blocksGenerated, playerIn);
 		return itemStackIn;
 	}
 	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated){

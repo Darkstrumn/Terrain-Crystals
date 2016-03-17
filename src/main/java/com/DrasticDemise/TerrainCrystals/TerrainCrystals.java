@@ -39,6 +39,8 @@ public class TerrainCrystals {
 	
 	public static class CommonProxy {
 		public void preInit(FMLPreInitializationEvent e){
+			Configuration config = new Configuration(e.getSuggestedConfigurationFile());
+			ConfigurationFile.configFile(config);
 			//Initialization of Blocks and Items
 			InitBlocks.init();
 			InitItems.init();
@@ -60,9 +62,6 @@ public class TerrainCrystals {
 			//Initialization of models
 			//ModRenderers.preInit();
 			InitItems.initModels();
-			
-			Configuration config = new Configuration(e.getSuggestedConfigurationFile());
-			ConfigurationFile.configFile(config);
 		}
 
 	}

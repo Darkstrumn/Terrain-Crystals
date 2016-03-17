@@ -3,6 +3,8 @@ package com.DrasticDemise.TerrainCrystals.Items;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
+
 import net.minecraft.block.IGrowable;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -25,6 +27,8 @@ public class TerrainCrystalMushroom extends Item{
 		setRegistryName("terrainCrystalMushroom");
 		setCreativeTab(CreativeTabs.tabBlock);
 		setHarvestLevel("stone", 0);
+		setMaxStackSize(1);
+		setMaxDamage(ConfigurationFile.mushroomCrystalDurability);
 	    GameRegistry.registerItem(this);
 	}
 	@Override
@@ -81,7 +85,8 @@ public class TerrainCrystalMushroom extends Item{
 				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated);
 			}
 		}
-		System.out.println(blocksGenerated);
+		//System.out.println(blocksGenerated);
+		itemStackIn.damageItem(blocksGenerated, playerIn);
 		return itemStackIn;
 	}
 	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated){

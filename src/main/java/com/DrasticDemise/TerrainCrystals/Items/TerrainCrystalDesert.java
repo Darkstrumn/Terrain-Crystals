@@ -2,6 +2,8 @@ package com.DrasticDemise.TerrainCrystals.Items;
 
 import java.util.ArrayList;
 
+import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
+
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +14,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -22,6 +25,9 @@ public class TerrainCrystalDesert extends Item{
 		setRegistryName("terrainCrystalDesert");
 		setCreativeTab(CreativeTabs.tabBlock);
 		setHarvestLevel("stone", 0);
+		setMaxStackSize(1);
+		//setMaxDamage
+		setMaxDamage(ConfigurationFile.desertCrystalDurability);
         GameRegistry.registerItem(this);
 	}
 	@Override
@@ -42,16 +48,11 @@ public class TerrainCrystalDesert extends Item{
 			int offsetXFirstHalf = (int) (posX + radius);
 			//Not sure why this has to be offset by 1 extra, but it does.
 			int offsetXSecondHalf = (int) (posX - radius + 1);
-			//Generates the first half
 			int yDown = 1;
 			int fakeCenter = center;
 			ArrayList<BlockPos> posList = new ArrayList<BlockPos>(68);
 			for(int i = 0; i < (fakeCenter); i ++){
-				//Creates the outline of the circle
-				//Each shell is respective to its quadrant
-				//These are added in the loop already
-				//BlockPos shellOne = new BlockPos(offsetXFirstHalf - i, posY-yDown, posZ - i);
-				//BlockPos shellTwo = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ + i);
+				//Creates a circle and fills it
 				for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
 					//Fills across the circle
 					BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ - i + placeInwards);
@@ -75,13 +76,16 @@ public class TerrainCrystalDesert extends Item{
 				}
 			}
 			for(BlockPos p : posList){
-				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated);
+				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated, itemStackIn);
 			}
 		}
-		System.out.println(blocksGenerated);
+		//System.out.println(blocksGenerated);
+		//itemStackIn.damageItem(blocksGenerated, playerIn);
+		//System.out.println(itemStackIn.getItemDamage());
+		itemStackIn.damageItem(blocksGenerated, playerIn);
 		return itemStackIn;
 	}
-	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated){
+	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated, ItemStack itemStackIn){
 		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
 		for(BlockPos pos : posList){
 			int surroundingBlocks = 0;
@@ -110,7 +114,7 @@ public class TerrainCrystalDesert extends Item{
 				}
 			}
 		if(!recursiveList.isEmpty()){
-			blocksGenerated = generateSpike(recursiveList, worldIn, playerIn, blocksGenerated);
+			blocksGenerated = generateSpike(recursiveList, worldIn, playerIn, blocksGenerated, itemStackIn);
 		}
 		return blocksGenerated;
 	}
