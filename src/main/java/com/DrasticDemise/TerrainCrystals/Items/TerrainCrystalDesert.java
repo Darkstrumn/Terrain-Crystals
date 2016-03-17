@@ -13,6 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -38,7 +40,7 @@ public class TerrainCrystalDesert extends Item{
 			int posY = MathHelper.floor_double(playerIn.posY);
 			int posZ = MathHelper.floor_double(playerIn.posZ);
 			int center;
-			int diameter = 11;
+			int diameter = ConfigurationFile.desertCrystalDiameter;
 			double radius = diameter/2.0;
 			if(diameter%2 != 0){
 				center = (int) (radius + 0.5);
@@ -124,6 +126,11 @@ public class TerrainCrystalDesert extends Item{
 			if(posY - pos.getY() == 1){
 				if(Math.random() < .7){
 					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
+					
+					if(ConfigurationFile.desertCrystalChangesBiome){
+						setBiome(worldIn, pos);
+					}
+					
 					desertDecoration(worldIn, pos);
 				}else{
 					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
@@ -140,7 +147,7 @@ public class TerrainCrystalDesert extends Item{
 		return blocksGenerated;
 	}
 	private void desertDecoration(World worldIn, BlockPos pos){
-		if(Blocks.cactus.canPlaceBlockAt(worldIn, pos.up())){
+		if(Blocks.cactus.canPlaceBlockAt(worldIn, pos.up()) && ConfigurationFile.desertCrystalGenerateCactus){
 			if(Math.random() < .10){
 				if(Math.random() < .5){
 					worldIn.setBlockState(pos.up(), Blocks.cactus.getDefaultState());
@@ -156,6 +163,19 @@ public class TerrainCrystalDesert extends Item{
 			}
 		}
 	}
+	//Code taken from World Edit by Skq89
+	//https://goo.gl/iEi0oU
+	public boolean setBiome(World worldIn, BlockPos position) {
+        Chunk chunk = worldIn.getChunkFromBlockCoords(position);
+        BiomeGenBase desiredBiome = BiomeGenBase.plains;
+        if ((chunk != null) && (chunk.isLoaded())) {
+        	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getWorldChunkManager()).biomeID != desiredBiome.biomeID){
+        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;
+	            return true;
+        	}
+        }
+        return false;
+    }
 	@SideOnly(Side.CLIENT)
     public void initModel() {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));

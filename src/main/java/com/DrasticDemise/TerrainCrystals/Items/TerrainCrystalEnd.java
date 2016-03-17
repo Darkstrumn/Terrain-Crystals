@@ -16,6 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,7 +41,7 @@ public class TerrainCrystalEnd extends Item{
 				int posY = MathHelper.floor_double(playerIn.posY);
 				int posZ = MathHelper.floor_double(playerIn.posZ);
 				int center;
-				int diameter = 11;
+				int diameter = ConfigurationFile.endCrystalDiameter;
 				double radius = diameter/2.0;
 				if(diameter%2 != 0){
 					center = (int) (radius + 0.5);
@@ -127,7 +129,12 @@ public class TerrainCrystalEnd extends Item{
 				int posY = MathHelper.floor_double(playerIn.posY);
 				if(posY - pos.getY() == 1){
 					worldIn.setBlockState(pos, Blocks.end_stone.getDefaultState());
-					decorateEnd(worldIn, pos);
+					if(ConfigurationFile.endCrystalGenerateObsidianSpikes){
+						decorateEnd(worldIn, pos);
+					}
+					if(ConfigurationFile.endCrystalChangesBiome){
+						setBiome(worldIn, pos);
+					}
 					blocksGenerated++;
 				}else{
 					worldIn.setBlockState(pos, Blocks.end_stone.getDefaultState());
@@ -244,6 +251,19 @@ public class TerrainCrystalEnd extends Item{
 				}
 			}
 		}
+		//Code taken from World Edit by Skq89
+		//https://goo.gl/iEi0oU
+		public boolean setBiome(World worldIn, BlockPos position) {
+	        Chunk chunk = worldIn.getChunkFromBlockCoords(position);
+	        BiomeGenBase desiredBiome = BiomeGenBase.plains;
+	        if ((chunk != null) && (chunk.isLoaded())) {
+	        	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getWorldChunkManager()).biomeID != desiredBiome.biomeID){
+	        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;
+		            return true;
+	        	}
+	        }
+	        return false;
+	    }
 		@SideOnly(Side.CLIENT)
 	    public void initModel() {
 	        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));

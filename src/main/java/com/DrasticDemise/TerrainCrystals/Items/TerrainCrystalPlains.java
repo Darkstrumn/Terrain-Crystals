@@ -52,7 +52,7 @@ public class TerrainCrystalPlains extends Item{
 			int posY = MathHelper.floor_double(playerIn.posY);
 			int posZ = MathHelper.floor_double(playerIn.posZ);
 			int center;
-			int diameter = 11;
+			int diameter = ConfigurationFile.plainsCrystalDiameter;
 			double radius = diameter/2.0;
 			BlockPos playerLocation = new BlockPos(posX, posY, posZ);
 			setBiome(worldIn, playerLocation);
@@ -111,10 +111,7 @@ public class TerrainCrystalPlains extends Item{
 	        BiomeGenBase desiredBiome = BiomeGenBase.plains;
 	        if ((chunk != null) && (chunk.isLoaded())) {
 	        	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getWorldChunkManager()).biomeID != desiredBiome.biomeID){
-		        	//chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) BiomeGenBase.beach.biomeID;
-		        	byte[]biomeArray = chunk.getBiomeArray();
-		            biomeArray[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;
-		            chunk.setBiomeArray(biomeArray);
+	        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;
 		            return true;
 	        	}
 	        }
@@ -158,8 +155,15 @@ public class TerrainCrystalPlains extends Item{
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
 				worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
-				boneMeal(worldIn, pos);
-				setBiome(worldIn, pos);
+				
+				if(ConfigurationFile.plainsCrystalGenerateTallGrass){
+					boneMeal(worldIn, pos);
+				}
+				
+				if(ConfigurationFile.plainsCrystalChangesBiome){
+					setBiome(worldIn, pos);
+				}
+				
 				blocksGenerated++;
 			}else{
 				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
@@ -182,9 +186,10 @@ public class TerrainCrystalPlains extends Item{
 					{
 						worldIn.playAuxSFX(2005, pos, 0);
 						growable.grow(worldIn, rand, pos, state);
-						
-						if(Math.random() <= 0.1){
-							growTree(worldIn, pos);
+						if(ConfigurationFile.plainsCrystalGenerateTrees){
+							if(Math.random() <= 0.1){
+								growTree(worldIn, pos);
+							}
 						}
 					}
 				}

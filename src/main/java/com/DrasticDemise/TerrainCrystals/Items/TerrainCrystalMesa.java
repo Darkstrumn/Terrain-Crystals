@@ -13,6 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,7 +38,7 @@ public class TerrainCrystalMesa extends Item{
 			int posY = MathHelper.floor_double(playerIn.posY);
 			int posZ = MathHelper.floor_double(playerIn.posZ);
 			int center;
-			int diameter = 11;
+			int diameter = ConfigurationFile.mesaCrystalDiameter;
 			double radius = diameter/2.0;
 			if(diameter%2 != 0){
 				center = (int) (radius + 0.5);
@@ -127,6 +129,9 @@ public class TerrainCrystalMesa extends Item{
 			if(posY - pos.getY() == 1){
 				if(Math.random() < .7){
 					worldIn.setBlockState(pos, Blocks.sand.getStateFromMeta(1));
+					if(ConfigurationFile.mesaCrystalChangesBiome){
+						setBiome(worldIn, pos);
+					}
 					mesaDecoration(worldIn, pos);
 				}else{
 					if(Math.random() < .50){
@@ -162,6 +167,19 @@ public class TerrainCrystalMesa extends Item{
 		}
 		return blocksGenerated;
 	}
+	//Code taken from World Edit by Skq89
+	//https://goo.gl/iEi0oU
+	public boolean setBiome(World worldIn, BlockPos position) {
+        Chunk chunk = worldIn.getChunkFromBlockCoords(position);
+        BiomeGenBase desiredBiome = BiomeGenBase.plains;
+        if ((chunk != null) && (chunk.isLoaded())) {
+        	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getWorldChunkManager()).biomeID != desiredBiome.biomeID){
+        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;
+	            return true;
+        	}
+        }
+        return false;
+    }
 	private void mesaDecoration(World worldIn, BlockPos pos){
 		if(Blocks.cactus.canPlaceBlockAt(worldIn, pos.up())){
 			if(Math.random() < .08){

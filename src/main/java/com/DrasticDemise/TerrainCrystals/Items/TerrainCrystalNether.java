@@ -16,6 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,7 +41,7 @@ public class TerrainCrystalNether extends Item{
 			int posY = MathHelper.floor_double(playerIn.posY);
 			int posZ = MathHelper.floor_double(playerIn.posZ);
 			int center;
-			int diameter = 11;
+			int diameter = ConfigurationFile.netherCrystalDiameter;
 			double radius = diameter/2.0;
 			if(diameter%2 != 0){
 				center = (int) (radius + 0.5);
@@ -129,6 +131,9 @@ public class TerrainCrystalNether extends Item{
 			if(posY - pos.getY() == 1){
 				if(Math.random() < .9){
 					worldIn.setBlockState(pos, Blocks.netherrack.getDefaultState());
+					if(ConfigurationFile.netherCrystalChangesBiome){
+						setBiome(worldIn, pos);
+					}
 					netherDecoration(worldIn, pos);
 				}else if (Math.random() < 0.3){
 					worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
@@ -160,8 +165,22 @@ public class TerrainCrystalNether extends Item{
 			}
 		}
 	}
+	
 	@SideOnly(Side.CLIENT)
     public void initModel() {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    }
+	//Code taken from World Edit by Skq89
+	//https://goo.gl/iEi0oU
+	public boolean setBiome(World worldIn, BlockPos position) {
+        Chunk chunk = worldIn.getChunkFromBlockCoords(position);
+        BiomeGenBase desiredBiome = BiomeGenBase.plains;
+        if ((chunk != null) && (chunk.isLoaded())) {
+        	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getWorldChunkManager()).biomeID != desiredBiome.biomeID){
+        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;
+	            return true;
+        	}
+        }
+        return false;
     }
 }
