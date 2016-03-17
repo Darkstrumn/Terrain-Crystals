@@ -1,4 +1,5 @@
 All source code in this repository is free for reuse and educational purposes so long as the following conditions are met:
+
 1. Your code must also be visible source
 2. You give credit within your source code and link back to the repository in which it was used.
 3. You have fun!
