@@ -21,10 +21,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class TerrainCrystalAbstract extends Item{
 
 	@Override
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
-		return gatherBlockGenList(itemStackIn, worldIn, playerIn, 11, BiomeGenBase.plains);
-	}
-	public ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, BiomeGenBase desiredBiome){
+	public abstract ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn);
+	
+	
+	public ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, BiomeGenBase desiredBiome, Boolean changeBiome){
 		int blocksGenerated = 0;
 		if(!worldIn.isRemote){
 			int posX = MathHelper.floor_double(playerIn.posX); 
@@ -68,7 +68,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 				}
 			}
 			for(BlockPos p : posList){
-				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome);
+				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
 			}
 		}
 		//System.out.println(blocksGenerated);
@@ -77,12 +77,12 @@ public abstract class TerrainCrystalAbstract extends Item{
 		itemStackIn.damageItem(blocksGenerated, playerIn);
 		return itemStackIn;
 	}
-	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated, ItemStack itemStackIn, BiomeGenBase desiredBiome){
+	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated, ItemStack itemStackIn, BiomeGenBase desiredBiome, boolean changeBiome){
 		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
 		for(BlockPos pos : posList){
 			int surroundingBlocks = 0;
 			
-				blocksGenerated = generateInWorld(pos, worldIn, playerIn, blocksGenerated, desiredBiome);
+				blocksGenerated = generateInWorld(pos, worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
 				
 				if(worldIn.getBlockState(pos.north()) != Blocks.air.getDefaultState()){
 					//System.out.println("entered northCheck");
@@ -101,68 +101,31 @@ public abstract class TerrainCrystalAbstract extends Item{
 					surroundingBlocks++;
 				}
 				if(surroundingBlocks >= 3 || Math.random() < 0.05){
-					blocksGenerated = generateInWorld(pos.down(), worldIn, playerIn, blocksGenerated, desiredBiome);
+					blocksGenerated = generateInWorld(pos.down(), worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
 					recursiveList.add(pos.down());
 				}
 			}
 		if(!recursiveList.isEmpty()){
-			blocksGenerated = generateSpike(recursiveList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome);
+			blocksGenerated = generateSpike(recursiveList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
 		}
 		return blocksGenerated;
 	}
-	private int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated, BiomeGenBase desiredBiome){
-		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()){
-			int posY = MathHelper.floor_double(playerIn.posY);
-			if(posY - pos.getY() == 1){
-				if(Math.random() < .7){
-					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
-					
-					if(ConfigurationFile.desertCrystalChangesBiome){
-						setBiome(worldIn, pos, desiredBiome);
-					}
-					
-					platformDecoration(worldIn, pos);
-				}else{
-					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
-				}
-			}else{
-				if(Math.random() < .9){
-					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
-				}else{
-					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
-				}
-			}
-			blocksGenerated++;
-		}
-		return blocksGenerated;
-	}
-	private void platformDecoration(World worldIn, BlockPos pos){
-		if(Blocks.cactus.canPlaceBlockAt(worldIn, pos.up()) && ConfigurationFile.desertCrystalGenerateCactus){
-			if(Math.random() < .10){
-				if(Math.random() < .5){
-					worldIn.setBlockState(pos.up(), Blocks.cactus.getDefaultState());
-					if(Math.random() < .5){
-						worldIn.setBlockState(pos.up(2), Blocks.cactus.getDefaultState());
-						if(Math.random() < .5){
-							worldIn.setBlockState(pos.up(3), Blocks.cactus.getDefaultState());
-						}
-					}
-				}else{
-					worldIn.setBlockState(pos.up(), Blocks.deadbush.getDefaultState());
-				}
-			}
-		}
-	}
+	public abstract int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated, BiomeGenBase desiredBiome, boolean changeBiome);
+	//Each class needs to provide its own decoration rules
+	abstract void platformDecoration(World worldIn, BlockPos pos);
+	
 	//Code taken from World Edit by Skq89
 	//https://goo.gl/iEi0oU
-	public boolean setBiome(World worldIn, BlockPos position, BiomeGenBase desiredBiome) {
-        Chunk chunk = worldIn.getChunkFromBlockCoords(position);
-       // BiomeGenBase desiredBiome = BiomeGenBase.desert;
-        if ((chunk != null) && (chunk.isLoaded())) {
-        	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getWorldChunkManager()).biomeID != desiredBiome.biomeID){
-        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;
-	            return true;
-        	}
+	public boolean setBiome(World worldIn, BlockPos position, BiomeGenBase desiredBiome, Boolean changeBiome) {
+        if(changeBiome){
+			Chunk chunk = worldIn.getChunkFromBlockCoords(position);
+	       // BiomeGenBase desiredBiome = BiomeGenBase.desert;
+	        if ((chunk != null) && (chunk.isLoaded())) {
+	        	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getWorldChunkManager()).biomeID != desiredBiome.biomeID){
+	        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;
+		            return true;
+	        	}
+	        }
         }
         return false;
     }
