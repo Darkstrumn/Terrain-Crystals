@@ -1,3 +1,7 @@
+Repository for the 1.8.9 mod Terrain Crystals - available here: http://minecraft.curseforge.com/projects/terrain-crystals
+
+Feel free to post any suggestions, issues or pull requests here. Thanks!
+
 All source code in this repository is free for reuse and educational purposes so long as the following conditions are met:
 
 1. Your code must also be visible source
