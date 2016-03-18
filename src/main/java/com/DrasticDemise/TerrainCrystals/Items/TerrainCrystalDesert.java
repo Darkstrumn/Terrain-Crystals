@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TerrainCrystalDesert extends Item{
+public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 	public TerrainCrystalDesert(){
 		setUnlocalizedName("terrainCrystalDesert");
 		setRegistryName("terrainCrystalDesert");
@@ -33,105 +33,20 @@ public class TerrainCrystalDesert extends Item{
         GameRegistry.registerItem(this);
 	}
 	@Override
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
-		int blocksGenerated = 0;
-		if(!worldIn.isRemote){
-			int posX = MathHelper.floor_double(playerIn.posX);
-			int posY = MathHelper.floor_double(playerIn.posY);
-			int posZ = MathHelper.floor_double(playerIn.posZ);
-			int center;
-			int diameter = ConfigurationFile.desertCrystalDiameter;
-			double radius = diameter/2.0;
-			if(diameter%2 != 0){
-				center = (int) (radius + 0.5);
-			}else{
-				center = (int) (radius);
-			}
-			int offsetXFirstHalf = (int) (posX + radius);
-			//Not sure why this has to be offset by 1 extra, but it does.
-			int offsetXSecondHalf = (int) (posX - radius + 1);
-			int yDown = 1;
-			int fakeCenter = center;
-			ArrayList<BlockPos> posList = new ArrayList<BlockPos>(68);
-			for(int i = 0; i < (fakeCenter); i ++){
-				//Creates a circle and fills it
-				for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
-					//Fills across the circle
-					BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ - i + placeInwards);
-					posList.add(fillShellOne);
-					BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ + i - placeInwards);
-					posList.add(fillShellTwo);
-				}
-			}
-			//Generates the second half
-			for(int i = 0; i < (center); i ++){
-				BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i);
-				BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i);
-				posList.add(shellThree); 
-				posList.add(shellFour);
-				
-				for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
-					BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards);
-					BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards);
-					posList.add(fillShellThree);
-					posList.add(fillShellFour);
-				}
-			}
-			for(BlockPos p : posList){
-				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated, itemStackIn);
-			}
-		}
-		//System.out.println(blocksGenerated);
-		//itemStackIn.damageItem(blocksGenerated, playerIn);
-		//System.out.println(itemStackIn.getItemDamage());
-		itemStackIn.damageItem(blocksGenerated, playerIn);
-		return itemStackIn;
+	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
+		return super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.desertCrystalDiameter, BiomeGenBase.desert, ConfigurationFile.desertCrystalChangesBiome);
 	}
-	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated, ItemStack itemStackIn){
-		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
-		for(BlockPos pos : posList){
-			int surroundingBlocks = 0;
-			
-				blocksGenerated = generateInWorld(pos, worldIn, playerIn, blocksGenerated);
-				
-				if(worldIn.getBlockState(pos.north()) != Blocks.air.getDefaultState()){
-					//System.out.println("entered northCheck");
-					surroundingBlocks++;
-				}
-				
-				if(worldIn.getBlockState(pos.east()) != Blocks.air.getDefaultState()){
-					surroundingBlocks++;
-				}
-				
-				if(worldIn.getBlockState(pos.south()) != Blocks.air.getDefaultState()){
-					surroundingBlocks++;
-				}
-				
-				if(worldIn.getBlockState(pos.west()) != Blocks.air.getDefaultState()){
-					surroundingBlocks++;
-				}
-				if(surroundingBlocks >= 3 || Math.random() < 0.05){
-					blocksGenerated = generateInWorld(pos.down(), worldIn, playerIn, blocksGenerated);
-					recursiveList.add(pos.down());
-				}
-			}
-		if(!recursiveList.isEmpty()){
-			blocksGenerated = generateSpike(recursiveList, worldIn, playerIn, blocksGenerated, itemStackIn);
-		}
-		return blocksGenerated;
-	}
-	private int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated){
+	
+	@Override
+	protected int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
+			BiomeGenBase desiredBiome, boolean changeBiome) {
 		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()){
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
 				if(Math.random() < .7){
 					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
-					
-					if(ConfigurationFile.desertCrystalChangesBiome){
-						setBiome(worldIn, pos);
-					}
-					
-					desertDecoration(worldIn, pos);
+					super.setBiome(worldIn, pos, BiomeGenBase.desert, ConfigurationFile.desertCrystalChangesBiome);
+					decoratePlatform(worldIn, pos);
 				}else{
 					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
 				}
@@ -146,7 +61,9 @@ public class TerrainCrystalDesert extends Item{
 		}
 		return blocksGenerated;
 	}
-	private void desertDecoration(World worldIn, BlockPos pos){
+	
+	@Override
+	protected void decoratePlatform(World worldIn, BlockPos pos){
 		if(Blocks.cactus.canPlaceBlockAt(worldIn, pos.up()) && ConfigurationFile.desertCrystalGenerateCactus){
 			if(Math.random() < .10){
 				if(Math.random() < .5){
@@ -163,21 +80,4 @@ public class TerrainCrystalDesert extends Item{
 			}
 		}
 	}
-	//Code taken from World Edit by Skq89
-	//https://goo.gl/iEi0oU
-	public boolean setBiome(World worldIn, BlockPos position) {
-        Chunk chunk = worldIn.getChunkFromBlockCoords(position);
-        BiomeGenBase desiredBiome = BiomeGenBase.desert;
-        if ((chunk != null) && (chunk.isLoaded())) {
-        	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getWorldChunkManager()).biomeID != desiredBiome.biomeID){
-        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;
-	            return true;
-        	}
-        }
-        return false;
-    }
-	@SideOnly(Side.CLIENT)
-    public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    }
 }

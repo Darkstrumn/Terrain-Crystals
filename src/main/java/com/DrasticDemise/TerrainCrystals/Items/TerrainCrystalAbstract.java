@@ -22,7 +22,11 @@ public abstract class TerrainCrystalAbstract extends Item{
 
 	@Override
 	public abstract ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn);
-	
+	//Each class needs to provide its own platform makeup.
+	protected abstract int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated, BiomeGenBase desiredBiome, boolean changeBiome);
+		
+	//Each class needs to provide its own decoration rules
+	abstract void decoratePlatform(World worldIn, BlockPos pos);
 	
 	public ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, BiomeGenBase desiredBiome, Boolean changeBiome){
 		int blocksGenerated = 0;
@@ -71,9 +75,6 @@ public abstract class TerrainCrystalAbstract extends Item{
 				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
 			}
 		}
-		//System.out.println(blocksGenerated);
-		//itemStackIn.damageItem(blocksGenerated, playerIn);
-		//System.out.println(itemStackIn.getItemDamage());
 		itemStackIn.damageItem(blocksGenerated, playerIn);
 		return itemStackIn;
 	}
@@ -110,13 +111,9 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return blocksGenerated;
 	}
-	public abstract int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated, BiomeGenBase desiredBiome, boolean changeBiome);
-	//Each class needs to provide its own decoration rules
-	abstract void platformDecoration(World worldIn, BlockPos pos);
-	
 	//Code taken from World Edit by Skq89
 	//https://goo.gl/iEi0oU
-	public boolean setBiome(World worldIn, BlockPos position, BiomeGenBase desiredBiome, Boolean changeBiome) {
+	protected boolean setBiome(World worldIn, BlockPos position, BiomeGenBase desiredBiome, Boolean changeBiome) {
         if(changeBiome){
 			Chunk chunk = worldIn.getChunkFromBlockCoords(position);
 	       // BiomeGenBase desiredBiome = BiomeGenBase.desert;
