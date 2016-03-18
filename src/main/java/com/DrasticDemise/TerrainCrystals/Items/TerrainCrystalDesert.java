@@ -45,7 +45,7 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 			if(posY - pos.getY() == 1){
 				if(Math.random() < .7){
 					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
-					super.setBiome(worldIn, pos, BiomeGenBase.desert, ConfigurationFile.desertCrystalChangesBiome);
+					super.setBiome(worldIn, pos, desiredBiome, changeBiome);
 					decoratePlatform(worldIn, pos);
 				}else{
 					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
