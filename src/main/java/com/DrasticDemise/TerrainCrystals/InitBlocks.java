@@ -1,7 +1,5 @@
 package com.DrasticDemise.TerrainCrystals;
 
-import com.DrasticDemise.TerrainCrystals.blocks.CelestialStorageCell;
-
 public class InitBlocks {
 
 	//Creates dust objects
