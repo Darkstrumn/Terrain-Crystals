@@ -6,6 +6,7 @@ import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalMesa;
 import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalMushroom;
 import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalNether;
 import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalPlains;
+import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalPlainsIceSpikes;
 import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalTaiga;
 
 import net.minecraft.block.Block;
@@ -31,6 +32,7 @@ public class InitItems {
 	public static TerrainCrystalMushroom terrainCrystalMushroom;
 	public static TerrainCrystalEnd terrainCrystalEnd;
 	public static TerrainCrystalTaiga terrainCrystalTaiga;
+	public static TerrainCrystalPlainsIceSpikes terrainCrystalPlainsIceSpikes;
 	//Initializes new dust objects
 	public static void init(){
 		//ironDust = new IronDust();
@@ -41,6 +43,7 @@ public class InitItems {
 		terrainCrystalMushroom = new TerrainCrystalMushroom();
 		terrainCrystalEnd = new TerrainCrystalEnd();
 		terrainCrystalTaiga = new TerrainCrystalTaiga();
+		terrainCrystalPlainsIceSpikes = new TerrainCrystalPlainsIceSpikes();
 	}
 	public static void recipes(){
 		ItemStack dirtStack = new ItemStack(Blocks.dirt);
@@ -48,6 +51,9 @@ public class InitItems {
 		ItemStack hardenedClayStack  = new ItemStack(Blocks.hardened_clay);
 		ItemStack netherrackStack = new ItemStack(Blocks.netherrack);
 		ItemStack endStoneStack = new ItemStack(Blocks.end_stone);
+		ItemStack snowBlockStack = new ItemStack(Blocks.snow);
+		ItemStack iceBlockStack = new ItemStack(Blocks.ice);
+		ItemStack grassBlockStack = new ItemStack(Blocks.grass);
 		ItemStack cactusStack = new ItemStack(Blocks.cactus);
 		ItemStack brownMushBlockStack = new ItemStack(Blocks.brown_mushroom_block);
 		ItemStack redMushBlockStack = new ItemStack(Blocks.red_mushroom_block);
@@ -99,7 +105,13 @@ public class InitItems {
 				"xxx",
 				"xwx",
 				"xxx",
-				'w', goldBlockStack, 'x',snowballStack);
+				'w', goldBlockStack, 'x',grassBlockStack);
+		//Ice Spikes Plains
+		GameRegistry.addRecipe(new ItemStack(InitItems.terrainCrystalPlainsIceSpikes),
+				"yxy",
+				"xwx",
+				"yxy",
+				'w', goldBlockStack, 'x',iceBlockStack, 'y', snowBlockStack);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -111,6 +123,7 @@ public class InitItems {
         terrainCrystalMushroom.initModel();
         terrainCrystalEnd.initModel();
         terrainCrystalTaiga.initModel();
+        terrainCrystalPlainsIceSpikes.initModel();
     }
 	//Adds dusts to the ore dictionary
 	public static void oreRegistration(){

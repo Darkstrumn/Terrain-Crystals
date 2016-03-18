@@ -19,13 +19,34 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class TerrainCrystalAbstract extends Item{
-
+	
+	/**
+	 * Needs to return the itemstack from the method call gatherBlockGenList with the itemStack,
+	 * world, player, diameter, desired biome type and the biome change boolean.
+	 */
 	@Override
 	public abstract ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn);
 	//Each class needs to provide its own platform makeup.
-	protected abstract int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated, BiomeGenBase desiredBiome, boolean changeBiome);
+	/**
+	 * This method is called after the list of positions has been created. Each position is then passed into the method
+	 * and needs to be set the world as a blockstate. Checks should be made for air blocks before placement.
+	 * This method also needs to call super.setBiome at blocks that are placed.
+	 * @param pos Position that the block is being placed at.
+	 * @param worldIn The world
+	 * @param playerIn The player
+	 * @param blocksGenerated The number of the blocks placed in the world. This keeps track of durability
+	 * @param desiredBiome The desired biome type of the world. 
+	 * @param changeBiome If the biome will be changed at the block column.
+	 * @return Needs to return the amount of blocks placed. This keeps track of the durability.
+	 */
+	protected abstract int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated, BiomeGenBase desiredBiome, boolean changeBiome);
 		
 	//Each class needs to provide its own decoration rules
+	/**
+	 * Optional implementation that needs to be called by generateBlocksInWorld on the SURFACE of the platform.
+	 * @param worldIn The world
+	 * @param pos The SURFACE block to be decorated.
+	 */
 	abstract void decoratePlatform(World worldIn, BlockPos pos);
 	
 	public ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, BiomeGenBase desiredBiome, Boolean changeBiome){
@@ -83,7 +104,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 		for(BlockPos pos : posList){
 			int surroundingBlocks = 0;
 			
-				blocksGenerated = generateInWorld(pos, worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
+				blocksGenerated = generateBlocksInWorld(pos, worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
 				
 				if(worldIn.getBlockState(pos.north()) != Blocks.air.getDefaultState()){
 					//System.out.println("entered northCheck");
@@ -102,7 +123,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 					surroundingBlocks++;
 				}
 				if(surroundingBlocks >= 3 || Math.random() < 0.05){
-					blocksGenerated = generateInWorld(pos.down(), worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
+					blocksGenerated = generateBlocksInWorld(pos.down(), worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
 					recursiveList.add(pos.down());
 				}
 			}
@@ -113,10 +134,17 @@ public abstract class TerrainCrystalAbstract extends Item{
 	}
 	//Code taken from World Edit by Skq89
 	//https://goo.gl/iEi0oU
+	/**
+	 * Changes the biome at a given position to the one given from the original method calls.
+	 * @param worldIn World that it takes place in
+	 * @param position Location of the biome change
+	 * @param desiredBiome Biome ID that the biome will be moved to
+	 * @param changeBiome If the config allows the biome change
+	 * @return Returns whether or not the biome was changed.
+	 */
 	protected boolean setBiome(World worldIn, BlockPos position, BiomeGenBase desiredBiome, Boolean changeBiome) {
         if(changeBiome){
 			Chunk chunk = worldIn.getChunkFromBlockCoords(position);
-	       // BiomeGenBase desiredBiome = BiomeGenBase.desert;
 	        if ((chunk != null) && (chunk.isLoaded())) {
 	        	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getWorldChunkManager()).biomeID != desiredBiome.biomeID){
 	        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;

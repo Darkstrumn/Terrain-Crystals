@@ -39,7 +39,7 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 		return super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.taigaCrystalDiameter, BiomeGenBase.coldTaiga, ConfigurationFile.taigaCrystalChangesBiome);
 	}
 	@Override
-	protected int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
+	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome){
 		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()){
 			int posY = MathHelper.floor_double(playerIn.posY);
@@ -53,12 +53,8 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 				}else{
 					worldIn.setBlockState(pos, Blocks.dirt.getStateFromMeta(2));
 				}
-				if(ConfigurationFile.taigaCrystalGeneratesTrees){
-					decoratePlatform(worldIn, pos);
-				}
-				if(ConfigurationFile.taigaCrystalChangesBiome){
-					setBiome(worldIn, pos, desiredBiome, changeBiome);
-				}
+				decoratePlatform(worldIn, pos);
+				setBiome(worldIn, pos, desiredBiome, changeBiome);
 				
 				blocksGenerated++;
 			}else{

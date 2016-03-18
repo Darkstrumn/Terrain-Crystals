@@ -35,7 +35,7 @@ public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 		return super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.mesaCrystalDiameter, BiomeGenBase.mesa, ConfigurationFile.mesaCrystalChangesBiome);
 	}
 	@Override
-	protected int generateInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
+	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome){
 		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()){
 			int posY = MathHelper.floor_double(playerIn.posY);
