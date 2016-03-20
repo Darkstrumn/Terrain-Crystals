@@ -2,6 +2,7 @@ package com.DrasticDemise.TerrainCrystals;
 
 import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalDesert;
 import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalEnd;
+import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalJungle;
 import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalMesa;
 import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalMushroom;
 import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalNether;
@@ -33,6 +34,7 @@ public class InitItems {
 	public static TerrainCrystalEnd terrainCrystalEnd;
 	public static TerrainCrystalTaiga terrainCrystalTaiga;
 	public static TerrainCrystalPlainsIceSpikes terrainCrystalPlainsIceSpikes;
+	public static TerrainCrystalJungle terrainCrystalJungle;
 	//Initializes new dust objects
 	public static void init(){
 		//ironDust = new IronDust();
@@ -44,6 +46,7 @@ public class InitItems {
 		terrainCrystalEnd = new TerrainCrystalEnd();
 		terrainCrystalTaiga = new TerrainCrystalTaiga();
 		terrainCrystalPlainsIceSpikes = new TerrainCrystalPlainsIceSpikes();
+		terrainCrystalJungle = new TerrainCrystalJungle();
 	}
 	public static void recipes(){
 		ItemStack dirtStack = new ItemStack(Blocks.dirt);
@@ -124,6 +127,7 @@ public class InitItems {
         terrainCrystalEnd.initModel();
         terrainCrystalTaiga.initModel();
         terrainCrystalPlainsIceSpikes.initModel();
+        terrainCrystalJungle.initModel();
     }
 	//Adds dusts to the ore dictionary
 	public static void oreRegistration(){

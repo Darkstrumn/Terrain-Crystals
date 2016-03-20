@@ -97,6 +97,28 @@ public class ConfigurationFile {
 		boolean propPlainsIceCrystalChangesBiome = config.getBoolean("Ice Plains Crystal Turns Other Biomes Ice Plains", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
 		plainsIceCrystalChangesBiome = propPlainsIceCrystalChangesBiome;
 		
+		//Jungle
+		int propJungleCrystalDurability = config.getInt("Jungle Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+		jungleCrystalDurability = propJungleCrystalDurability;
+		
+		int propJungleCrystalDiameter = config.getInt("Jungle Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+		jungleCrystalDiameter = propJungleCrystalDiameter;
+		
+		boolean propJungleCrystalChangesBiome = config.getBoolean("Jungle Crystal Turns Other Biomes Jungle", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
+		jungleCrystalChangesBiome = propJungleCrystalChangesBiome;
+		
+		boolean propJungleCrystalGeneratesTrees = config.getBoolean("Jungle Crystal Generates Trees", Configuration.CATEGORY_GENERAL, true, "Should platform have spruce trees on it?");
+		jungleCrystalGeneratesTrees = propJungleCrystalGeneratesTrees;
+		
+		boolean propJungleCrystalGeneratesMelon = config.getBoolean("Jungle Crystal Generates Melon", Configuration.CATEGORY_GENERAL, true, "Should platform have melons on it?");
+		jungleCrystalGeneratesMelon = propJungleCrystalGeneratesMelon;
+		
+		boolean propJungleCrystalGeneratesCocoa = config.getBoolean("Jungle Crystal Generates Cocoa Beans", Configuration.CATEGORY_GENERAL, true, "Should Jungle trees have cocoa beans?");
+		jungleCrystalGeneratesCocoa = propJungleCrystalGeneratesCocoa;
+		
+		boolean propJungleCrystalGeneratesBushes = config.getBoolean("Jungle Crystal Generates small bushes", Configuration.CATEGORY_GENERAL, true, "Should platform have bushes?");
+		jungleCrystalGeneratesBushes = propJungleCrystalGeneratesBushes;
+		
 		if(config.hasChanged()){
 			config.save();
 		}
@@ -134,8 +156,16 @@ public class ConfigurationFile {
     public static int taigaCrystalDiameter;
     public static boolean taigaCrystalGeneratesTrees;
     public static boolean taigaCrystalChangesBiome;
-    
+    //Plains Ice Spikes
     public static int plainsIceCrystalDurability;
     public static int plainsIceCrystalDiameter;
     public static boolean plainsIceCrystalChangesBiome;
+    //Jungle
+    public static int jungleCrystalDurability;
+    public static int jungleCrystalDiameter;
+    public static boolean jungleCrystalGeneratesTrees;
+    public static boolean jungleCrystalChangesBiome;
+    public static boolean jungleCrystalGeneratesMelon;
+    public static boolean jungleCrystalGeneratesCocoa;
+    public static boolean jungleCrystalGeneratesBushes;
 }

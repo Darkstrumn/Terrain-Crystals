@@ -91,8 +91,10 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 				}
 				IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
 				Random rand = new Random();	
-				while(worldIn.getBlockState(pos.up()) != Blocks.log.getDefaultState()){
+				int attemptCap = 0;
+				while((worldIn.getBlockState(pos.up()) != Blocks.log.getDefaultState()) && attemptCap < 10){
 					growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
+					attemptCap++;
 				}
 			}
 		}
