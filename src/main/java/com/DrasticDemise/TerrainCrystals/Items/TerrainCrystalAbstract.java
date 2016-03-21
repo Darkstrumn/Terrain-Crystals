@@ -1,8 +1,7 @@
 package com.DrasticDemise.TerrainCrystals.Items;
 
 import java.util.ArrayList;
-
-import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
+import java.util.HashSet;
 
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +18,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class TerrainCrystalAbstract extends Item{
+	public static HashSet replaceableBlocks;
 	
+	/**
+	 * Initializes the hashSet with block states that can be replaced by the platform.
+	 */
+	public static void initReplaceableBlocks(){
+		replaceableBlocks = new HashSet();
+		replaceableBlocks.add(Blocks.tallgrass.getDefaultState());
+		replaceableBlocks.add(Blocks.flowing_water.getDefaultState());
+		replaceableBlocks.add(Blocks.flowing_lava.getDefaultState());
+		replaceableBlocks.add(Blocks.red_flower.getDefaultState());
+		replaceableBlocks.add(e)
+	}
 	/**
 	 * Needs to return the itemstack from the method call gatherBlockGenList with the itemStack,
 	 * world, player, diameter, desired biome type and the biome change boolean.
@@ -132,6 +143,11 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return blocksGenerated;
 	}
+	
+	public void canSafelyGenerate(BlockPos pos){
+		
+	}
+	
 	//Code taken from World Edit by Skq89
 	//https://goo.gl/iEi0oU
 	/**
