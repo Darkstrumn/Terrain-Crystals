@@ -122,7 +122,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 				if(worldIn.getBlockState(pos.west()) != Blocks.air.getDefaultState()){
 					surroundingBlocks++;
 				}
-				if(surroundingBlocks >= 3 || Math.random() < 0.05){
+				if((surroundingBlocks >= 3 || Math.random() < 0.05) && pos.getY() > 1){
 					blocksGenerated = generateBlocksInWorld(pos.down(), worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
 					recursiveList.add(pos.down());
 				}
