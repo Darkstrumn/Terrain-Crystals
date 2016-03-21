@@ -40,6 +40,10 @@ public abstract class TerrainCrystalAbstract extends Item{
 		replaceableBlockStates.add(Blocks.air.getDefaultState());
 		replaceableBlockStates.add(Blocks.sapling.getStateFromMeta(1));
 		replaceableBlockStates.add(Blocks.deadbush.getDefaultState());
+		replaceableBlockStates.add(Blocks.log.getStateFromMeta(1));
+		replaceableBlockStates.add(Blocks.leaves.getStateFromMeta(1));
+		replaceableBlockStates.add(Blocks.log.getDefaultState());
+		replaceableBlockStates.add(Blocks.leaves.getDefaultState());
 	}
 	/**
 	 * Returns if the state is eligible for replacing.

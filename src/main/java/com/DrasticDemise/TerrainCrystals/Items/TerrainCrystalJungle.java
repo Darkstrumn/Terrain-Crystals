@@ -99,40 +99,6 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 			growTree(worldIn, pos);
 		}
 	}
-	//Does not function properly
-	private void growBigTree(World worldIn, BlockPos pos) {
-		try{
-			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
-				try{
-					IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
-					Random rand = new Random();	
-					
-					worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(3));
-					
-					if(safelyExpandPlatform(worldIn, pos.north())){
-						worldIn.setBlockState(pos.up().north(), Blocks.sapling.getStateFromMeta(3));
-					}	
-					if(safelyExpandPlatform(worldIn, pos.north().east())){
-						worldIn.setBlockState(pos.up().north().east(), Blocks.sapling.getStateFromMeta(3));
-					}
-					if(safelyExpandPlatform(worldIn, pos.east())){
-						worldIn.setBlockState(pos.up().east(), Blocks.sapling.getStateFromMeta(3));
-					}
-					int attemptCap = 0;
-					while((worldIn.getBlockState(pos.up()) != Blocks.log.getStateFromMeta(3) && attemptCap < 10)){
-						growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
-						attemptCap++;
-					}
-					generateCocoaBeans(worldIn, pos);
-				}
-				catch(ClassCastException e){
-					
-				}
-			}
-		}catch(IllegalArgumentException e){
-			
-		}
-	}
 	private void growTree(World worldIn, BlockPos pos) {
 		try{
 			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
