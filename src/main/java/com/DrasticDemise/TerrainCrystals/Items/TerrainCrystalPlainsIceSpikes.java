@@ -30,7 +30,7 @@ public class TerrainCrystalPlainsIceSpikes extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome) {
-		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState()&& pos.getY() > 1){
+		if(eligibleStateLocation(worldIn.getBlockState(pos), pos)){
 			int posY = MathHelper.floor_double(playerIn.posY);
 			int layer = posY - pos.getY();
 			if(layer == 1){

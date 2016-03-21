@@ -37,7 +37,7 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome) {
-		if((worldIn.getBlockState(pos) == Blocks.air.getDefaultState() || worldIn.getBlockState(pos) == Blocks.vine.getDefaultState())
+		if((eligibleStateLocation(worldIn.getBlockState(pos), pos))
 				&& pos.getY() > 1){
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){

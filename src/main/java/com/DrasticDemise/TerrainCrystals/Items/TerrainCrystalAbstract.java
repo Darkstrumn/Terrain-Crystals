@@ -3,6 +3,7 @@ package com.DrasticDemise.TerrainCrystals.Items;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -18,18 +19,40 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class TerrainCrystalAbstract extends Item{
-	public static HashSet replaceableBlocks;
+	public static HashSet replaceableBlockStates;
 	
 	/**
 	 * Initializes the hashSet with block states that can be replaced by the platform.
 	 */
 	public static void initReplaceableBlocks(){
-		replaceableBlocks = new HashSet();
-		replaceableBlocks.add(Blocks.tallgrass.getDefaultState());
-		replaceableBlocks.add(Blocks.flowing_water.getDefaultState());
-		replaceableBlocks.add(Blocks.flowing_lava.getDefaultState());
-		replaceableBlocks.add(Blocks.red_flower.getDefaultState());
-		replaceableBlocks.add(e)
+		replaceableBlockStates = new HashSet();
+		replaceableBlockStates.add(Blocks.tallgrass.getDefaultState());
+		replaceableBlockStates.add(Blocks.flowing_water.getDefaultState());
+		replaceableBlockStates.add(Blocks.flowing_lava.getDefaultState());
+		replaceableBlockStates.add(Blocks.red_flower.getDefaultState());
+		replaceableBlockStates.add(Blocks.yellow_flower.getDefaultState());
+		replaceableBlockStates.add(Blocks.red_mushroom.getDefaultState());
+		replaceableBlockStates.add(Blocks.brown_mushroom.getDefaultState());
+		replaceableBlockStates.add(Blocks.log.getStateFromMeta(3));
+		replaceableBlockStates.add(Blocks.leaves.getStateFromMeta(3));
+		replaceableBlockStates.add(Blocks.melon_block.getDefaultState());
+		replaceableBlockStates.add(Blocks.cactus.getDefaultState());
+		replaceableBlockStates.add(Blocks.air.getDefaultState());
+		replaceableBlockStates.add(Blocks.sapling.getStateFromMeta(1));
+		replaceableBlockStates.add(Blocks.deadbush.getDefaultState());
+	}
+	/**
+	 * Returns if the state is eligible for replacing.
+	 * @param blockState
+	 * @return
+	 */
+	public static boolean eligibleStateLocation(IBlockState blockstate, BlockPos pos){
+		if(pos.getY() > 1){
+			if(replaceableBlockStates.contains(blockstate)){
+				return true;
+			}
+		}
+		return false;
 	}
 	/**
 	 * Needs to return the itemstack from the method call gatherBlockGenList with the itemStack,
@@ -40,8 +63,10 @@ public abstract class TerrainCrystalAbstract extends Item{
 	//Each class needs to provide its own platform makeup.
 	/**
 	 * This method is called after the list of positions has been created. Each position is then passed into the method
-	 * and needs to be set the world as a blockstate. Checks should be made for air blocks before placement.
-	 * This method also needs to call super.setBiome at blocks that are placed.
+	 * and needs to be set the world as a blockstate. The positions need to have a Y value greater than 1.
+	 * Checks should be made for air blocks before placement and a call to
+	 * eligibleStateLocation: EX: eligibleStateLocation(worldIn.getBlockState(pos))
+	 * This method also needs to call super.setBiome at blocks that are placed. 
 	 * @param pos Position that the block is being placed at.
 	 * @param worldIn The world
 	 * @param playerIn The player
