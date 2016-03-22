@@ -27,7 +27,15 @@ public abstract class TerrainCrystalAbstract extends Item{
 	public static void initReplaceableBlocks(){
 		replaceableBlockStates = new HashSet();
 		replaceableBlockStates.add(Blocks.tallgrass.getDefaultState());
-		replaceableBlockStates.add(Blocks.flowing_water.getDefaultState());
+		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(1));
+		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(2));
+		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(3));
+		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(4));
+		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(5));
+		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(6));
+		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(7));
+		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(8));
+		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(9));
 		replaceableBlockStates.add(Blocks.flowing_lava.getDefaultState());
 		replaceableBlockStates.add(Blocks.red_flower.getDefaultState());
 		replaceableBlockStates.add(Blocks.yellow_flower.getDefaultState());
@@ -46,9 +54,9 @@ public abstract class TerrainCrystalAbstract extends Item{
 		replaceableBlockStates.add(Blocks.leaves.getDefaultState());
 	}
 	/**
-	 * Returns if the state is eligible for replacing.
-	 * @param blockState
-	 * @return
+	 * Returns if the state is eligible for replacing. Checks Y Level and block state
+	 * @param blockState Takes the intended block state from the position in the world
+	 * @return returns a boolean if elgible or not.
 	 */
 	public static boolean eligibleStateLocation(IBlockState blockstate, BlockPos pos){
 		if(pos.getY() > 1){

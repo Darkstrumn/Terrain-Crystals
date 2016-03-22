@@ -119,10 +119,31 @@ public class ConfigurationFile {
 		boolean propJungleCrystalGeneratesBushes = config.getBoolean("Jungle Crystal Generates small bushes", Configuration.CATEGORY_GENERAL, true, "Should platform have bushes?");
 		jungleCrystalGeneratesBushes = propJungleCrystalGeneratesBushes;
 		
+		int propSwampCrystalDurability = config.getInt("Swamp Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+		swampCrystalDurability = propSwampCrystalDurability;
+		
+		int propSwampCrystalDiameter = config.getInt("Swamp Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+		swampCrystalDiameter = propSwampCrystalDiameter;
+		
+		boolean propSwampCrystalGensWater = config.getBoolean("Swamp Crystal Generates water pools", Configuration.CATEGORY_GENERAL, true, "Creates small water pools");
+		swampCrystalGensWater = propSwampCrystalGensWater;
+		
+		boolean propSwampCrystalGensClay = config.getBoolean("Swamp Crystal Generates Clay", Configuration.CATEGORY_GENERAL, true, "If water pools can generate clay");
+		swampCrystalGensClay = propSwampCrystalGensClay;
+		
+		boolean propSwampCrystalChangesBiome = config.getBoolean("Swamp Crystal Turns Other Biomes Swamplands", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
+		swampCrystalChangesBiome = propSwampCrystalChangesBiome;
+		
 		if(config.hasChanged()){
 			config.save();
 		}
 	}
+	//Swamp
+	public static int swampCrystalDurability;
+	public static int swampCrystalDiameter;
+	public static boolean swampCrystalGensWater;
+	public static boolean swampCrystalGensClay;
+	public static boolean swampCrystalChangesBiome;
 	//Plains
 	public static int plainsCrystalDurability;
 	public static int plainsCrystalDiameter;

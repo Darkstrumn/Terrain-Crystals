@@ -45,15 +45,10 @@ public class TerrainCrystals {
 			Configuration config = new Configuration(e.getSuggestedConfigurationFile());
 			ConfigurationFile.configFile(config);
 			//Initialization of Blocks and Items
-			InitBlocks.init();
 			InitItems.init();
-			//InitItems.recipes();
-			//InitItems.initModels();
-			//ModCrafting.init();
 		}
 		public void init(FMLInitializationEvent e){
 			InitItems.recipes();
-			InitItems.oreRegistration();
 			TerrainCrystalAbstract.initReplaceableBlocks();
 			new VersionChecker().init();
 		}
@@ -67,7 +62,6 @@ public class TerrainCrystals {
 		public void preInit(FMLPreInitializationEvent e){
 			super.preInit(e);
 			//Initialization of models
-			//ModRenderers.preInit();
 			InitItems.initModels();
 		}
 
