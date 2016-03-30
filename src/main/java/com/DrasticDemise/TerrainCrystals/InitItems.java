@@ -12,7 +12,6 @@ import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalSwamp;
 import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalTaiga;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
