@@ -5,6 +5,8 @@ import java.util.HashSet;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -71,7 +73,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * world, player, diameter, desired biome type and the biome change boolean.
 	 */
 	@Override
-	public abstract ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn);
+	public abstract ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand);
 	//Each class needs to provide its own platform makeup.
 	/**
 	 * This method is called after the list of positions has been created. Each position is then passed into the method
@@ -199,7 +201,7 @@ public abstract class TerrainCrystalAbstract extends Item{
         if(changeBiome){
 			Chunk chunk = worldIn.getChunkFromBlockCoords(position);
 	        if ((chunk != null) && (chunk.isLoaded())) {
-	        	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getWorldChunkManager()).biomeID != desiredBiome.biomeID){
+	        	if(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getChunkFromBlockCoords(position).getBiome(pos, chunkManager) != desiredBiome.biomeID){
 	        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.biomeID;
 		            return true;
 	        	}
