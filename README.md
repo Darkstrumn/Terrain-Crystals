@@ -1,4 +1,4 @@
-Repository for the 1.8.9 mod Terrain Crystals - available here: http://minecraft.curseforge.com/projects/terrain-crystals
+Repository for the 1.8.9 and 1.9 mod Terrain Crystals - available here: http://minecraft.curseforge.com/projects/terrain-crystals
 
 Feel free to post any suggestions, issues or pull requests here. Thanks!
 
