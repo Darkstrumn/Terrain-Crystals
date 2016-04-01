@@ -4,12 +4,17 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
+
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -29,8 +34,9 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	
 	
 	@Override
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-		return super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.jungleCrystalDiameter, BiomeGenBase.jungle, ConfigurationFile.jungleCrystalChangesBiome);
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
+		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.jungleCrystalDiameter, Biomes.jungle, ConfigurationFile.jungleCrystalChangesBiome);
+		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
 
 	@Override

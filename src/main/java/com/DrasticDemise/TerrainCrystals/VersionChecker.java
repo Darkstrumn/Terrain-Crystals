@@ -12,6 +12,10 @@ import net.minecraft.entity.player.EntityPlayer.EnumChatVisibility;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 
 public class VersionChecker {
 	public static String version = "";
@@ -26,10 +30,9 @@ public class VersionChecker {
 	public void onTick(ClientTickEvent event) throws IOException {
 		if(!doneChecking && Minecraft.getMinecraft().thePlayer != null){
 			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-			if(!VersionChecker.version.equals(TerrainCrystals.VERSION)){
+			if(!VersionChecker.version.equals(TerrainCrystals.VERSION) && ConfigurationFile.versionChecker){
 				System.out.println("VC: " + VersionChecker.version + " " + "TC V: " + TerrainCrystals.VERSION);
-				//player.addChatComponentMessage(new ITextComponent("There is a new version for Terrain Crystals Available!")));
-				//player.addChatMessage(new ChatComponentTranslation());
+				player.addChatComponentMessage(new TextComponentTranslation("There is a new version for Terrain Crystals Available!"));
 
 			}
 			VersionChecker.doneChecking = true;

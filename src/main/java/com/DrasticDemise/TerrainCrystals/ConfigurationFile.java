@@ -134,10 +134,16 @@ public class ConfigurationFile {
 		boolean propSwampCrystalChangesBiome = config.getBoolean("Swamp Crystal Turns Other Biomes Swamplands", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
 		swampCrystalChangesBiome = propSwampCrystalChangesBiome;
 		
+		
+		
+		boolean propVersionChecker = config.getBoolean("Version Checker Enabled", Configuration.CATEGORY_CLIENT, true, "If you want to be notified when a new version is available");
+		versionChecker = propVersionChecker;
+		
 		if(config.hasChanged()){
 			config.save();
 		}
 	}
+	public static boolean versionChecker;
 	//Swamp
 	public static int swampCrystalDurability;
 	public static int swampCrystalDiameter;

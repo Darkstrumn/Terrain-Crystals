@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
 
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -32,8 +36,9 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
         GameRegistry.registerItem(this);
 	}
 	@Override
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-		return super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.desertCrystalDiameter, BiomeGenBase.desert, ConfigurationFile.desertCrystalChangesBiome);
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
+		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.desertCrystalDiameter, Biomes.desert, ConfigurationFile.desertCrystalChangesBiome);
+		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
 	
 	@Override

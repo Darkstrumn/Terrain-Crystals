@@ -7,10 +7,14 @@ import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
 
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -33,8 +37,9 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 	        GameRegistry.registerItem(this);
 		}
 		@Override
-		public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-			return super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.endCrystalDiameter, BiomeGenBase.sky, ConfigurationFile.endCrystalChangesBiome);
+		public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
+			super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.endCrystalDiameter, Biomes.sky, ConfigurationFile.endCrystalChangesBiome);
+			return new ActionResult(EnumActionResult.PASS, itemStackIn);
 		}
 		@Override
 		protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
@@ -44,7 +49,7 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 				if(posY - pos.getY() == 1){
 					worldIn.setBlockState(pos, Blocks.end_stone.getDefaultState());
 					decoratePlatform(worldIn, pos);
-					super.setBiome(worldIn, pos, BiomeGenBase.sky, ConfigurationFile.endCrystalChangesBiome);
+					super.setBiome(worldIn, pos, desiredBiome, changeBiome);
 					blocksGenerated++;
 				}else{
 					worldIn.setBlockState(pos, Blocks.end_stone.getDefaultState());

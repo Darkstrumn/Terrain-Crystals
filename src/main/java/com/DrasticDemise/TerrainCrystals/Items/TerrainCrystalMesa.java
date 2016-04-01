@@ -6,9 +6,13 @@ import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -30,8 +34,9 @@ public class TerrainCrystalMesa extends TerrainCrystalAbstract{
         GameRegistry.registerItem(this);
 	}
 	@Override
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-		return super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.mesaCrystalDiameter, BiomeGenBase.mesa, ConfigurationFile.mesaCrystalChangesBiome);
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
+		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.mesaCrystalDiameter, Biomes.mesa, ConfigurationFile.mesaCrystalChangesBiome);
+		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,

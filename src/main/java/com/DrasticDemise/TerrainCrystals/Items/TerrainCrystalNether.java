@@ -9,10 +9,14 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -33,8 +37,9 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
         GameRegistry.registerItem(this);
 	}
 	@Override
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-		return super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.netherCrystalDiameter, BiomeGenBase.hell, ConfigurationFile.netherCrystalChangesBiome);
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
+		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.netherCrystalDiameter, Biomes.hell, ConfigurationFile.netherCrystalChangesBiome);
+		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,

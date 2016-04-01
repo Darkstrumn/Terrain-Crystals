@@ -16,7 +16,7 @@ public class ThreadVersionChecker extends Thread{
 	@Override
 	public void run() {
 		try {
-			URL url = new URL("https://raw.githubusercontent.com/DrasticDemise/Terrain-Crystals/master/UpdateHandler");
+			URL url = new URL("https://raw.githubusercontent.com/DrasticDemise/Terrain-Crystals/master/1.9%20Update%20Handler");
 			BufferedReader r = new BufferedReader(new InputStreamReader(url.openStream()));
 			VersionChecker.version = r.readLine();
 			r.close();
