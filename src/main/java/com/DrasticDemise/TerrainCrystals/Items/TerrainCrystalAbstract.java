@@ -2,11 +2,13 @@ package com.DrasticDemise.TerrainCrystals.Items;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -59,7 +61,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	/**
 	 * Returns if the state is eligible for replacing. Checks Y Level and block state
 	 * @param blockState Takes the intended block state from the position in the world
-	 * @return returns a boolean if elgible or not.
+	 * @return returns a boolean if eligible or not.
 	 */
 	public static boolean eligibleStateLocation(IBlockState blockstate, BlockPos pos){
 		if(pos.getY() > 1){
@@ -74,7 +76,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * world, player, diameter, desired biome type and the biome change boolean.
 	 */
 	@Override
-	public abstract EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ);
+	public abstract ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand);
 	//Each class needs to provide its own platform makeup.
 	/**
 	 * This method is called after the list of positions has been created. Each position is then passed into the method
@@ -202,6 +204,7 @@ public abstract class TerrainCrystalAbstract extends Item{
         if(changeBiome){
 			Chunk chunk = worldIn.getChunkFromBlockCoords(position);
 	        if ((chunk != null) && (chunk.isLoaded())) {
+
 	        	if(BiomeGenBase.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != BiomeGenBase.getIdForBiome(desiredBiome)){
 	        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.getIdForBiome(desiredBiome);
 		            return true;
@@ -210,6 +213,12 @@ public abstract class TerrainCrystalAbstract extends Item{
         }
         return false;
     }
+	@SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+    {
+		tooltip.add("You must relog in order to see the biome change client-side. Changes server-side instantly.");
+    }
+	
 	@SideOnly(Side.CLIENT)
     public void initModel() {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
