@@ -47,6 +47,7 @@ public class InitItems {
 		terrainCrystalJungle = new TerrainCrystalJungle();
 		terrainCrystalSwamp = new TerrainCrystalSwamp();
 	}
+	//
 	public static void recipes(){
 		ItemStack dirtStack = new ItemStack(Blocks.dirt);
 		ItemStack sandStack = new ItemStack(Blocks.sand);
@@ -64,7 +65,7 @@ public class InitItems {
 		ItemStack slimeBallStack = new ItemStack(Items.slime_ball);
 		ItemStack bRodStack = new ItemStack(Items.blaze_rod);
 		ItemStack pearlStack = new ItemStack(Items.ender_pearl);
-		
+		ItemStack melonSeedStack = new ItemStack(Items.melon_seeds);
 		ItemStack goldBlockStack = new ItemStack(Blocks.gold_block);
 		//Plains Crystal
 		GameRegistry.addRecipe(
@@ -121,8 +122,14 @@ public class InitItems {
 				"xwx",
 				"yxy",
 				'w', goldBlockStack, 'x',clayBlockStack, 'y', slimeBallStack);
+		//Jungle
+		GameRegistry.addRecipe(new ItemStack(InitItems.terrainCrystalJungle),
+				"xxx",
+				"xwx",
+				"xxx",
+				'w', goldBlockStack, 'x',melonSeedStack);
 	}
-
+	//
 	@SideOnly(Side.CLIENT)
     public static void initModels() {
         terrainCrystalPlains.initModel();

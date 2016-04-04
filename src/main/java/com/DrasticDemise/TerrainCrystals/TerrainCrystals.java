@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class TerrainCrystals {
 	public static final String MODID = "terrainCrystals";
 	public static final String MODNAME = "Terrain Crystals";
-	public static final String VERSION = "1.0.4";
+	public static final String VERSION = "1.0.5";
 	public static final String URL = "https://raw.githubusercontent.com/DrasticDemise/Terrain-Crystals/master/UpdateHandler";
 
 	@SidedProxy
@@ -50,7 +50,6 @@ public class TerrainCrystals {
 		public void init(FMLInitializationEvent e){
 			InitItems.recipes();
 			TerrainCrystalAbstract.initReplaceableBlocks();
-			new VersionChecker().init();
 		}
 		public void postInit(FMLPostInitializationEvent e){
 			
@@ -64,7 +63,11 @@ public class TerrainCrystals {
 			//Initialization of models
 			InitItems.initModels();
 		}
-
+		@Override
+		public void init(FMLInitializationEvent e){
+			super.init(e);
+			new VersionChecker().init();
+		}
 	}
 	
 	public static class ServerProxy extends CommonProxy{
