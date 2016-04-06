@@ -21,11 +21,11 @@ plugins {
 }
 */
 version = "1.0"
-group= "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group= "com.drasticdemise.TerrainCrystals" 
 archivesBaseName = "modid"
 
 minecraft {
-    version = "1.9-12.16.0.1813-1.9"
+    version = "1.9-12.16.0.1849-1.9"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
@@ -37,6 +37,32 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
+jar {
+    classifier = 'universal'
+}
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        include '**/*.info'
+        include '**/*.properties'
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude '**/*.info'
+        exclude '**/*.properties'
+    }
+}
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    from (sourceSets.main.output) {
+        include 'LICENSE.txt'
+    }
+
+    classifier = 'sources'
+}
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
 dependencies {
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
