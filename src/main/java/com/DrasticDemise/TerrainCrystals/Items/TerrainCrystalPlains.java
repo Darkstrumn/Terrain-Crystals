@@ -87,6 +87,7 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 	}
 	private void growTree(World worldIn, BlockPos pos){
 		if(ConfigurationFile.plainsCrystalGenerateTrees){
+			//spacedFarEnough(worldIn, pos.up())
 			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
 				if(Math.random() < .5){
 					worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(2));

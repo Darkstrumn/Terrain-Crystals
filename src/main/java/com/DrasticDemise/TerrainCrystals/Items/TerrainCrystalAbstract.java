@@ -25,6 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class TerrainCrystalAbstract extends Item{
 	public static HashSet replaceableBlockStates;
+	public static HashSet invalidSpaces;
 	
 	/**
 	 * Initializes the hashSet with block states that can be replaced by the platform.
@@ -57,6 +58,28 @@ public abstract class TerrainCrystalAbstract extends Item{
 		replaceableBlockStates.add(Blocks.leaves.getStateFromMeta(1));
 		replaceableBlockStates.add(Blocks.log.getDefaultState());
 		replaceableBlockStates.add(Blocks.leaves.getDefaultState());
+	}
+	public static void initInvalidSpaces(){
+		invalidSpaces = new HashSet();
+		invalidSpaces.add(Blocks.log.getDefaultState());
+		invalidSpaces.add(Blocks.log.getStateFromMeta(1));
+		invalidSpaces.add(Blocks.log.getStateFromMeta(2));
+		invalidSpaces.add(Blocks.log.getStateFromMeta(3));
+		invalidSpaces.add(Blocks.log2.getDefaultState());
+		invalidSpaces.add(Blocks.packed_ice.getDefaultState());
+		invalidSpaces.add(Blocks.leaves.getDefaultState());
+		invalidSpaces.add(Blocks.leaves.getStateFromMeta(1));
+		invalidSpaces.add(Blocks.leaves.getStateFromMeta(2));
+		invalidSpaces.add(Blocks.leaves.getStateFromMeta(3));
+	}
+	public static boolean eligibleSpaceForTree(IBlockState blockState, BlockPos pos){
+		if(pos.getY() > 1){
+			if(invalidSpaces.contains(blockState)){
+				return false;
+			}
+			return true;
+		}
+		return false;
 	}
 	/**
 	 * Returns if the state is eligible for replacing. Checks Y Level and block state
@@ -216,7 +239,51 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @return Returns if viable location
 	 */
 	protected boolean spacedFarEnough(World worldIn, BlockPos pos){
-		
+		int diameter = 5;
+		int posX = pos.getX();
+		int posY = pos.getY();
+		int posZ = pos.getZ();
+		int center;
+		ArrayList<BlockPos> posList = new ArrayList<BlockPos>(13);
+		double radius = diameter/2.0;
+		if(diameter%2 != 0){
+			center = (int) (radius + 0.5);
+		}else{
+			center = (int) (radius);
+		}
+		int offsetXFirstHalf = (int) (posX + radius);
+		//Not sure why this has to be offset by 1 extra, but it does.
+		int offsetXSecondHalf = (int) (posX - radius + 1);
+		int yDown = 1;
+		for(int i = 0; i < (center); i ++){
+			//Creates a circle and fills it
+			for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
+				//Fills across the circle
+				BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ - i + placeInwards);
+				posList.add(fillShellOne);
+				BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ + i - placeInwards);
+				posList.add(fillShellTwo);
+			}
+		}
+		//Generates the second half
+		for(int i = 0; i < (center); i ++){
+			BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i);
+			BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i);
+			posList.add(shellThree); 
+			posList.add(shellFour);
+			
+			for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
+				BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards);
+				BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards);
+				posList.add(fillShellThree);
+				posList.add(fillShellFour);
+			}
+		}
+		for(BlockPos b : posList){
+			if(!eligibleStateLocation(worldIn.getBlockState(b), b)){
+				return false;
+			}
+		}
 		return true;
 	}
 	
