@@ -66,7 +66,7 @@ public class TerrainCrystalPlainsIceSpikes extends TerrainCrystalAbstract{
 	}
 
 	@Override
-	void decoratePlatform(World worldIn, BlockPos pos) {
+	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		if(Math.random() < .55){
 			if(worldIn.getBlockState(pos.up()) == Blocks.air.getDefaultState())
 				worldIn.setBlockState(pos.up(), Blocks.snow_layer.getDefaultState());

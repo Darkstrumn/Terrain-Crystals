@@ -58,6 +58,7 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 			}
 			return blocksGenerated;
 		}
+		
 		@Override
 		protected void decoratePlatform(World worldIn, BlockPos pos){
 			//Chance to create a pillar

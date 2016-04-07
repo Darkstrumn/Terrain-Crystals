@@ -92,7 +92,7 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 		}
 	}
 	@Override
-	void decoratePlatform(World worldIn, BlockPos pos) {
+	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		// TODO Auto-generated method stub
 		
 	}

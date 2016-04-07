@@ -58,7 +58,7 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	}
 
 	@Override
-	void decoratePlatform(World worldIn, BlockPos pos) {
+	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		//Generate bush things
 		if(Math.random() < 0.01 && ConfigurationFile.jungleCrystalGeneratesBushes){
 			worldIn.setBlockState(pos.up(), Blocks.leaves.getDefaultState());

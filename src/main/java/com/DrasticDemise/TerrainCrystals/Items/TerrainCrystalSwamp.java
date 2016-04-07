@@ -57,7 +57,7 @@ public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
 	}
 
 	@Override
-	void decoratePlatform(World worldIn, BlockPos pos) {
+	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		if(Math.random() < 0.02 && ConfigurationFile.swampCrystalGensWater){
 			if(Math.random() < 0.5){
 				worldIn.setBlockState(pos, Blocks.water.getDefaultState());

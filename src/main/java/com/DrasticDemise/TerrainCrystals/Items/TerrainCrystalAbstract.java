@@ -100,7 +100,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param worldIn The world
 	 * @param pos The SURFACE block to be decorated.
 	 */
-	abstract void decoratePlatform(World worldIn, BlockPos pos);
+	protected abstract void decoratePlatform(World worldIn, BlockPos pos);
 	
 	public ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, BiomeGenBase desiredBiome, Boolean changeBiome){
 		int blocksGenerated = 0;
@@ -186,10 +186,6 @@ public abstract class TerrainCrystalAbstract extends Item{
 		return blocksGenerated;
 	}
 	
-	public void canSafelyGenerate(BlockPos pos){
-		
-	}
-	
 	//Code taken from World Edit by Skq89
 	//https://goo.gl/iEi0oU
 	/**
@@ -213,6 +209,18 @@ public abstract class TerrainCrystalAbstract extends Item{
         }
         return false;
     }
+	/**
+	 * Pass this method the position that the sapling will OCCUPY, not REST ON. Meaning Pos.UP of the platform.
+	 * @param worldIn World
+	 * @param pos Position
+	 * @return Returns if viable location
+	 */
+	protected boolean spacedFarEnough(World worldIn, BlockPos pos){
+		
+		return true;
+	}
+	
+	
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
