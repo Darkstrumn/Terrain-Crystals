@@ -47,18 +47,27 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 		if(eligibleStateLocation(worldIn.getBlockState(pos), pos)){
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
-				if(Math.random() < .7){
-					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
-					super.setBiome(worldIn, pos, desiredBiome, changeBiome);
-					decoratePlatform(worldIn, pos);
-				}else{
+				super.setBiome(worldIn, pos, desiredBiome, changeBiome);
+				
+				if(worldIn.getBlockState(pos.down()).equals(Blocks.air.getDefaultState())){
 					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
+				}else{
+					if(Math.random() < 0.7){
+						worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
+						decoratePlatform(worldIn, pos);	
+					}else{
+						worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
+					}
 				}
 			}else{
 				if(Math.random() < .9){
 					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
 				}else{
-					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
+					if(worldIn.getBlockState(pos.down()).equals(Blocks.air.getDefaultState())){
+						worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
+					}else{
+						worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
+					}
 				}
 			}
 			blocksGenerated++;

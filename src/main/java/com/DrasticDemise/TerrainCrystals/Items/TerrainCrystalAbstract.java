@@ -72,6 +72,12 @@ public abstract class TerrainCrystalAbstract extends Item{
 		invalidSpaces.add(Blocks.leaves.getStateFromMeta(2));
 		invalidSpaces.add(Blocks.leaves.getStateFromMeta(3));
 	}
+	/**
+	 * If the block given has enough room around it to generate a tree.
+	 * @param blockState Takes a block state
+	 * @param pos Position
+	 * @return Returns a boolean if the blockstate given is an eligble location for a tree.
+	 */
 	public static boolean eligibleSpaceForTree(IBlockState blockState, BlockPos pos){
 		if(pos.getY() > 1){
 			if(invalidSpaces.contains(blockState)){
@@ -98,7 +104,6 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * Needs to return the itemstack from the method call gatherBlockGenList with the itemStack,
 	 * world, player, diameter, desired biome type and the biome change boolean.
 	 */
-	@Override
 	public abstract ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand);
 	//Each class needs to provide its own platform makeup.
 	/**
@@ -175,6 +180,17 @@ public abstract class TerrainCrystalAbstract extends Item{
 		itemStackIn.damageItem(blocksGenerated, playerIn);
 		return itemStackIn;
 	}
+	/**
+	 * Converts the list of positions into blocks in the shape of a spike.
+	 * @param posList List of positions
+	 * @param worldIn World
+	 * @param playerIn Player location
+	 * @param blocksGenerated Number of blocks that have been generated so far
+	 * @param itemStackIn The item used
+	 * @param desiredBiome Biome type desired
+	 * @param changeBiome If the config allows the biome to be changed
+	 * @return Returns an int, usually the number of blocks generated in the world.
+	 */
 	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated, ItemStack itemStackIn, BiomeGenBase desiredBiome, boolean changeBiome){
 		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
 		for(BlockPos pos : posList){
@@ -233,7 +249,7 @@ public abstract class TerrainCrystalAbstract extends Item{
         return false;
     }
 	/**
-	 * Pass this method the position that the sapling will OCCUPY, not REST ON. Meaning Pos.UP of the platform.
+	 * Pass this method the position that the sapling will OCCUPY, not REST ON. Meaning Pos.UP of the platform position.
 	 * @param worldIn World
 	 * @param pos Position
 	 * @return Returns if viable location

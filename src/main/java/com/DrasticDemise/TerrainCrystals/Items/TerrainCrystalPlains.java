@@ -79,10 +79,7 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 						}
 					}
 				}
-			}catch(IllegalArgumentException e){
-				//System.out.println("Caught an error in tree growing! Tossing it out, goodbye chunk error!");
-				return;
-			}
+			}catch(Exception e){}
 		}
 	}
 	private void growTree(World worldIn, BlockPos pos){
