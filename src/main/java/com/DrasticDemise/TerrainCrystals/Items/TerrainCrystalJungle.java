@@ -29,7 +29,7 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 		setHarvestLevel("stone", 0);
 		setMaxStackSize(1);
 		setMaxDamage(ConfigurationFile.jungleCrystalDurability);
-        GameRegistry.registerItem(this);
+        GameRegistry.register(this);
 	}
 	
 	
@@ -60,7 +60,7 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		//Generate bush things
-		if(Math.random() < 0.01 && ConfigurationFile.jungleCrystalGeneratesBushes){
+		if(Math.random() < 0.01 && ConfigurationFile.jungleCrystalGeneratesBushes && spacedFarEnough(worldIn, pos)){
 			worldIn.setBlockState(pos.up(), Blocks.leaves.getDefaultState());
 			worldIn.setBlockState(pos.up(2), Blocks.leaves.getDefaultState());
 			worldIn.setBlockState(pos.up().east(), Blocks.leaves.getDefaultState());
@@ -106,7 +106,7 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	}
 	private void growTree(World worldIn, BlockPos pos) {
 		try{
-			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
+			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up()) && spacedFarEnough(worldIn, pos)){
 				worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(3));
 				try{
 					IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();

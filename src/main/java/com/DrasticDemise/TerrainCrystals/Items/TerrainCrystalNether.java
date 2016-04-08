@@ -34,7 +34,7 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 		setHarvestLevel("stone", 0);
 		setMaxStackSize(1);
 		setMaxDamage(ConfigurationFile.netherCrystalDurability);
-        GameRegistry.registerItem(this);
+        GameRegistry.register(this);
 	}
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
@@ -60,12 +60,10 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 					worldIn.setBlockState(pos, Blocks.gravel.getDefaultState());
 				}
 			}else{
-				if(Math.random() < .9){
+				if(Math.random() < .95){
 					worldIn.setBlockState(pos, Blocks.netherrack.getDefaultState());
-				}else if (Math.random() < 0.3){
-					worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
 				}else{
-					worldIn.setBlockState(pos, Blocks.gravel.getDefaultState());
+					worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
 				}
 			}
 			blocksGenerated++;
@@ -75,7 +73,7 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 	protected void decoratePlatform(World worldIn, BlockPos pos){
 		if(Blocks.brown_mushroom.canPlaceBlockAt(worldIn, pos.up())){
 			if(Math.random() < .10){
-				if(Math.random() < .5){
+				if(Math.random() < .3){
 					worldIn.setBlockState(pos.up(), Blocks.brown_mushroom.getDefaultState());
 				}else{
 					worldIn.setBlockState(pos.up(), Blocks.red_mushroom.getDefaultState());

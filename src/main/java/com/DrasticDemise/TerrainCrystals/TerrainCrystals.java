@@ -50,6 +50,7 @@ public class TerrainCrystals {
 		public void init(FMLInitializationEvent e){
 			InitItems.recipes();
 			TerrainCrystalAbstract.initReplaceableBlocks();
+			TerrainCrystalAbstract.initInvalidSpaces();
 		}
 		public void postInit(FMLPostInitializationEvent e){
 			

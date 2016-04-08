@@ -34,7 +34,7 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 			setHarvestLevel("stone", 0);
 			setMaxStackSize(1);
 			setMaxDamage(ConfigurationFile.endCrystalDurability);
-	        GameRegistry.registerItem(this);
+	        GameRegistry.register(this);
 		}
 		@Override
 		public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
@@ -62,7 +62,7 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 		@Override
 		protected void decoratePlatform(World worldIn, BlockPos pos){
 			//Chance to create a pillar
-			if(ConfigurationFile.endCrystalGenerateObsidianSpikes){
+			if(ConfigurationFile.endCrystalGenerateObsidianSpikes && spacedFarEnough(worldIn, pos)){
 				if(Math.random() < .02){
 					worldIn.setBlockState(pos, Blocks.obsidian.getDefaultState());
 					worldIn.setBlockState(pos.up(), Blocks.obsidian.getDefaultState());
