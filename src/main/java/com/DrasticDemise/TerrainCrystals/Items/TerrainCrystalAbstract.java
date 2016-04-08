@@ -66,11 +66,17 @@ public abstract class TerrainCrystalAbstract extends Item{
 		invalidSpaces.add(Blocks.log.getStateFromMeta(2));
 		invalidSpaces.add(Blocks.log.getStateFromMeta(3));
 		invalidSpaces.add(Blocks.log2.getDefaultState());
-		invalidSpaces.add(Blocks.packed_ice.getDefaultState());
 		invalidSpaces.add(Blocks.leaves.getDefaultState());
 		invalidSpaces.add(Blocks.leaves.getStateFromMeta(1));
 		invalidSpaces.add(Blocks.leaves.getStateFromMeta(2));
 		invalidSpaces.add(Blocks.leaves.getStateFromMeta(3));
+		//Used for end crystal
+		invalidSpaces.add(Blocks.obsidian.getDefaultState());
+		//Used to ice spikes plains
+		invalidSpaces.add(Blocks.packed_ice.getDefaultState());
+		//Mushroom Islands
+		invalidSpaces.add(Blocks.red_mushroom_block.getDefaultState());
+		invalidSpaces.add(Blocks.brown_mushroom_block.getDefaultState());
 	}
 	/**
 	 * If the block given has enough room around it to generate a tree.
@@ -154,7 +160,9 @@ public abstract class TerrainCrystalAbstract extends Item{
 				for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
 					//Fills across the circle
 					BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ - i + placeInwards);
-					posList.add(fillShellOne);
+					if(eligibleStateLocation(worldIn, fillShellOne)){
+						posList.add(fillShellOne);
+					}
 					BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ + i - placeInwards);
 					posList.add(fillShellTwo);
 				}

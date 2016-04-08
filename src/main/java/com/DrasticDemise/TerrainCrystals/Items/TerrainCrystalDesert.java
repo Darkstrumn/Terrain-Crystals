@@ -33,7 +33,7 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 		setMaxStackSize(1);
 		//setMaxDamage
 		setMaxDamage(ConfigurationFile.desertCrystalDurability);
-        GameRegistry.registerItem(this);
+        GameRegistry.register(this);
 	}
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
@@ -44,30 +44,29 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome) {
-		if(eligibleStateLocation(worldIn.getBlockState(pos), pos)){
-			int posY = MathHelper.floor_double(playerIn.posY);
-			if(posY - pos.getY() == 1){
-				super.setBiome(worldIn, pos, desiredBiome, changeBiome);
-				
-				if(Math.random() < 0.7){
-					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
-					decoratePlatform(worldIn, pos);	
-				}else{
-					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
-				}
+		
+		int posY = MathHelper.floor_double(playerIn.posY);
+		if(posY - pos.getY() == 1){
+			super.setBiome(worldIn, pos, desiredBiome, changeBiome);
+			
+			if(Math.random() < 0.7){
+				worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
+				decoratePlatform(worldIn, pos);	
 			}else{
-				if(Math.random() < .9){
+				worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
+			}
+		}else{
+			if(Math.random() < .9){
+				worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
+			}else{
+				if(worldIn.getBlockState(pos.down()).equals(Blocks.air.getDefaultState())){
 					worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
 				}else{
-					if(worldIn.getBlockState(pos.down()).equals(Blocks.air.getDefaultState())){
-						worldIn.setBlockState(pos, Blocks.sandstone.getDefaultState());
-					}else{
-						worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
-					}
+					worldIn.setBlockState(pos, Blocks.sand.getDefaultState());
 				}
 			}
-			blocksGenerated++;
 		}
+		blocksGenerated++;
 		return blocksGenerated;
 	}
 	

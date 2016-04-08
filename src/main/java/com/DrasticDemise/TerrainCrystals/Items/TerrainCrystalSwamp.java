@@ -29,7 +29,7 @@ public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
 		setHarvestLevel("stone", 0);
 		setMaxStackSize(1);
 		setMaxDamage(ConfigurationFile.swampCrystalDurability);
-        GameRegistry.registerItem(this);
+        GameRegistry.register(this);
 	}
 
 	@Override

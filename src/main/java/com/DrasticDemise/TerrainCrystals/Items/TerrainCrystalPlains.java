@@ -34,7 +34,7 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 		setHarvestLevel("stone", 0);
 		setMaxStackSize(1);
 		setMaxDamage(ConfigurationFile.plainsCrystalDurability);
-        GameRegistry.registerItem(this);
+        GameRegistry.register(this);
 	}
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){

@@ -34,7 +34,7 @@ public class TerrainCrystalMushroom extends TerrainCrystalAbstract{
 		setHarvestLevel("stone", 0);
 		setMaxStackSize(1);
 		setMaxDamage(ConfigurationFile.mushroomCrystalDurability);
-	    GameRegistry.registerItem(this);
+	    GameRegistry.register(this);
 	}
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
@@ -62,14 +62,14 @@ public class TerrainCrystalMushroom extends TerrainCrystalAbstract{
 			if(Math.random() < .10){
 				if(Math.random() < .5){
 					worldIn.setBlockState(pos.up(), Blocks.brown_mushroom.getDefaultState());
-					if(Math.random() < 0.1){
+					if(Math.random() < 0.1 && spacedFarEnough(worldIn, pos)){
 						IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
 						Random rand = new Random();
 						growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos));
 					}
 				}else{
 					worldIn.setBlockState(pos.up(), Blocks.red_mushroom.getDefaultState());
-					if(Math.random() < 0.1){
+					if(Math.random() < 0.1&& spacedFarEnough(worldIn, pos)){
 						IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
 						Random rand = new Random();
 						growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos));
