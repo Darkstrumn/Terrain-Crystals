@@ -78,7 +78,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param pos Position
 	 * @return Returns a boolean if the blockstate given is an eligble location for a tree.
 	 */
-	public static boolean eligibleSpaceForTree(IBlockState blockState, BlockPos pos){
+	private static boolean eligibleSpaceForTree(IBlockState blockState, BlockPos pos){
 		if(pos.getY() > 1){
 			if(invalidSpaces.contains(blockState)){
 				return false;
@@ -270,33 +270,32 @@ public abstract class TerrainCrystalAbstract extends Item{
 		int offsetXFirstHalf = (int) (posX + radius);
 		//Not sure why this has to be offset by 1 extra, but it does.
 		int offsetXSecondHalf = (int) (posX - radius + 1);
-		int yDown = 1;
 		for(int i = 0; i < (center); i ++){
 			//Creates a circle and fills it
 			for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
 				//Fills across the circle
-				BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ - i + placeInwards);
+				BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY, posZ - i + placeInwards);
 				posList.add(fillShellOne);
-				BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ + i - placeInwards);
+				BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY, posZ + i - placeInwards);
 				posList.add(fillShellTwo);
 			}
 		}
 		//Generates the second half
 		for(int i = 0; i < (center); i ++){
-			BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i);
-			BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i);
+			BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY, posZ  + i);
+			BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY, posZ - i);
 			posList.add(shellThree); 
 			posList.add(shellFour);
 			
 			for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
-				BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards);
-				BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards);
+				BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY, posZ + i - placeInwards);
+				BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY, posZ - i + placeInwards);
 				posList.add(fillShellThree);
 				posList.add(fillShellFour);
 			}
 		}
 		for(BlockPos b : posList){
-			if(!eligibleStateLocation(worldIn.getBlockState(b), b)){
+			if(!eligibleSpaceForTree(worldIn.getBlockState(b), b)){
 				return false;
 			}
 		}

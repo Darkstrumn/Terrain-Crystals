@@ -73,11 +73,11 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 						{
 							worldIn.playAuxSFX(2005, pos, 0);
 							growable.grow(worldIn, rand, pos, state);
-							if(Math.random() <= 0.1){
-								growTree(worldIn, pos);
-							}
 						}
 					}
+				}
+				if(Math.random() <= 0.05){
+					growTree(worldIn, pos);
 				}
 			}catch(Exception e){}
 		}
@@ -85,7 +85,7 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 	private void growTree(World worldIn, BlockPos pos){
 		if(ConfigurationFile.plainsCrystalGenerateTrees){
 			//spacedFarEnough(worldIn, pos.up())
-			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
+			if (spacedFarEnough(worldIn, pos.up())){
 				if(Math.random() < .5){
 					worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(2));
 				}else{
