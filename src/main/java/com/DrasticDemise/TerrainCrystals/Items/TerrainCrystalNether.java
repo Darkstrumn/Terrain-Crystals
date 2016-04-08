@@ -44,31 +44,29 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome){
-		if(eligibleStateLocation(worldIn.getBlockState(pos), pos)){
-			int posY = MathHelper.floor_double(playerIn.posY);
-			if(posY - pos.getY() == 1){
-				if(Math.random() < .9){
-					worldIn.setBlockState(pos, Blocks.netherrack.getDefaultState());
-					if(ConfigurationFile.netherCrystalChangesBiome){
-						setBiome(worldIn, pos, desiredBiome, changeBiome);
-					}
-					decoratePlatform(worldIn, pos);
-				}else if (Math.random() < 0.3){
-					worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
-					decoratePlatform(worldIn, pos);
-				}else{
-					worldIn.setBlockState(pos, Blocks.gravel.getDefaultState());
+		
+		int posY = MathHelper.floor_double(playerIn.posY);
+		if(posY - pos.getY() == 1){
+			if(Math.random() < .9){
+				worldIn.setBlockState(pos, Blocks.netherrack.getDefaultState());
+				if(ConfigurationFile.netherCrystalChangesBiome){
+					setBiome(worldIn, pos, desiredBiome, changeBiome);
 				}
+				decoratePlatform(worldIn, pos);
+			}else if (Math.random() < 0.3){
+				worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
+				decoratePlatform(worldIn, pos);
 			}else{
-				if(Math.random() < .95){
-					worldIn.setBlockState(pos, Blocks.netherrack.getDefaultState());
-				}else{
-					worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
-				}
+				worldIn.setBlockState(pos, Blocks.gravel.getDefaultState());
 			}
-			blocksGenerated++;
+		}else{
+			if(Math.random() < .95){
+				worldIn.setBlockState(pos, Blocks.netherrack.getDefaultState());
+			}else{
+				worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
+			}
 		}
-		return blocksGenerated;
+		return blocksGenerated++;
 	}
 	protected void decoratePlatform(World worldIn, BlockPos pos){
 		if(Blocks.brown_mushroom.canPlaceBlockAt(worldIn, pos.up())){

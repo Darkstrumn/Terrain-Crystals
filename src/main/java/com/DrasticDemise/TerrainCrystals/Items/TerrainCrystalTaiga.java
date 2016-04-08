@@ -44,30 +44,26 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome){
-		if(eligibleStateLocation(worldIn.getBlockState(pos), pos)){
-			int posY = MathHelper.floor_double(playerIn.posY);
-			if(posY - pos.getY() == 1){
-				if(Math.random() < .4){
-					if(Math.random() < .5){
-						worldIn.setBlockState(pos, Blocks.dirt.getStateFromMeta(1));
-					}else{
-						worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
-					}
+		int posY = MathHelper.floor_double(playerIn.posY);
+		
+		if(posY - pos.getY() == 1){
+			if(Math.random() < .4){
+				if(Math.random() < .5){
+					worldIn.setBlockState(pos, Blocks.dirt.getStateFromMeta(1));
 				}else{
-					worldIn.setBlockState(pos, Blocks.dirt.getStateFromMeta(2));
+					worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
 				}
-				if(ConfigurationFile.taigaCrystalGeneratesTrees && Math.random() < 0.02){
-					growTree(worldIn, pos);
-				}
-				setBiome(worldIn, pos, desiredBiome, changeBiome);
-				
-				blocksGenerated++;
 			}else{
-				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
-				blocksGenerated++;
+				worldIn.setBlockState(pos, Blocks.dirt.getStateFromMeta(2));
 			}
+			if(ConfigurationFile.taigaCrystalGeneratesTrees && Math.random() < 0.02){
+				growTree(worldIn, pos);
+			}
+			setBiome(worldIn, pos, desiredBiome, changeBiome);
+		}else{
+			worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
 		}
-		return blocksGenerated;
+		return blocksGenerated++;
 	}
 	private void growTree(World worldIn, BlockPos pos) {
 		try{

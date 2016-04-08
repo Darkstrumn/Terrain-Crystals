@@ -44,19 +44,15 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 		@Override
 		protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 				BiomeGenBase desiredBiome, boolean changeBiome){
-			if(eligibleStateLocation(worldIn.getBlockState(pos), pos)){
 				int posY = MathHelper.floor_double(playerIn.posY);
 				if(posY - pos.getY() == 1){
 					worldIn.setBlockState(pos, Blocks.end_stone.getDefaultState());
 					decoratePlatform(worldIn, pos);
 					super.setBiome(worldIn, pos, desiredBiome, changeBiome);
-					blocksGenerated++;
 				}else{
 					worldIn.setBlockState(pos, Blocks.end_stone.getDefaultState());
-					blocksGenerated++;
 				}
-			}
-			return blocksGenerated;
+			return blocksGenerated++;
 		}
 		
 		@Override

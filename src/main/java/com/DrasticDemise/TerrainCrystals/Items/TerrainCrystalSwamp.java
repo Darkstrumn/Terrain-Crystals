@@ -41,19 +41,15 @@ public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome) {
-		if(eligibleStateLocation(worldIn.getBlockState(pos), pos)){
-			int posY = MathHelper.floor_double(playerIn.posY);
-			if(posY - pos.getY() == 1){
-				worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
-				setBiome(worldIn, pos, desiredBiome, changeBiome);
-				decoratePlatform(worldIn, pos);
-				blocksGenerated++;
-			}else{
-				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
-				blocksGenerated++;
-			}
+		int posY = MathHelper.floor_double(playerIn.posY);
+		if(posY - pos.getY() == 1){
+			setBiome(worldIn, pos, desiredBiome, changeBiome);
+			worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
+			decoratePlatform(worldIn, pos);
+		}else{
+			worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
 		}
-		return blocksGenerated;
+		return blocksGenerated++;
 	}
 
 	@Override

@@ -66,8 +66,7 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 				}
 			}
 		}
-		blocksGenerated++;
-		return blocksGenerated;
+		return blocksGenerated++;
 	}
 	
 	@Override
