@@ -44,7 +44,7 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome) {
-		if(eligibleStateLocation(worldIn.getBlockState(pos), pos)){
+		if(eligibleStateLocation(worldIn, pos)){
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
 				super.setBiome(worldIn, pos, desiredBiome, changeBiome);

@@ -92,9 +92,10 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param blockState Takes the intended block state from the position in the world
 	 * @return returns a boolean if eligible or not.
 	 */
-	public static boolean eligibleStateLocation(IBlockState blockstate, BlockPos pos){
+	public static boolean eligibleStateLocation(World worldIn, BlockPos pos){
+		
 		if(pos.getY() > 1){
-			if(replaceableBlockStates.contains(blockstate)){
+			if(replaceableBlockStates.contains(worldIn.getBlockState(pos))){
 				return true;
 			}
 		}
@@ -130,6 +131,16 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 */
 	protected abstract void decoratePlatform(World worldIn, BlockPos pos);
 	
+	/**
+	 * Gathers the list of blocks to be generated 
+	 * @param itemStackIn
+	 * @param worldIn
+	 * @param playerIn
+	 * @param diameter
+	 * @param desiredBiome
+	 * @param changeBiome
+	 * @return
+	 */
 	public ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, BiomeGenBase desiredBiome, Boolean changeBiome){
 		int blocksGenerated = 0;
 		if(!worldIn.isRemote){
@@ -154,23 +165,34 @@ public abstract class TerrainCrystalAbstract extends Item{
 				for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
 					//Fills across the circle
 					BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ - i + placeInwards);
-					posList.add(fillShellOne);
+					if(eligibleStateLocation(worldIn, fillShellOne)){
+						posList.add(fillShellOne);
+					}
 					BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ + i - placeInwards);
-					posList.add(fillShellTwo);
+					if(eligibleStateLocation(worldIn, fillShellTwo)){
+						posList.add(fillShellTwo);
+					}
 				}
 			}
 			//Generates the second half
 			for(int i = 0; i < (center); i ++){
 				BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i);
 				BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i);
-				posList.add(shellThree); 
-				posList.add(shellFour);
-				
+				if(eligibleStateLocation(worldIn, shellThree)){
+					posList.add(shellThree); 
+				}
+				if(eligibleStateLocation(worldIn, shellFour)){
+					posList.add(shellFour);
+				}
 				for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
 					BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards);
 					BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards);
-					posList.add(fillShellThree);
-					posList.add(fillShellFour);
+					if(eligibleStateLocation(worldIn, fillShellThree)){
+						posList.add(fillShellThree);
+					}
+					if(eligibleStateLocation(worldIn, fillShellFour)){
+						posList.add(fillShellFour);
+					}
 				}
 			}
 			for(BlockPos p : posList){
@@ -195,30 +217,30 @@ public abstract class TerrainCrystalAbstract extends Item{
 		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
 		for(BlockPos pos : posList){
 			int surroundingBlocks = 0;
+		
+			blocksGenerated = generateBlocksInWorld(pos, worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
 			
-				blocksGenerated = generateBlocksInWorld(pos, worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
-				
-				if(worldIn.getBlockState(pos.north()) != Blocks.air.getDefaultState()){
-					//System.out.println("entered northCheck");
-					surroundingBlocks++;
-				}
-				
-				if(worldIn.getBlockState(pos.east()) != Blocks.air.getDefaultState()){
-					surroundingBlocks++;
-				}
-				
-				if(worldIn.getBlockState(pos.south()) != Blocks.air.getDefaultState()){
-					surroundingBlocks++;
-				}
-				
-				if(worldIn.getBlockState(pos.west()) != Blocks.air.getDefaultState()){
-					surroundingBlocks++;
-				}
-				if((surroundingBlocks >= 3 || Math.random() < 0.05) && pos.getY() > 1){
-					blocksGenerated = generateBlocksInWorld(pos.down(), worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
-					recursiveList.add(pos.down());
-				}
+			if(worldIn.getBlockState(pos.north()) != Blocks.air.getDefaultState()){
+				//System.out.println("entered northCheck");
+				surroundingBlocks++;
 			}
+			
+			if(worldIn.getBlockState(pos.east()) != Blocks.air.getDefaultState()){
+				surroundingBlocks++;
+			}
+			
+			if(worldIn.getBlockState(pos.south()) != Blocks.air.getDefaultState()){
+				surroundingBlocks++;
+			}
+			
+			if(worldIn.getBlockState(pos.west()) != Blocks.air.getDefaultState()){
+				surroundingBlocks++;
+			}
+			if((surroundingBlocks >= 3 || Math.random() < 0.05) && pos.getY() > 1){
+				blocksGenerated = generateBlocksInWorld(pos.down(), worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
+				recursiveList.add(pos.down());
+			}
+		}
 		if(!recursiveList.isEmpty()){
 			blocksGenerated = generateSpike(recursiveList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
 		}
@@ -296,7 +318,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 			}
 		}
 		for(BlockPos b : posList){
-			if(!eligibleStateLocation(worldIn.getBlockState(b), b)){
+			if(!eligibleStateLocation(worldIn, b)){
 				return false;
 			}
 		}
