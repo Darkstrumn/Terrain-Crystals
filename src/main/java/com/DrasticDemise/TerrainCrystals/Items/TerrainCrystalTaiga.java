@@ -44,28 +44,30 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome){
-		int posY = MathHelper.floor_double(playerIn.posY);
 		
-		if(posY - pos.getY() == 1){
-			setBiome(worldIn, pos, desiredBiome, changeBiome);
-			if(Math.random() < .4){
-				if(Math.random() < .5){
-					worldIn.setBlockState(pos, Blocks.dirt.getStateFromMeta(1));
-				}else{
-					worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
-				}
-				if(ConfigurationFile.taigaCrystalGeneratesTrees && Math.random() <= 0.01){
-					if(Math.random() < 0.08){
-						growTree(worldIn, pos);
+		if(eligibleStateLocation(worldIn, pos)){
+			int posY = MathHelper.floor_double(playerIn.posY);
+			if(posY - pos.getY() == 1){
+				setBiome(worldIn, pos, desiredBiome, changeBiome);
+				if(Math.random() < .4){
+					if(Math.random() < .5){
+						worldIn.setBlockState(pos, Blocks.dirt.getStateFromMeta(1));
+					}else{
+						worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
+					}
+					if(ConfigurationFile.taigaCrystalGeneratesTrees && Math.random() <= 0.01){
+						if(Math.random() < 0.08){
+							growTree(worldIn, pos);
+						}
+					}else{
+						decoratePlatform(worldIn, pos);
 					}
 				}else{
-					decoratePlatform(worldIn, pos);
+					worldIn.setBlockState(pos, Blocks.dirt.getStateFromMeta(2));
 				}
 			}else{
-				worldIn.setBlockState(pos, Blocks.dirt.getStateFromMeta(2));
+				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
 			}
-		}else{
-			worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
 		}
 		return blocksGenerated++;
 	}
