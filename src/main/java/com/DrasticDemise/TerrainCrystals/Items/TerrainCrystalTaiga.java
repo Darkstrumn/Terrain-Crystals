@@ -55,10 +55,8 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 					}else{
 						worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
 					}
-					if(ConfigurationFile.taigaCrystalGeneratesTrees && Math.random() <= 0.01){
-						if(Math.random() < 0.08){
-							growTree(worldIn, pos);
-						}
+					if(ConfigurationFile.taigaCrystalGeneratesTrees && Math.random() < 0.08){
+						growTree(worldIn, pos);
 					}else{
 						decoratePlatform(worldIn, pos);
 					}
@@ -78,7 +76,7 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 				IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
 				Random rand = new Random();	
 				int attemptCap = 0;
-				while(worldIn.getBlockState(pos.up()) != Blocks.log.getStateFromMeta(1) && attemptCap < 10){
+				while(worldIn.getBlockState(pos.up()) != Blocks.log.getStateFromMeta(1) && attemptCap < 12){
 					growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
 					attemptCap++;
 				}
@@ -92,7 +90,7 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 	}
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
-		if(Math.random() < 0.02){
+		if(Math.random() < 0.3){
 			if(Math.random() < 0.50){
 				worldIn.setBlockState(pos.up(), Blocks.tallgrass.getStateFromMeta(2));
 			}else{
