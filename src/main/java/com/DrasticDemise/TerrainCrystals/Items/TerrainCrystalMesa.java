@@ -41,42 +41,43 @@ public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome){
-		
-		int posY = MathHelper.floor_double(playerIn.posY);
-		int getMetaFromPlayerDistance = posY - pos.getY();
-		if(posY - pos.getY() == 1){
-			if(Math.random() < .7){
-				super.setBiome(worldIn, pos, desiredBiome, changeBiome);
-				worldIn.setBlockState(pos, Blocks.sand.getStateFromMeta(1));
-				decoratePlatform(worldIn, pos);
+		if(eligibleStateLocation(worldIn, pos)){
+			int posY = MathHelper.floor_double(playerIn.posY);
+			int getMetaFromPlayerDistance = posY - pos.getY();
+			if(posY - pos.getY() == 1){
+				if(Math.random() < .7){
+					super.setBiome(worldIn, pos, desiredBiome, changeBiome);
+					worldIn.setBlockState(pos, Blocks.sand.getStateFromMeta(1));
+					decoratePlatform(worldIn, pos);
+				}else{
+					if(Math.random() < .50){
+						worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+					}else{
+						worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(1));
+					}
+				}
 			}else{
-				if(Math.random() < .50){
-					worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+				if(getMetaFromPlayerDistance == 2){
+					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance - 1));
+				}else if (getMetaFromPlayerDistance == 3 || getMetaFromPlayerDistance == 4){
+					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(4));
+				}else if (getMetaFromPlayerDistance == 5 || getMetaFromPlayerDistance == 6){
+					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(5));
+				}else if (getMetaFromPlayerDistance == 7 || getMetaFromPlayerDistance == 8){
+					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(7));
+				}else if (getMetaFromPlayerDistance == 9 || getMetaFromPlayerDistance == 10){
+					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(8));
+				}else if (getMetaFromPlayerDistance == 11){
+					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
+				}else if (getMetaFromPlayerDistance == 12){
+					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
+				}else if (getMetaFromPlayerDistance == 13){
+					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
+				}else if (getMetaFromPlayerDistance == 14){
+					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
 				}else{
 					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(1));
 				}
-			}
-		}else{
-			if(getMetaFromPlayerDistance == 2){
-				worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance - 1));
-			}else if (getMetaFromPlayerDistance == 3 || getMetaFromPlayerDistance == 4){
-				worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(4));
-			}else if (getMetaFromPlayerDistance == 5 || getMetaFromPlayerDistance == 6){
-				worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(5));
-			}else if (getMetaFromPlayerDistance == 7 || getMetaFromPlayerDistance == 8){
-				worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(7));
-			}else if (getMetaFromPlayerDistance == 9 || getMetaFromPlayerDistance == 10){
-				worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(8));
-			}else if (getMetaFromPlayerDistance == 11){
-				worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
-			}else if (getMetaFromPlayerDistance == 12){
-				worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
-			}else if (getMetaFromPlayerDistance == 13){
-				worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
-			}else if (getMetaFromPlayerDistance == 14){
-				worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(getMetaFromPlayerDistance));
-			}else{
-				worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(1));
 			}
 		}
 		return blocksGenerated++;

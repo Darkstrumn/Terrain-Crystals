@@ -44,6 +44,7 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 		@Override
 		protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 				BiomeGenBase desiredBiome, boolean changeBiome){
+			if(eligibleStateLocation(worldIn, pos)){
 				int posY = MathHelper.floor_double(playerIn.posY);
 				if(posY - pos.getY() == 1){
 					worldIn.setBlockState(pos, Blocks.end_stone.getDefaultState());
@@ -52,13 +53,14 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 				}else{
 					worldIn.setBlockState(pos, Blocks.end_stone.getDefaultState());
 				}
+			}
 			return blocksGenerated++;
 		}
 		
 		@Override
 		protected void decoratePlatform(World worldIn, BlockPos pos){
 			//Chance to create a pillar
-			if(ConfigurationFile.endCrystalGenerateObsidianSpikes && spacedFarEnough(worldIn, pos)){
+			if(ConfigurationFile.endCrystalGenerateObsidianSpikes && spacedFarEnough(worldIn, pos.up())){
 				if(Math.random() < .02){
 					worldIn.setBlockState(pos, Blocks.obsidian.getDefaultState());
 					worldIn.setBlockState(pos.up(), Blocks.obsidian.getDefaultState());

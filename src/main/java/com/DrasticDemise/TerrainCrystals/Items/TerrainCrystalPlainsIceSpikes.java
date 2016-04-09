@@ -35,28 +35,29 @@ public class TerrainCrystalPlainsIceSpikes extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome) {
-		
-		int posY = MathHelper.floor_double(playerIn.posY);
-		int layer = posY - pos.getY();
-		if(layer == 1){
-			setBiome(worldIn, pos, desiredBiome, changeBiome);
-			worldIn.setBlockState(pos, Blocks.snow.getDefaultState());
-			decoratePlatform(worldIn, pos);
-		}else if(layer == 2){
-			if(Math.random() < .80){
+		if(eligibleStateLocation(worldIn, pos)){
+			int posY = MathHelper.floor_double(playerIn.posY);
+			int layer = posY - pos.getY();
+			if(layer == 1){
+				setBiome(worldIn, pos, desiredBiome, changeBiome);
 				worldIn.setBlockState(pos, Blocks.snow.getDefaultState());
-			}else{
+				decoratePlatform(worldIn, pos);
+			}else if(layer == 2){
+				if(Math.random() < .80){
+					worldIn.setBlockState(pos, Blocks.snow.getDefaultState());
+				}else{
+					worldIn.setBlockState(pos, Blocks.stone.getDefaultState());
+				}
+			}else if(layer == 3){
+				if(Math.random() < .40){
+					worldIn.setBlockState(pos, Blocks.snow.getDefaultState());
+				}else{
+					worldIn.setBlockState(pos, Blocks.stone.getDefaultState());
+				}
+			}
+			else{
 				worldIn.setBlockState(pos, Blocks.stone.getDefaultState());
 			}
-		}else if(layer == 3){
-			if(Math.random() < .40){
-				worldIn.setBlockState(pos, Blocks.snow.getDefaultState());
-			}else{
-				worldIn.setBlockState(pos, Blocks.stone.getDefaultState());
-			}
-		}
-		else{
-			worldIn.setBlockState(pos, Blocks.stone.getDefaultState());
 		}
 		return blocksGenerated++;
 	}
@@ -67,7 +68,7 @@ public class TerrainCrystalPlainsIceSpikes extends TerrainCrystalAbstract{
 			if(worldIn.getBlockState(pos.up()) == Blocks.air.getDefaultState())
 				worldIn.setBlockState(pos.up(), Blocks.snow_layer.getDefaultState());
 		}else{
-			if(Math.random() < 0.03){
+			if(Math.random() < 0.03 && spacedFarEnough(worldIn, pos)){
 				//Creates the pillar up
 				worldIn.setBlockState(pos, Blocks.packed_ice.getDefaultState());
 				worldIn.setBlockState(pos.up(), Blocks.packed_ice.getDefaultState());
@@ -103,7 +104,7 @@ public class TerrainCrystalPlainsIceSpikes extends TerrainCrystalAbstract{
 				}
 				int flowerLayer = layer - 2;
 				int outwardsLayer = flowerLayer;
-				boolean generateOutwards = false;
+				//boolean generateOutwards = false;
 				if(Math.random() < .5 && layer > 5){
 					for(int i = 0; i < 2; i ++){
 						worldIn.setBlockState(pos.up(flowerLayer).north(), Blocks.packed_ice.getDefaultState());
@@ -112,9 +113,17 @@ public class TerrainCrystalPlainsIceSpikes extends TerrainCrystalAbstract{
 						worldIn.setBlockState(pos.up(flowerLayer).west(), Blocks.packed_ice.getDefaultState());
 						flowerLayer--;
 					}
-					generateOutwards = true;
+					if(Math.random() < .4){
+						for(int i = 0; i < 2; i ++){
+							worldIn.setBlockState(pos.up(outwardsLayer).north().east(), Blocks.packed_ice.getDefaultState());
+							worldIn.setBlockState(pos.up(outwardsLayer).north().west(), Blocks.packed_ice.getDefaultState());
+							worldIn.setBlockState(pos.up(outwardsLayer).south().east(), Blocks.packed_ice.getDefaultState());
+							worldIn.setBlockState(pos.up(outwardsLayer).south().west(), Blocks.packed_ice.getDefaultState());
+							outwardsLayer--;
+						}
+					}
 				}
-				if(Math.random() < .4 && generateOutwards == true){
+				/*if(Math.random() < .4 && generateOutwards == true){
 					for(int i = 0; i < 2; i ++){
 						worldIn.setBlockState(pos.up(outwardsLayer).north().east(), Blocks.packed_ice.getDefaultState());
 						worldIn.setBlockState(pos.up(outwardsLayer).north().west(), Blocks.packed_ice.getDefaultState());
@@ -122,7 +131,7 @@ public class TerrainCrystalPlainsIceSpikes extends TerrainCrystalAbstract{
 						worldIn.setBlockState(pos.up(outwardsLayer).south().west(), Blocks.packed_ice.getDefaultState());
 						outwardsLayer--;
 					}
-				}
+				}*/
 			}	
 		}
 	}

@@ -42,13 +42,15 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome) {
-		int posY = MathHelper.floor_double(playerIn.posY);
-		if(posY - pos.getY() == 1){
-			worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
-			super.setBiome(worldIn, pos, desiredBiome, changeBiome);
-			decoratePlatform(worldIn, pos);
-		}else{
-			worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+		if(eligibleStateLocation(worldIn, pos)){
+			int posY = MathHelper.floor_double(playerIn.posY);
+			if(posY - pos.getY() == 1){
+				worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
+				super.setBiome(worldIn, pos, desiredBiome, changeBiome);
+				decoratePlatform(worldIn, pos);
+			}else{
+				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+			}
 		}
 		return blocksGenerated++;
 	}
@@ -56,7 +58,7 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		//Generate bush things
-		if(Math.random() < 0.01 && ConfigurationFile.jungleCrystalGeneratesBushes && spacedFarEnough(worldIn, pos)){
+		if(Math.random() < 0.01 && ConfigurationFile.jungleCrystalGeneratesBushes && spacedFarEnough(worldIn, pos.up())){
 			worldIn.setBlockState(pos.up(), Blocks.leaves.getDefaultState());
 			worldIn.setBlockState(pos.up(2), Blocks.leaves.getDefaultState());
 			worldIn.setBlockState(pos.up().east(), Blocks.leaves.getDefaultState());
@@ -102,7 +104,7 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	}
 	private void growTree(World worldIn, BlockPos pos) {
 		try{
-			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up()) && spacedFarEnough(worldIn, pos)){
+			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up()) && spacedFarEnough(worldIn, pos.up())){
 				worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(3));
 				try{
 					IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();

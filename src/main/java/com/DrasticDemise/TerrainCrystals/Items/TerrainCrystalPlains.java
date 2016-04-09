@@ -44,13 +44,15 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			BiomeGenBase desiredBiome, boolean changeBiome){
-		int posY = MathHelper.floor_double(playerIn.posY);
-		if(posY - pos.getY() == 1){
-			worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
-			decoratePlatform(worldIn, pos);
-			setBiome(worldIn, pos, desiredBiome, changeBiome);
-		}else{
-			worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+		if(eligibleStateLocation(worldIn, pos)){
+			int posY = MathHelper.floor_double(playerIn.posY);
+			if(posY - pos.getY() == 1){
+				worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
+				decoratePlatform(worldIn, pos);
+				setBiome(worldIn, pos, desiredBiome, changeBiome);
+			}else{
+				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+			}
 		}
 		return blocksGenerated++;
 	}

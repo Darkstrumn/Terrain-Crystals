@@ -32,7 +32,6 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 */
 	public static void initReplaceableBlocks(){
 		replaceableBlockStates = new HashSet();
-		replaceableBlockStates.add(Blocks.tallgrass.getDefaultState());
 		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(1));
 		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(2));
 		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(3));
@@ -43,21 +42,27 @@ public abstract class TerrainCrystalAbstract extends Item{
 		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(8));
 		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(9));
 		replaceableBlockStates.add(Blocks.flowing_lava.getDefaultState());
+		
+		replaceableBlockStates.add(Blocks.tallgrass.getDefaultState());
+		replaceableBlockStates.add(Blocks.tallgrass.getStateFromMeta(1));
 		replaceableBlockStates.add(Blocks.red_flower.getDefaultState());
 		replaceableBlockStates.add(Blocks.yellow_flower.getDefaultState());
 		replaceableBlockStates.add(Blocks.red_mushroom.getDefaultState());
 		replaceableBlockStates.add(Blocks.brown_mushroom.getDefaultState());
-		replaceableBlockStates.add(Blocks.log.getStateFromMeta(3));
-		replaceableBlockStates.add(Blocks.leaves.getStateFromMeta(3));
+
 		replaceableBlockStates.add(Blocks.melon_block.getDefaultState());
-		replaceableBlockStates.add(Blocks.cactus.getDefaultState());
+		replaceableBlockStates.add(Blocks.cactus.getDefaultState())
+		;
 		replaceableBlockStates.add(Blocks.air.getDefaultState());
+		
 		replaceableBlockStates.add(Blocks.sapling.getStateFromMeta(1));
 		replaceableBlockStates.add(Blocks.deadbush.getDefaultState());
-		replaceableBlockStates.add(Blocks.log.getStateFromMeta(1));
-		replaceableBlockStates.add(Blocks.leaves.getStateFromMeta(1));
-		replaceableBlockStates.add(Blocks.log.getDefaultState());
 		replaceableBlockStates.add(Blocks.leaves.getDefaultState());
+		replaceableBlockStates.add(Blocks.leaves.getStateFromMeta(1));
+		replaceableBlockStates.add(Blocks.leaves.getStateFromMeta(3));
+	//	replaceableBlockStates.add(Blocks.log.getDefaultState());
+	//	replaceableBlockStates.add(Blocks.log.getStateFromMeta(1));
+	//	replaceableBlockStates.add(Blocks.log.getStateFromMeta(3));
 	}
 	public static void initInvalidSpaces(){
 		invalidSpaces = new HashSet();
@@ -66,10 +71,16 @@ public abstract class TerrainCrystalAbstract extends Item{
 		invalidSpaces.add(Blocks.log.getStateFromMeta(2));
 		invalidSpaces.add(Blocks.log.getStateFromMeta(3));
 		invalidSpaces.add(Blocks.log2.getDefaultState());
+		
 		invalidSpaces.add(Blocks.leaves.getDefaultState());
 		invalidSpaces.add(Blocks.leaves.getStateFromMeta(1));
 		invalidSpaces.add(Blocks.leaves.getStateFromMeta(2));
 		invalidSpaces.add(Blocks.leaves.getStateFromMeta(3));
+		
+		invalidSpaces.add(Blocks.sapling.getDefaultState());
+		invalidSpaces.add(Blocks.sapling.getStateFromMeta(1));
+		invalidSpaces.add(Blocks.sapling.getStateFromMeta(2));
+		invalidSpaces.add(Blocks.sapling.getStateFromMeta(3));
 		//Used for end crystal
 		invalidSpaces.add(Blocks.obsidian.getDefaultState());
 		//Used to ice spikes plains
@@ -99,7 +110,6 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @return returns a boolean if eligible or not.
 	 */
 	public static boolean eligibleStateLocation(World worldIn, BlockPos pos){
-		
 		if(pos.getY() > 1){
 			if(replaceableBlockStates.contains(worldIn.getBlockState(pos))){
 				return true;
@@ -171,34 +181,34 @@ public abstract class TerrainCrystalAbstract extends Item{
 				for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
 					//Fills across the circle
 					BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ - i + placeInwards);
-					if(eligibleStateLocation(worldIn, fillShellOne)){
+			//		if(eligibleStateLocation(worldIn, fillShellOne)){
 						posList.add(fillShellOne);
-					}
+			//		}
 					BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ + i - placeInwards);
-					if(eligibleStateLocation(worldIn, fillShellTwo)){
+			//		if(eligibleStateLocation(worldIn, fillShellTwo)){
 						posList.add(fillShellTwo);
-					}
+			//		}
 				}
 			}
 			//Generates the second half
 			for(int i = 0; i < (center); i ++){
 				BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i);
 				BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i);
-				if(eligibleStateLocation(worldIn, shellThree)){
+				//if(eligibleStateLocation(worldIn, shellThree)){
 					posList.add(shellThree); 
-				}
-				if(eligibleStateLocation(worldIn, shellFour)){
+				//}
+				//if(eligibleStateLocation(worldIn, shellFour)){
 					posList.add(shellFour);
-				}
+				//}
 				for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
 					BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards);
 					BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards);
-					if(eligibleStateLocation(worldIn, fillShellThree)){
+				//	if(eligibleStateLocation(worldIn, fillShellThree)){
 						posList.add(fillShellThree);
-					}
-					if(eligibleStateLocation(worldIn, fillShellFour)){
+			//		}
+				//	if(eligibleStateLocation(worldIn, fillShellFour)){
 						posList.add(fillShellFour);
-					}
+				//	}
 				}
 			}
 			for(BlockPos p : posList){

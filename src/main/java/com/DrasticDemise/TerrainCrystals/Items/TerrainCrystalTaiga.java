@@ -47,19 +47,23 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 		int posY = MathHelper.floor_double(playerIn.posY);
 		
 		if(posY - pos.getY() == 1){
+			setBiome(worldIn, pos, desiredBiome, changeBiome);
 			if(Math.random() < .4){
 				if(Math.random() < .5){
 					worldIn.setBlockState(pos, Blocks.dirt.getStateFromMeta(1));
 				}else{
 					worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
 				}
+				if(ConfigurationFile.taigaCrystalGeneratesTrees && Math.random() <= 0.01){
+					if(Math.random() < 0.08){
+						growTree(worldIn, pos);
+					}
+				}else{
+					decoratePlatform(worldIn, pos);
+				}
 			}else{
 				worldIn.setBlockState(pos, Blocks.dirt.getStateFromMeta(2));
 			}
-			if(ConfigurationFile.taigaCrystalGeneratesTrees && Math.random() < 0.02){
-				growTree(worldIn, pos);
-			}
-			setBiome(worldIn, pos, desiredBiome, changeBiome);
 		}else{
 			worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
 		}
@@ -67,29 +71,32 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 	}
 	private void growTree(World worldIn, BlockPos pos) {
 		try{
-			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
+			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up()) && spacedFarEnough(worldIn, pos)){
 				worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(1));
-				try{
-					IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
-					Random rand = new Random();	
-					int attemptCap = 0;
-					while(worldIn.getBlockState(pos.up()) != Blocks.log.getStateFromMeta(1) && attemptCap < 10){
-						growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
-						attemptCap++;
-					}
-					if(attemptCap > 8){
-						worldIn.setBlockState(pos.up(), Blocks.air.getDefaultState());
-					}
-				}catch(ClassCastException e){	
+				IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
+				Random rand = new Random();	
+				int attemptCap = 0;
+				while(worldIn.getBlockState(pos.up()) != Blocks.log.getStateFromMeta(1) && attemptCap < 10){
+					growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
+					attemptCap++;
+				}
+				if(attemptCap > 8){
+					worldIn.setBlockState(pos.up(), Blocks.air.getDefaultState());
 				}
 			}
-		}catch(IllegalArgumentException e){
+		}catch(Exception e){
 			
 		}
 	}
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
-		// TODO Auto-generated method stub
+		if(Math.random() < 0.02){
+			if(Math.random() < 0.50){
+				worldIn.setBlockState(pos.up(), Blocks.tallgrass.getStateFromMeta(2));
+			}else{
+				worldIn.setBlockState(pos.up(), Blocks.tallgrass.getStateFromMeta(1));
+			}
+		}
 		
 	}
 }
