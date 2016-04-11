@@ -41,21 +41,6 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 	    super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.plainsCrystalDiameter, Biomes.plains, ConfigurationFile.plainsCrystalChangesBiome);
 		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
-	@Override
-	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
-			BiomeGenBase desiredBiome, boolean changeBiome){
-		if(eligibleStateLocation(worldIn, pos)){
-			int posY = MathHelper.floor_double(playerIn.posY);
-			if(posY - pos.getY() == 1){
-				worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
-				decoratePlatform(worldIn, pos);
-				setBiome(worldIn, pos, desiredBiome, changeBiome);
-			}else{
-				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
-			}
-		}
-		return blocksGenerated++;
-	}
 	//Code taken from Lumien's Random Things Nature Core tile entity
 	protected void decoratePlatform(World worldIn, BlockPos pos){
 		if(ConfigurationFile.plainsCrystalGenerateTallGrass){
@@ -64,15 +49,7 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 			//Try-catching our worries away!
 			try{
 				if(Math.random() < 0.10){
-					if (state.getBlock() instanceof IGrowable)
-					{
-						IGrowable growable = (IGrowable) state.getBlock();
-						if (growable.canGrow(worldIn, pos, state, worldIn.isRemote))
-						{
-							worldIn.playAuxSFX(2005, pos, 0);
-							growable.grow(worldIn, rand, pos, state);
-						}
-					}
+					bonemeal(worldIn, pos);
 				}
 				if(Math.random() <= 0.05){
 					growTree(worldIn, pos);

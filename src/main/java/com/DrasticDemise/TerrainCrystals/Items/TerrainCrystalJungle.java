@@ -40,22 +40,6 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	}
 
 	@Override
-	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
-			BiomeGenBase desiredBiome, boolean changeBiome) {
-		if(eligibleStateLocation(worldIn, pos)){
-			int posY = MathHelper.floor_double(playerIn.posY);
-			if(posY - pos.getY() == 1){
-				worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
-				super.setBiome(worldIn, pos, desiredBiome, changeBiome);
-				decoratePlatform(worldIn, pos);
-			}else{
-				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
-			}
-		}
-		return blocksGenerated++;
-	}
-
-	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		//Generate bush things
 		if(Math.random() < 0.01 && ConfigurationFile.jungleCrystalGeneratesBushes && spacedFarEnough(worldIn, pos.up())){
@@ -75,26 +59,11 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 		}
 		//Decorate with tall grass
 		if(Math.random() < 0.08){
-			IBlockState state = worldIn.getBlockState(pos);
-			Random rand = new Random();
-			//Try-catching our worries away!
-			try{
-				if (state.getBlock() instanceof IGrowable)
-				{
-					IGrowable growable = (IGrowable) state.getBlock();
-					if (growable.canGrow(worldIn, pos, state, worldIn.isRemote))
-					{
-						worldIn.playAuxSFX(2005, pos, 0);
-						growable.grow(worldIn, rand, pos, state);
-					}
-				}
-				if(Math.random() < 0.05 && ConfigurationFile.jungleCrystalGeneratesMelon){
-					if(worldIn.getBlockState(pos.up()) == Blocks.air.getDefaultState())
-						worldIn.setBlockState(pos.up(), Blocks.melon_block.getDefaultState());
-				}
-			}catch(IllegalArgumentException e){
-				//System.out.println("Caught an error in tree growing! Tossing it out, goodbye chunk error!");
-				return;
+			bonemeal(worldIn, pos);
+			
+			if(Math.random() < 0.05 && ConfigurationFile.jungleCrystalGeneratesMelon){
+				if(worldIn.getBlockState(pos.up()) == Blocks.air.getDefaultState())
+					worldIn.setBlockState(pos.up(), Blocks.melon_block.getDefaultState());
 			}
 		}
 		

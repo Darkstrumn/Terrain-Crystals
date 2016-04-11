@@ -67,7 +67,6 @@ public class TerrainCrystals {
 		}
 
 	}
-	
 	public static class ServerProxy extends CommonProxy{
 
 	}

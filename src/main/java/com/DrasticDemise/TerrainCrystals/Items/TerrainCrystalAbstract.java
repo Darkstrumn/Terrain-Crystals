@@ -3,7 +3,9 @@ package com.DrasticDemise.TerrainCrystals.Items;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.util.EnumActionResult;
@@ -45,14 +47,12 @@ public abstract class TerrainCrystalAbstract extends Item{
 		
 		replaceableBlockStates.add(Blocks.tallgrass.getDefaultState());
 		replaceableBlockStates.add(Blocks.tallgrass.getStateFromMeta(1));
-		replaceableBlockStates.add(Blocks.red_flower.getDefaultState());
-		replaceableBlockStates.add(Blocks.yellow_flower.getDefaultState());
 		replaceableBlockStates.add(Blocks.red_mushroom.getDefaultState());
 		replaceableBlockStates.add(Blocks.brown_mushroom.getDefaultState());
 
 		replaceableBlockStates.add(Blocks.melon_block.getDefaultState());
-		replaceableBlockStates.add(Blocks.cactus.getDefaultState())
-		;
+		replaceableBlockStates.add(Blocks.cactus.getDefaultState());
+		
 		replaceableBlockStates.add(Blocks.air.getDefaultState());
 		
 		replaceableBlockStates.add(Blocks.sapling.getStateFromMeta(1));
@@ -60,6 +60,11 @@ public abstract class TerrainCrystalAbstract extends Item{
 		replaceableBlockStates.add(Blocks.leaves.getDefaultState());
 		replaceableBlockStates.add(Blocks.leaves.getStateFromMeta(1));
 		replaceableBlockStates.add(Blocks.leaves.getStateFromMeta(3));
+		replaceableBlockStates.add(Blocks.yellow_flower.getDefaultState());
+		
+		for(int i = 0; i < 9; i ++){
+			replaceableBlockStates.add(Blocks.red_flower.getStateFromMeta(i));
+		}
 	//	replaceableBlockStates.add(Blocks.log.getDefaultState());
 	//	replaceableBlockStates.add(Blocks.log.getStateFromMeta(1));
 	//	replaceableBlockStates.add(Blocks.log.getStateFromMeta(3));
@@ -137,7 +142,19 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param changeBiome If the biome will be changed at the block column.
 	 * @return Needs to return the amount of blocks placed. This keeps track of the durability.
 	 */
-	protected abstract int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated, BiomeGenBase desiredBiome, boolean changeBiome);
+	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated, BiomeGenBase desiredBiome, boolean changeBiome){
+		if(eligibleStateLocation(worldIn, pos)){
+			int posY = MathHelper.floor_double(playerIn.posY);
+			if(posY - pos.getY() == 1){
+				setBiome(worldIn, pos, desiredBiome, changeBiome);
+				worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
+				decoratePlatform(worldIn, pos);
+			}else{
+				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+			}
+		}
+		return blocksGenerated++;
+	}
 		
 	//Each class needs to provide its own decoration rules
 	/**
@@ -146,6 +163,29 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param pos The SURFACE block to be decorated.
 	 */
 	protected abstract void decoratePlatform(World worldIn, BlockPos pos);
+	//Code taken from Lumien's Random Things Nature Core tile entity
+	/**
+	 * Bonemeals the grass at a given position
+	 * @param worldIn World
+	 * @param pos Pos
+	 */
+	protected void bonemeal(World worldIn, BlockPos pos){
+		IBlockState state = worldIn.getBlockState(pos);
+		Random rand = new Random();
+		//Try-catching our worries away!
+		try{
+			if (state.getBlock() instanceof IGrowable)
+			{
+				IGrowable growable = (IGrowable) state.getBlock();
+				if (growable.canGrow(worldIn, pos, state, worldIn.isRemote))
+				{
+					worldIn.playAuxSFX(2005, pos, 0);
+					growable.grow(worldIn, rand, pos, state);
+				}
+			}
+		}catch(Exception e){
+		}
+	}
 	
 	/**
 	 * Gathers the list of blocks to be generated 
@@ -339,7 +379,52 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return true;
 	}
-	
+	protected boolean spacedFarEnough(World worldIn, BlockPos pos, int diameter){
+		int posX = pos.getX();
+		int posY = pos.getY();
+		int posZ = pos.getZ();
+		int center;
+		ArrayList<BlockPos> posList = new ArrayList<BlockPos>(13);
+		double radius = diameter/2.0;
+		if(diameter%2 != 0){
+			center = (int) (radius + 0.5);
+		}else{
+			center = (int) (radius);
+		}
+		int offsetXFirstHalf = (int) (posX + radius);
+		//Not sure why this has to be offset by 1 extra, but it does.
+		int offsetXSecondHalf = (int) (posX - radius + 1);
+		for(int i = 0; i < (center); i ++){
+			//Creates a circle and fills it
+			for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
+				//Fills across the circle
+				BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY, posZ - i + placeInwards);
+				posList.add(fillShellOne);
+				BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY, posZ + i - placeInwards);
+				posList.add(fillShellTwo);
+			}
+		}
+		//Generates the second half
+		for(int i = 0; i < (center); i ++){
+			BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY, posZ  + i);
+			BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY, posZ - i);
+			posList.add(shellThree); 
+			posList.add(shellFour);
+			
+			for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
+				BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY, posZ + i - placeInwards);
+				BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY, posZ - i + placeInwards);
+				posList.add(fillShellThree);
+				posList.add(fillShellFour);
+			}
+		}
+		for(BlockPos b : posList){
+			if(!eligibleSpaceForTree(worldIn.getBlockState(b), b)){
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
