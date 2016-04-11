@@ -186,6 +186,35 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}catch(Exception e){
 		}
 	}
+	protected void bonemealTree(World worldIn, BlockPos pos){
+		try{
+			IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
+			Random rand = new Random();	
+			int attemptCap = 0;
+			while(attemptCap < 10){
+				growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
+				attemptCap++;
+			}
+			if(attemptCap > 8){
+				worldIn.setBlockState(pos.up(), Blocks.air.getDefaultState());
+			}
+		}catch(Exception e){
+			
+		}
+	}
+	protected void bonemealBlockNoRemoval(World worldIn, BlockPos pos){
+		try{
+			IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
+			Random rand = new Random();	
+			int attemptCap = 0;
+			while(attemptCap < 10){
+				growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
+				attemptCap++;
+			}
+		}catch(Exception e){
+			
+		}
+	}
 	
 	/**
 	 * Gathers the list of blocks to be generated 
@@ -273,11 +302,8 @@ public abstract class TerrainCrystalAbstract extends Item{
 		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
 		for(BlockPos pos : posList){
 			int surroundingBlocks = 0;
-		
 			blocksGenerated = generateBlocksInWorld(pos, worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
-			
 			if(worldIn.getBlockState(pos.north()) != Blocks.air.getDefaultState()){
-				//System.out.println("entered northCheck");
 				surroundingBlocks++;
 			}
 			

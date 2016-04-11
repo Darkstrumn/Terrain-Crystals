@@ -70,22 +70,9 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 		return blocksGenerated++;
 	}
 	private void growTree(World worldIn, BlockPos pos) {
-		try{
-			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up()) && spacedFarEnough(worldIn, pos)){
-				worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(1));
-				IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
-				Random rand = new Random();	
-				int attemptCap = 0;
-				while(worldIn.getBlockState(pos.up()) != Blocks.log.getStateFromMeta(1) && attemptCap < 12){
-					growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
-					attemptCap++;
-				}
-				if(attemptCap > 8){
-					worldIn.setBlockState(pos.up(), Blocks.air.getDefaultState());
-				}
-			}
-		}catch(Exception e){
-			
+		if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up()) && spacedFarEnough(worldIn, pos)){
+			worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(1));
+			bonemealTree(worldIn, pos);
 		}
 	}
 	@Override

@@ -67,34 +67,16 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 			}
 		}
 		
-		if(Math.random() < 0.07 && ConfigurationFile.jungleCrystalGeneratesTrees){
+		if(Math.random() < 0.07 && ConfigurationFile.jungleCrystalGeneratesTrees && spacedFarEnough(worldIn, pos.up())){
 			growTree(worldIn, pos);
 		}
 	}
 	private void growTree(World worldIn, BlockPos pos) {
-		try{
-			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up()) && spacedFarEnough(worldIn, pos.up())){
+			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
 				worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(3));
-				try{
-					IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
-					Random rand = new Random();	
-					int attemptCap = 0;
-					while(worldIn.getBlockState(pos.up()) != Blocks.log.getStateFromMeta(3) && attemptCap < 10){
-						growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
-						attemptCap++;
-					}
-					if(attemptCap > 8){
-						worldIn.setBlockState(pos.up(), Blocks.air.getDefaultState());
-					}
-					generateCocoaBeans(worldIn, pos.up());
-				}catch(ClassCastException e){
-					
-				}
-				
+				bonemealTree(worldIn, pos);
+				generateCocoaBeans(worldIn, pos.up());
 			}
-		}catch(IllegalArgumentException e){
-			
-		}
 	}
 	private boolean safelyExpandPlatform(World worldIn, BlockPos pos){
 		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState() || worldIn.getBlockState(pos) == Blocks.grass.getDefaultState()
@@ -125,26 +107,6 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 				}
 			}
 			counter++;
-		}
-	}
-	//Broken. Vines place in the wrong direction on half of the island.
-	private void generateVines(World worldIn, BlockPos pos) {
-		if(worldIn.getBlockState(pos.north()) == Blocks.air.getDefaultState()){
-			//System.out.println("entered northCheck");
-			if(worldIn.getBlockState(pos.north()) != Blocks.grass.getDefaultState())
-				worldIn.setBlockState(pos.north(), Blocks.vine.getDefaultState());
-		}
-		
-		if(worldIn.getBlockState(pos.east()) == Blocks.air.getDefaultState()){
-			worldIn.setBlockState(pos.east(), Blocks.vine.getDefaultState());
-		}
-		
-		if(worldIn.getBlockState(pos.south()) == Blocks.air.getDefaultState()){
-			worldIn.setBlockState(pos.south(), Blocks.vine.getStateFromMeta(0));
-		}
-		
-		if(worldIn.getBlockState(pos.west()) == Blocks.air.getDefaultState()){
-			worldIn.setBlockState(pos.west(), Blocks.vine.getDefaultState());
 		}
 	}
 }

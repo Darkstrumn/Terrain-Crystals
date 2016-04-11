@@ -54,13 +54,7 @@ public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
 			try{
 				if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up()) && Math.random() <= 0.03 && spacedFarEnough(worldIn, pos.up())){
 					worldIn.setBlockState(pos.up(), Blocks.sapling.getDefaultState());
-					IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
-					Random rand = new Random();	
-					int attemptCap = 0;
-					while((worldIn.getBlockState(pos.up()) != Blocks.log.getDefaultState()) && attemptCap < 8){
-						growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
-						attemptCap++;
-					}
+					bonemealTree(worldIn, pos);
 				}else if(Math.random() < 0.10){
 					bonemeal(worldIn, pos);
 				}

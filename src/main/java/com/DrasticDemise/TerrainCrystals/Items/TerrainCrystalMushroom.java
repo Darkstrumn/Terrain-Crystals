@@ -62,16 +62,12 @@ public class TerrainCrystalMushroom extends TerrainCrystalAbstract{
 				if(Math.random() < .5){
 					worldIn.setBlockState(pos.up(), Blocks.brown_mushroom.getDefaultState());
 					if(Math.random() < 0.1 && spacedFarEnough(worldIn, pos)){
-						IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
-						Random rand = new Random();
-						growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos));
+						bonemealBlockNoRemoval(worldIn, pos);
 					}
 				}else{
 					worldIn.setBlockState(pos.up(), Blocks.red_mushroom.getDefaultState());
 					if(Math.random() < 0.1&& spacedFarEnough(worldIn, pos)){
-						IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
-						Random rand = new Random();
-						growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos));
+						bonemealBlockNoRemoval(worldIn, pos);
 					}
 				}
 			}
