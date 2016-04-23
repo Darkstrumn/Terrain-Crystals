@@ -22,7 +22,7 @@ plugins {
 */
 version = "1.0"
 group= "com.drasticdemise.TerrainCrystals" 
-archivesBaseName = "modid"
+archivesBaseName = "TerrainCrystals"
 
 minecraft {
     version = "1.9-12.16.0.1849-1.9"
