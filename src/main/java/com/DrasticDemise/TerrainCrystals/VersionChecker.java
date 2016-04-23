@@ -33,7 +33,6 @@ public class VersionChecker {
 			if(!VersionChecker.version.equals(TerrainCrystals.VERSION) && ConfigurationFile.versionChecker){
 				System.out.println("VC: " + VersionChecker.version + " " + "TC V: " + TerrainCrystals.VERSION);
 				player.addChatComponentMessage(new TextComponentTranslation("There is a new version for Terrain Crystals Available!"));
-
 			}
 			VersionChecker.doneChecking = true;
 		}

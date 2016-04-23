@@ -66,8 +66,9 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 			}else{
 				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
 			}
+			blocksGenerated += 1;
 		}
-		return blocksGenerated++;
+		return blocksGenerated;
 	}
 	private void growTree(World worldIn, BlockPos pos) {
 		if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up()) && spacedFarEnough(worldIn, pos)){

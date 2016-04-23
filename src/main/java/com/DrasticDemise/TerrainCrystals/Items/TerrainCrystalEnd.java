@@ -53,8 +53,9 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 				}else{
 					worldIn.setBlockState(pos, Blocks.end_stone.getDefaultState());
 				}
+				blocksGenerated += 1;
 			}
-			return blocksGenerated++;
+			return blocksGenerated;
 		}
 		
 		@Override

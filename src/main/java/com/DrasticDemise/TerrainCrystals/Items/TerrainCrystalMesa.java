@@ -79,8 +79,9 @@ public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 					worldIn.setBlockState(pos, Blocks.stained_hardened_clay.getStateFromMeta(1));
 				}
 			}
+			blocksGenerated += 1;
 		}
-		return blocksGenerated++;
+		return blocksGenerated;
 	}
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos){

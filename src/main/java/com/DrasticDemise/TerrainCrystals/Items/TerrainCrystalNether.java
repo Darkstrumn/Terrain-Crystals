@@ -66,8 +66,9 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 					worldIn.setBlockState(pos, Blocks.soul_sand.getDefaultState());
 				}
 			}
+			blocksGenerated += 1;
 		}
-		return blocksGenerated++;
+		return blocksGenerated;
 	}
 	protected void decoratePlatform(World worldIn, BlockPos pos){
 		if(Blocks.brown_mushroom.canPlaceBlockAt(worldIn, pos.up())){

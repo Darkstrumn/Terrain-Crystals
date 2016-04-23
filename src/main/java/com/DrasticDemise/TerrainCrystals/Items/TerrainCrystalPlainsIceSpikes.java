@@ -58,8 +58,9 @@ public class TerrainCrystalPlainsIceSpikes extends TerrainCrystalAbstract{
 			else{
 				worldIn.setBlockState(pos, Blocks.stone.getDefaultState());
 			}
+			blocksGenerated += 1;
 		}
-		return blocksGenerated++;
+		return blocksGenerated;
 	}
 
 	@Override

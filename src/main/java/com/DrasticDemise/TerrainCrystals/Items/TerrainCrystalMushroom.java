@@ -53,8 +53,9 @@ public class TerrainCrystalMushroom extends TerrainCrystalAbstract{
 			}else{
 				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
 			}
+			blocksGenerated += 1;
 		}
-		return blocksGenerated++;
+		return blocksGenerated;
 	}
 	protected void decoratePlatform(World worldIn, BlockPos pos){
 		if(Blocks.brown_mushroom.canPlaceBlockAt(worldIn, pos.up())){

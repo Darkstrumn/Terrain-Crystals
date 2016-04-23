@@ -65,9 +65,6 @@ public abstract class TerrainCrystalAbstract extends Item{
 		for(int i = 0; i < 9; i ++){
 			replaceableBlockStates.add(Blocks.red_flower.getStateFromMeta(i));
 		}
-	//	replaceableBlockStates.add(Blocks.log.getDefaultState());
-	//	replaceableBlockStates.add(Blocks.log.getStateFromMeta(1));
-	//	replaceableBlockStates.add(Blocks.log.getStateFromMeta(3));
 	}
 	public static void initInvalidSpaces(){
 		invalidSpaces = new HashSet();
@@ -100,7 +97,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param pos Position
 	 * @return Returns a boolean if the blockstate given is an eligble location for a tree.
 	 */
-	private static boolean eligibleSpaceForTree(IBlockState blockState, BlockPos pos){
+	protected static boolean eligibleSpaceForTree(IBlockState blockState, BlockPos pos){
 		if(pos.getY() > 1){
 			if(invalidSpaces.contains(blockState)){
 				return false;
@@ -152,8 +149,9 @@ public abstract class TerrainCrystalAbstract extends Item{
 			}else{
 				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
 			}
+			blocksGenerated += 1;
 		}
-		return blocksGenerated++;
+		return blocksGenerated;
 	}
 		
 	//Each class needs to provide its own decoration rules
@@ -226,7 +224,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param changeBiome
 	 * @return
 	 */
-	public ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, BiomeGenBase desiredBiome, Boolean changeBiome){
+	protected ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, BiomeGenBase desiredBiome, Boolean changeBiome){
 		int blocksGenerated = 0;
 		if(!worldIn.isRemote){
 			int posX = MathHelper.floor_double(playerIn.posX); 
@@ -250,37 +248,26 @@ public abstract class TerrainCrystalAbstract extends Item{
 				for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
 					//Fills across the circle
 					BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ - i + placeInwards);
-			//		if(eligibleStateLocation(worldIn, fillShellOne)){
 						posList.add(fillShellOne);
-			//		}
 					BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ + i - placeInwards);
-			//		if(eligibleStateLocation(worldIn, fillShellTwo)){
 						posList.add(fillShellTwo);
-			//		}
 				}
 			}
 			//Generates the second half
 			for(int i = 0; i < (center); i ++){
 				BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i);
 				BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i);
-				//if(eligibleStateLocation(worldIn, shellThree)){
 					posList.add(shellThree); 
-				//}
-				//if(eligibleStateLocation(worldIn, shellFour)){
 					posList.add(shellFour);
-				//}
 				for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
 					BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards);
 					BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards);
-				//	if(eligibleStateLocation(worldIn, fillShellThree)){
 						posList.add(fillShellThree);
-			//		}
-				//	if(eligibleStateLocation(worldIn, fillShellFour)){
 						posList.add(fillShellFour);
-				//	}
 				}
 			}
-			for(BlockPos p : posList){
+			//Hacky-fix to the island not generating properly on a single call
+			for(int i = 0; i < 15; i++){
 				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
 			}
 		}
@@ -298,7 +285,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param changeBiome If the config allows the biome to be changed
 	 * @return Returns an int, usually the number of blocks generated in the world.
 	 */
-	public int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated, ItemStack itemStackIn, BiomeGenBase desiredBiome, boolean changeBiome){
+	protected int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated, ItemStack itemStackIn, BiomeGenBase desiredBiome, boolean changeBiome){
 		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
 		for(BlockPos pos : posList){
 			int surroundingBlocks = 0;
@@ -343,7 +330,6 @@ public abstract class TerrainCrystalAbstract extends Item{
         if(changeBiome){
 			Chunk chunk = worldIn.getChunkFromBlockCoords(position);
 	        if ((chunk != null) && (chunk.isLoaded())) {
-
 	        	if(BiomeGenBase.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != BiomeGenBase.getIdForBiome(desiredBiome)){
 	        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.getIdForBiome(desiredBiome);
 		            return true;
@@ -455,7 +441,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
-		tooltip.add("You must relog in order to see the biome change client-side. Changes server-side instantly.");
+		tooltip.add("Relog for client sync.");
     }
 	
 	@SideOnly(Side.CLIENT)
