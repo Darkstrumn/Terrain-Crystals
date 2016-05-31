@@ -1,26 +1,12 @@
 package com.DrasticDemise.TerrainCrystals;
 
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalDesert;
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalEnd;
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalJungle;
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalMesa;
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalMushroom;
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalNether;
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalPlains;
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalPlainsIceSpikes;
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalSwamp;
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalTaiga;
-
-import net.minecraft.block.Block;
+import com.DrasticDemise.TerrainCrystals.Items.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class InitItems {
 	
@@ -47,25 +33,25 @@ public class InitItems {
 		terrainCrystalSwamp = new TerrainCrystalSwamp();
 	}
 	public static void recipes(){
-		ItemStack dirtStack = new ItemStack(Blocks.dirt);
-		ItemStack sandStack = new ItemStack(Blocks.sand);
-		ItemStack hardenedClayStack  = new ItemStack(Blocks.hardened_clay);
-		ItemStack netherrackStack = new ItemStack(Blocks.netherrack);
-		ItemStack endStoneStack = new ItemStack(Blocks.end_stone);
-		ItemStack snowBlockStack = new ItemStack(Blocks.snow);
-		ItemStack iceBlockStack = new ItemStack(Blocks.ice);
-		ItemStack grassBlockStack = new ItemStack(Blocks.grass);
-		ItemStack cactusStack = new ItemStack(Blocks.cactus);
-		ItemStack brownMushBlockStack = new ItemStack(Blocks.brown_mushroom_block);
-		ItemStack redMushBlockStack = new ItemStack(Blocks.red_mushroom_block);
-		ItemStack snowballStack = new ItemStack(Items.snowball);
-		ItemStack clayBlockStack = new ItemStack(Blocks.clay);
-		ItemStack slimeBallStack = new ItemStack(Items.slime_ball);
-		ItemStack bRodStack = new ItemStack(Items.blaze_rod);
-		ItemStack pearlStack = new ItemStack(Items.ender_pearl);
-		ItemStack melonSeedStack = new ItemStack(Items.melon_seeds);
+		ItemStack dirtStack = new ItemStack(Blocks.DIRT);
+		ItemStack sandStack = new ItemStack(Blocks.SAND);
+		ItemStack hardenedClayStack  = new ItemStack(Blocks.HARDENED_CLAY);
+		ItemStack netherrackStack = new ItemStack(Blocks.NETHERRACK);
+		ItemStack endStoneStack = new ItemStack(Blocks.END_STONE);
+		ItemStack snowBlockStack = new ItemStack(Blocks.SNOW);
+		ItemStack iceBlockStack = new ItemStack(Blocks.ICE);
+		ItemStack grassBlockStack = new ItemStack(Blocks.GRASS);
+		ItemStack cactusStack = new ItemStack(Blocks.CACTUS);
+		ItemStack brownMushBlockStack = new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK);
+		ItemStack redMushBlockStack = new ItemStack(Blocks.RED_MUSHROOM_BLOCK);
+		ItemStack snowballStack = new ItemStack(Items.SNOWBALL);
+		ItemStack clayBlockStack = new ItemStack(Blocks.CLAY);
+		ItemStack slimeBallStack = new ItemStack(Items.SLIME_BALL);
+		ItemStack bRodStack = new ItemStack(Items.BLAZE_ROD);
+		ItemStack pearlStack = new ItemStack(Items.ENDER_PEARL);
+		ItemStack melonSeedStack = new ItemStack(Items.MELON_SEEDS);
 		
-		ItemStack goldBlockStack = new ItemStack(Blocks.gold_block);
+		ItemStack goldBlockStack = new ItemStack(Blocks.GOLD_BLOCK);
 		//Plains Crystal
 		GameRegistry.addRecipe(
 			    new ItemStack(InitItems.terrainCrystalPlains),

@@ -1,29 +1,27 @@
 package com.DrasticDemise.TerrainCrystals.Items;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 
 public abstract class TerrainCrystalAbstract extends Item{
 	public static HashSet replaceableBlockStates;
@@ -34,62 +32,62 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 */
 	public static void initReplaceableBlocks(){
 		replaceableBlockStates = new HashSet();
-		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(1));
-		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(2));
-		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(3));
-		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(4));
-		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(5));
-		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(6));
-		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(7));
-		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(8));
-		replaceableBlockStates.add(Blocks.flowing_water.getStateFromMeta(9));
-		replaceableBlockStates.add(Blocks.flowing_lava.getDefaultState());
+		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(1));
+		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(2));
+		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(3));
+		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(4));
+		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(5));
+		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(6));
+		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(7));
+		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(8));
+		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(9));
+		replaceableBlockStates.add(Blocks.FLOWING_WATER.getDefaultState());
 		
-		replaceableBlockStates.add(Blocks.tallgrass.getDefaultState());
-		replaceableBlockStates.add(Blocks.tallgrass.getStateFromMeta(1));
-		replaceableBlockStates.add(Blocks.red_mushroom.getDefaultState());
-		replaceableBlockStates.add(Blocks.brown_mushroom.getDefaultState());
+		replaceableBlockStates.add(Blocks.TALLGRASS.getDefaultState());
+		replaceableBlockStates.add(Blocks.TALLGRASS.getStateFromMeta(1));
+		replaceableBlockStates.add(Blocks.RED_MUSHROOM.getDefaultState());
+		replaceableBlockStates.add(Blocks.BROWN_MUSHROOM.getDefaultState());
 
-		replaceableBlockStates.add(Blocks.melon_block.getDefaultState());
-		replaceableBlockStates.add(Blocks.cactus.getDefaultState());
+		replaceableBlockStates.add(Blocks.MELON_BLOCK.getDefaultState());
+		replaceableBlockStates.add(Blocks.CACTUS.getDefaultState());
 		
-		replaceableBlockStates.add(Blocks.air.getDefaultState());
+		replaceableBlockStates.add(Blocks.AIR.getDefaultState());
 		
-		replaceableBlockStates.add(Blocks.sapling.getStateFromMeta(1));
-		replaceableBlockStates.add(Blocks.deadbush.getDefaultState());
-		replaceableBlockStates.add(Blocks.leaves.getDefaultState());
-		replaceableBlockStates.add(Blocks.leaves.getStateFromMeta(1));
-		replaceableBlockStates.add(Blocks.leaves.getStateFromMeta(3));
-		replaceableBlockStates.add(Blocks.yellow_flower.getDefaultState());
+		replaceableBlockStates.add(Blocks.SAPLING.getStateFromMeta(1));
+		replaceableBlockStates.add(Blocks.DEADBUSH.getDefaultState());
+		replaceableBlockStates.add(Blocks.LEAVES.getDefaultState());
+		replaceableBlockStates.add(Blocks.LEAVES.getStateFromMeta(1));
+		replaceableBlockStates.add(Blocks.LEAVES.getStateFromMeta(3));
+		replaceableBlockStates.add(Blocks.YELLOW_FLOWER.getDefaultState());
 		
 		for(int i = 0; i < 9; i ++){
-			replaceableBlockStates.add(Blocks.red_flower.getStateFromMeta(i));
+			replaceableBlockStates.add(Blocks.RED_FLOWER.getStateFromMeta(i));
 		}
 	}
 	public static void initInvalidSpaces(){
 		invalidSpaces = new HashSet();
-		invalidSpaces.add(Blocks.log.getDefaultState());
-		invalidSpaces.add(Blocks.log.getStateFromMeta(1));
-		invalidSpaces.add(Blocks.log.getStateFromMeta(2));
-		invalidSpaces.add(Blocks.log.getStateFromMeta(3));
-		invalidSpaces.add(Blocks.log2.getDefaultState());
+		invalidSpaces.add(Blocks.LOG.getDefaultState());
+		invalidSpaces.add(Blocks.LOG.getStateFromMeta(1));
+		invalidSpaces.add(Blocks.LOG.getStateFromMeta(2));
+		invalidSpaces.add(Blocks.LOG.getStateFromMeta(3));
+		invalidSpaces.add(Blocks.LOG2.getDefaultState());
 		
-		invalidSpaces.add(Blocks.leaves.getDefaultState());
-		invalidSpaces.add(Blocks.leaves.getStateFromMeta(1));
-		invalidSpaces.add(Blocks.leaves.getStateFromMeta(2));
-		invalidSpaces.add(Blocks.leaves.getStateFromMeta(3));
+		invalidSpaces.add(Blocks.LEAVES.getDefaultState());
+		invalidSpaces.add(Blocks.LEAVES.getStateFromMeta(1));
+		invalidSpaces.add(Blocks.LEAVES.getStateFromMeta(2));
+		invalidSpaces.add(Blocks.LEAVES.getStateFromMeta(3));
 		
-		invalidSpaces.add(Blocks.sapling.getDefaultState());
-		invalidSpaces.add(Blocks.sapling.getStateFromMeta(1));
-		invalidSpaces.add(Blocks.sapling.getStateFromMeta(2));
-		invalidSpaces.add(Blocks.sapling.getStateFromMeta(3));
+		invalidSpaces.add(Blocks.SAPLING.getDefaultState());
+		invalidSpaces.add(Blocks.SAPLING.getStateFromMeta(1));
+		invalidSpaces.add(Blocks.SAPLING.getStateFromMeta(2));
+		invalidSpaces.add(Blocks.SAPLING.getStateFromMeta(3));
 		//Used for end crystal
-		invalidSpaces.add(Blocks.obsidian.getDefaultState());
+		invalidSpaces.add(Blocks.OBSIDIAN.getDefaultState());
 		//Used to ice spikes plains
-		invalidSpaces.add(Blocks.packed_ice.getDefaultState());
+		invalidSpaces.add(Blocks.PACKED_ICE.getDefaultState());
 		//Mushroom Islands
-		invalidSpaces.add(Blocks.red_mushroom_block.getDefaultState());
-		invalidSpaces.add(Blocks.brown_mushroom_block.getDefaultState());
+		invalidSpaces.add(Blocks.RED_MUSHROOM_BLOCK.getDefaultState());
+		invalidSpaces.add(Blocks.BROWN_MUSHROOM_BLOCK.getDefaultState());
 	}
 	/**
 	 * If the block given has enough room around it to generate a tree.
@@ -108,7 +106,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	}
 	/**
 	 * Returns if the state is eligible for replacing. Checks Y Level and block state
-	 * @param blockState Takes the intended block state from the position in the world
+	 * @param pos Takes the intended block state from the position in the world
 	 * @return returns a boolean if eligible or not.
 	 */
 	public static boolean eligibleStateLocation(World worldIn, BlockPos pos){
@@ -128,7 +126,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	/**
 	 * This method is called after the list of positions has been created. Each position is then passed into the method
 	 * and needs to be set the world as a blockstate. The positions need to have a Y value greater than 1.
-	 * Checks should be made for air blocks before placement and a call to
+	 * Checks should be made for AIR blocks before placement and a call to
 	 * eligibleStateLocation: EX: eligibleStateLocation(worldIn.getBlockState(pos))
 	 * This method also needs to call super.setBiome at blocks that are placed. 
 	 * @param pos Position that the block is being placed at.
@@ -139,15 +137,15 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param changeBiome If the biome will be changed at the block column.
 	 * @return Needs to return the amount of blocks placed. This keeps track of the durability.
 	 */
-	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated, BiomeGenBase desiredBiome, boolean changeBiome){
+	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated, Biome desiredBiome, boolean changeBiome){
 		if(eligibleStateLocation(worldIn, pos)){
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
 				setBiome(worldIn, pos, desiredBiome, changeBiome);
-				worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
+				worldIn.setBlockState(pos, Blocks.GRASS.getDefaultState());
 				decoratePlatform(worldIn, pos);
 			}else{
-				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
+				worldIn.setBlockState(pos, Blocks.DIRT.getDefaultState());
 			}
 			blocksGenerated += 1;
 		}
@@ -177,7 +175,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 				IGrowable growable = (IGrowable) state.getBlock();
 				if (growable.canGrow(worldIn, pos, state, worldIn.isRemote))
 				{
-					worldIn.playAuxSFX(2005, pos, 0);
+					worldIn.playBroadcastSound(2005, pos, 0);
 					growable.grow(worldIn, rand, pos, state);
 				}
 			}
@@ -194,7 +192,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 				attemptCap++;
 			}
 			if(attemptCap > 8){
-				worldIn.setBlockState(pos.up(), Blocks.air.getDefaultState());
+				worldIn.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
 			}
 		}catch(Exception e){
 			
@@ -224,7 +222,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param changeBiome
 	 * @return
 	 */
-	protected ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, BiomeGenBase desiredBiome, Boolean changeBiome){
+	protected ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, Biome desiredBiome, Boolean changeBiome){
 		int blocksGenerated = 0;
 		if(!worldIn.isRemote){
 			int posX = MathHelper.floor_double(playerIn.posX); 
@@ -285,24 +283,24 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param changeBiome If the config allows the biome to be changed
 	 * @return Returns an int, usually the number of blocks generated in the world.
 	 */
-	protected int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated, ItemStack itemStackIn, BiomeGenBase desiredBiome, boolean changeBiome){
+	protected int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated, ItemStack itemStackIn, Biome desiredBiome, boolean changeBiome){
 		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
 		for(BlockPos pos : posList){
 			int surroundingBlocks = 0;
 			blocksGenerated = generateBlocksInWorld(pos, worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
-			if(worldIn.getBlockState(pos.north()) != Blocks.air.getDefaultState()){
+			if(worldIn.getBlockState(pos.north()) != Blocks.AIR.getDefaultState()){
 				surroundingBlocks++;
 			}
 			
-			if(worldIn.getBlockState(pos.east()) != Blocks.air.getDefaultState()){
+			if(worldIn.getBlockState(pos.east()) != Blocks.AIR.getDefaultState()){
 				surroundingBlocks++;
 			}
 			
-			if(worldIn.getBlockState(pos.south()) != Blocks.air.getDefaultState()){
+			if(worldIn.getBlockState(pos.south()) != Blocks.AIR.getDefaultState()){
 				surroundingBlocks++;
 			}
 			
-			if(worldIn.getBlockState(pos.west()) != Blocks.air.getDefaultState()){
+			if(worldIn.getBlockState(pos.west()) != Blocks.AIR.getDefaultState()){
 				surroundingBlocks++;
 			}
 			if((surroundingBlocks >= 3 || Math.random() < 0.05) && pos.getY() > 1){
@@ -326,11 +324,11 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param changeBiome If the config allows the biome change
 	 * @return Returns whether or not the biome was changed.
 	 */
-	protected boolean setBiome(World worldIn, BlockPos position, BiomeGenBase desiredBiome, Boolean changeBiome) {
+	protected boolean setBiome(World worldIn, BlockPos position, Biome desiredBiome, Boolean changeBiome) {
         if(changeBiome){
 			Chunk chunk = worldIn.getChunkFromBlockCoords(position);
 	        if ((chunk != null) && (chunk.isLoaded())) {
-	        	if(BiomeGenBase.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != BiomeGenBase.getIdForBiome(desiredBiome)){
+	        	if(Biome.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != Biome.getIdForBiome(desiredBiome)){
 	        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.getIdForBiome(desiredBiome);
 		            return true;
 	        	}

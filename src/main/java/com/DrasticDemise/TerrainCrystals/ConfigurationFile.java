@@ -1,7 +1,6 @@
 package com.DrasticDemise.TerrainCrystals;
 
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 
 public class ConfigurationFile {
 	public static void configFile(Configuration config){

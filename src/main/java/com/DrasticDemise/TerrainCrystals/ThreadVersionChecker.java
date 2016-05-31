@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import net.minecraftforge.common.MinecraftForge;
-
 public class ThreadVersionChecker extends Thread{
 	public ThreadVersionChecker() {
 		setName("Terrain Crystals Checking Thread");

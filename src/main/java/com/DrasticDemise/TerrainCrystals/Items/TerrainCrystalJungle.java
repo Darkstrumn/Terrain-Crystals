@@ -1,31 +1,23 @@
 package com.DrasticDemise.TerrainCrystals.Items;
 
-import java.util.Random;
-import java.util.concurrent.ExecutionException;
-
 import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
-
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	public TerrainCrystalJungle(){
 		setUnlocalizedName("terrainCrystalJungle");
 		setRegistryName("terrainCrystalJungle");
-		setCreativeTab(CreativeTabs.tabBlock);
+		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 		setHarvestLevel("stone", 0);
 		setMaxStackSize(1);
 		setMaxDamage(ConfigurationFile.jungleCrystalDurability);
@@ -35,7 +27,7 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
-		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.jungleCrystalDiameter, Biomes.jungle, ConfigurationFile.jungleCrystalChangesBiome);
+		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.jungleCrystalDiameter, Biomes.JUNGLE, ConfigurationFile.jungleCrystalChangesBiome);
 		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
 
@@ -43,27 +35,27 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		//Generate bush things
 		if(Math.random() < 0.01 && ConfigurationFile.jungleCrystalGeneratesBushes && spacedFarEnough(worldIn, pos.up())){
-			worldIn.setBlockState(pos.up(), Blocks.leaves.getDefaultState());
-			worldIn.setBlockState(pos.up(2), Blocks.leaves.getDefaultState());
-			worldIn.setBlockState(pos.up().east(), Blocks.leaves.getDefaultState());
-			worldIn.setBlockState(pos.up().north(), Blocks.leaves.getDefaultState());
-			worldIn.setBlockState(pos.up().south(), Blocks.leaves.getDefaultState());
-			worldIn.setBlockState(pos.up().west(), Blocks.leaves.getDefaultState());
+			worldIn.setBlockState(pos.up(), Blocks.LEAVES.getDefaultState());
+			worldIn.setBlockState(pos.up(2), Blocks.LEAVES.getDefaultState());
+			worldIn.setBlockState(pos.up().east(), Blocks.LEAVES.getDefaultState());
+			worldIn.setBlockState(pos.up().north(), Blocks.LEAVES.getDefaultState());
+			worldIn.setBlockState(pos.up().south(), Blocks.LEAVES.getDefaultState());
+			worldIn.setBlockState(pos.up().west(), Blocks.LEAVES.getDefaultState());
 			if(Math.random() < .3){
-				worldIn.setBlockState(pos.up().north().east(), Blocks.leaves.getDefaultState());
-				worldIn.setBlockState(pos.up().north().west(), Blocks.leaves.getDefaultState());
-				worldIn.setBlockState(pos.up().south().east(), Blocks.leaves.getDefaultState());
-				worldIn.setBlockState(pos.up().south().west(), Blocks.leaves.getDefaultState());
+				worldIn.setBlockState(pos.up().north().east(), Blocks.LEAVES.getDefaultState());
+				worldIn.setBlockState(pos.up().north().west(), Blocks.LEAVES.getDefaultState());
+				worldIn.setBlockState(pos.up().south().east(), Blocks.LEAVES.getDefaultState());
+				worldIn.setBlockState(pos.up().south().west(), Blocks.LEAVES.getDefaultState());
 			}
-			worldIn.setBlockState(pos, Blocks.log.getStateFromMeta(3));
+			worldIn.setBlockState(pos, Blocks.LOG.getStateFromMeta(3));
 		}
 		//Decorate with tall grass
 		if(Math.random() < 0.08){
 			bonemeal(worldIn, pos);
 			
 			if(Math.random() < 0.05 && ConfigurationFile.jungleCrystalGeneratesMelon){
-				if(worldIn.getBlockState(pos.up()) == Blocks.air.getDefaultState())
-					worldIn.setBlockState(pos.up(), Blocks.melon_block.getDefaultState());
+				if(worldIn.getBlockState(pos.up()) == Blocks.AIR.getDefaultState())
+					worldIn.setBlockState(pos.up(), Blocks.MELON_BLOCK.getDefaultState());
 			}
 		}
 		
@@ -72,37 +64,37 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 		}
 	}
 	private void growTree(World worldIn, BlockPos pos) {
-			if (Blocks.sapling.canPlaceBlockAt(worldIn, pos.up())){
-				worldIn.setBlockState(pos.up(), Blocks.sapling.getStateFromMeta(3));
+			if (Blocks.SAPLING.canPlaceBlockAt(worldIn, pos.up())){
+				worldIn.setBlockState(pos.up(), Blocks.SAPLING.getStateFromMeta(3));
 				bonemealTree(worldIn, pos);
 				generateCocoaBeans(worldIn, pos.up());
 			}
 	}
 	private boolean safelyExpandPlatform(World worldIn, BlockPos pos){
-		if(worldIn.getBlockState(pos) == Blocks.air.getDefaultState() || worldIn.getBlockState(pos) == Blocks.grass.getDefaultState()
-				|| worldIn.getBlockState(pos) == Blocks.dirt.getDefaultState()){
-			worldIn.setBlockState(pos, Blocks.grass.getDefaultState());
+		if(worldIn.getBlockState(pos) == Blocks.AIR.getDefaultState() || worldIn.getBlockState(pos) == Blocks.GRASS.getDefaultState()
+				|| worldIn.getBlockState(pos) == Blocks.DIRT.getDefaultState()){
+			worldIn.setBlockState(pos, Blocks.GRASS.getDefaultState());
 			return true;
 		}
 		return false;
 	}
 	private void generateCocoaBeans(World worldIn, BlockPos pos){
 		int counter = 2;
-		while((worldIn.getBlockState(pos.up(counter)) == Blocks.log.getStateFromMeta(3)) && counter < 16 && ConfigurationFile.jungleCrystalGeneratesCocoa){
-			if(worldIn.getBlockState(pos.up(counter).north()) != Blocks.leaves.getStateFromMeta(3)){
+		while((worldIn.getBlockState(pos.up(counter)) == Blocks.LOG.getStateFromMeta(3)) && counter < 16 && ConfigurationFile.jungleCrystalGeneratesCocoa){
+			if(worldIn.getBlockState(pos.up(counter).north()) != Blocks.LEAVES.getStateFromMeta(3)){
 				if(Math.random() < .05){
 					if(Math.random() < 0.25){
-						if(worldIn.getBlockState(pos.up().north()) == Blocks.air.getDefaultState())
-							worldIn.setBlockState(pos.up().north(), Blocks.cocoa.getStateFromMeta(4));
+						if(worldIn.getBlockState(pos.up().north()) == Blocks.AIR.getDefaultState())
+							worldIn.setBlockState(pos.up().north(), Blocks.COCOA.getStateFromMeta(4));
 					}else if(Math.random() < 0.50){
-						if(worldIn.getBlockState(pos.up().south()) == Blocks.air.getDefaultState())
-							worldIn.setBlockState(pos.up().south(), Blocks.cocoa.getStateFromMeta(2));
+						if(worldIn.getBlockState(pos.up().south()) == Blocks.AIR.getDefaultState())
+							worldIn.setBlockState(pos.up().south(), Blocks.COCOA.getStateFromMeta(2));
 					}else if(Math.random() < 0.75){
-						if(worldIn.getBlockState(pos.up().east()) == Blocks.air.getDefaultState())
-							worldIn.setBlockState(pos.up().east(), Blocks.cocoa.getStateFromMeta(1));
+						if(worldIn.getBlockState(pos.up().east()) == Blocks.AIR.getDefaultState())
+							worldIn.setBlockState(pos.up().east(), Blocks.COCOA.getStateFromMeta(1));
 					}else{
-						if(worldIn.getBlockState(pos.up().west()) == Blocks.air.getDefaultState())
-							worldIn.setBlockState(pos.up().west(), Blocks.cocoa.getStateFromMeta(3));
+						if(worldIn.getBlockState(pos.up().west()) == Blocks.AIR.getDefaultState())
+							worldIn.setBlockState(pos.up().west(), Blocks.COCOA.getStateFromMeta(3));
 					}
 				}
 			}
