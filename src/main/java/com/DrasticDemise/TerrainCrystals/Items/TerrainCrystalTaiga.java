@@ -52,6 +52,12 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 				}else{
 					worldIn.setBlockState(pos, Blocks.DIRT.getStateFromMeta(2));
 				}
+			}else if(ConfigurationFile.generateStone && posY - pos.getY() >= ConfigurationFile.stoneSpawnDepth){
+				if(ConfigurationFile.generateOres && Math.random() < 0.05){
+					worldIn.setBlockState(pos, oreListHelper());
+				}else{
+					worldIn.setBlockState(pos, Blocks.STONE.getDefaultState());
+				}
 			}else{
 				worldIn.setBlockState(pos, Blocks.DIRT.getDefaultState());
 			}

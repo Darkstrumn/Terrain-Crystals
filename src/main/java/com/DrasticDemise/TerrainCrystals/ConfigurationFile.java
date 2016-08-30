@@ -133,7 +133,14 @@ public class ConfigurationFile {
 		boolean propSwampCrystalChangesBiome = config.getBoolean("Swamp Crystal Turns Other Biomes Swamplands", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
 		swampCrystalChangesBiome = propSwampCrystalChangesBiome;
 		
+		boolean propGenerateStone = config.getBoolean("Have the islands generate stone by default", Configuration.CATEGORY_GENERAL, true, "Forces stone to spawn beneath certain crystals");
+		generateStone = propGenerateStone;
 		
+		boolean propGenerateOres = config.getBoolean("Have stone generating islands also spawn ore", Configuration.CATEGORY_GENERAL, false, "Generate stone must be enabled.");
+		generateOres = propGenerateOres;
+		
+		int propStoneSpawnDepth = config.getInt("How far down islands start to spawn stone. Does nothing if GenerateStone is not enabled.", Configuration.CATEGORY_GENERAL, 3, 2, 9999, "Must be atleast 2. Keep within range of the island depth. Default: 3");;
+		stoneSpawnDepth = propStoneSpawnDepth;
 		
 		boolean propVersionChecker = config.getBoolean("Version Checker Enabled", Configuration.CATEGORY_CLIENT, true, "If you want to be notified when a new version is available");
 		versionChecker = propVersionChecker;
@@ -143,6 +150,9 @@ public class ConfigurationFile {
 		}
 	}
 	public static boolean versionChecker;
+	public static boolean generateStone;
+	public static boolean generateOres;
+	public static int stoneSpawnDepth;
 	//Swamp
 	public static int swampCrystalDurability;
 	public static int swampCrystalDiameter;

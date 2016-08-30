@@ -23,6 +23,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
+import javax.security.auth.login.Configuration;
+
+import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
+
 public abstract class TerrainCrystalAbstract extends Item{
 	public static HashSet replaceableBlockStates;
 	public static HashSet invalidSpaces;
@@ -144,12 +148,36 @@ public abstract class TerrainCrystalAbstract extends Item{
 				setBiome(worldIn, pos, desiredBiome, changeBiome);
 				worldIn.setBlockState(pos, Blocks.GRASS.getDefaultState());
 				decoratePlatform(worldIn, pos);
-			}else{
+			}else if(ConfigurationFile.generateStone && posY - pos.getY() >= ConfigurationFile.stoneSpawnDepth){
+				if(ConfigurationFile.generateOres && Math.random() < 0.05){
+					worldIn.setBlockState(pos, oreListHelper());
+				}else{
+					worldIn.setBlockState(pos, Blocks.STONE.getDefaultState());
+				}
+			}
+			else{
 				worldIn.setBlockState(pos, Blocks.DIRT.getDefaultState());
 			}
 			blocksGenerated += 1;
 		}
 		return blocksGenerated;
+	}
+	public static IBlockState oreListHelper(){
+		double oreType = Math.random();
+		if(oreType < .40){
+			return Blocks.COAL_ORE.getDefaultState();
+		}else if(oreType < .65){
+			return Blocks.IRON_ORE.getDefaultState();
+		}else if(oreType < .80){
+			return Blocks.GOLD_ORE.getDefaultState();
+		}else if(oreType < .90){
+			return Blocks.REDSTONE_ORE.getDefaultState();
+		}else if(oreType < .98){
+			return Blocks.LAPIS_ORE.getDefaultState();
+		}else if(oreType < 1){
+			return Blocks.DIAMOND_ORE.getDefaultState();
+		}
+		return Blocks.COAL_ORE.getDefaultState();
 	}
 		
 	//Each class needs to provide its own decoration rules
