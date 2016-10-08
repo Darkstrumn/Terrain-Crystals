@@ -1,6 +1,7 @@
-package com.DrasticDemise.TerrainCrystals;
+package com.DrasticDemise.TerrainCrystals.core;
 
 import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalAbstract;
+
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;

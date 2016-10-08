@@ -1,6 +1,8 @@
-package com.DrasticDemise.TerrainCrystals.Items;
+package com.DrasticDemise.TerrainCrystals.Items.SkyCrystals;
 
-import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
+import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalAbstract;
+import com.DrasticDemise.TerrainCrystals.core.ConfigurationFile;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;

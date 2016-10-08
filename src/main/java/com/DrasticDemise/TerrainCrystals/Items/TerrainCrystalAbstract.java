@@ -1,5 +1,12 @@
 package com.DrasticDemise.TerrainCrystals.Items;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+
+import com.DrasticDemise.TerrainCrystals.core.ConfigurationFile;
+
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -17,15 +24,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-
-import javax.security.auth.login.Configuration;
-
-import com.DrasticDemise.TerrainCrystals.ConfigurationFile;
 
 public abstract class TerrainCrystalAbstract extends Item{
 	public static HashSet replaceableBlockStates;
@@ -251,8 +249,8 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @return
 	 */
 	protected ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, Biome desiredBiome, Boolean changeBiome){
-		int blocksGenerated = 0;
 		if(!worldIn.isRemote){
+			int blocksGenerated = 0;
 			int posX = MathHelper.floor_double(playerIn.posX); 
 			int posY = MathHelper.floor_double(playerIn.posY);
 			int posZ = MathHelper.floor_double(playerIn.posZ);
@@ -266,38 +264,30 @@ public abstract class TerrainCrystalAbstract extends Item{
 			int offsetXFirstHalf = (int) (posX + radius);
 			//Not sure why this has to be offset by 1 extra, but it does.
 			int offsetXSecondHalf = (int) (posX - radius + 1);
-			int yDown = 1;
-			int fakeCenter = center;
 			ArrayList<BlockPos> posList = new ArrayList<BlockPos>(68);
-			for(int i = 0; i < (fakeCenter); i ++){
+			for(int i = 0; i < (center); i ++){
 				//Creates a circle and fills it
 				for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
 					//Fills across the circle
-					BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ - i + placeInwards);
-						posList.add(fillShellOne);
-					BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY - yDown, posZ + i - placeInwards);
-						posList.add(fillShellTwo);
+					posList.add(new BlockPos(offsetXFirstHalf - i, posY - 1, posZ - i + placeInwards));
+					posList.add(new BlockPos(offsetXFirstHalf - i, posY - 1, posZ + i - placeInwards));
 				}
 			}
 			//Generates the second half
 			for(int i = 0; i < (center); i ++){
-				BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i);
-				BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i);
-					posList.add(shellThree); 
-					posList.add(shellFour);
+				posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i)); 
+				posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i));
 				for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
-					BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards);
-					BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards);
-						posList.add(fillShellThree);
-						posList.add(fillShellFour);
+						posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards));
+						posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards));
 				}
 			}
 			//Hacky-fix to the island not generating properly on a single call
 			for(int i = 0; i < 15; i++){
 				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
 			}
+			itemStackIn.damageItem(blocksGenerated, playerIn);
 		}
-		itemStackIn.damageItem(blocksGenerated, playerIn);
 		return itemStackIn;
 	}
 	/**
@@ -390,24 +380,18 @@ public abstract class TerrainCrystalAbstract extends Item{
 			//Creates a circle and fills it
 			for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
 				//Fills across the circle
-				BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY, posZ - i + placeInwards);
-				posList.add(fillShellOne);
-				BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY, posZ + i - placeInwards);
-				posList.add(fillShellTwo);
+				posList.add(new BlockPos(offsetXFirstHalf - i, posY, posZ - i + placeInwards));
+				posList.add(new BlockPos(offsetXFirstHalf - i, posY, posZ + i - placeInwards));
 			}
 		}
 		//Generates the second half
 		for(int i = 0; i < (center); i ++){
-			BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY, posZ  + i);
-			BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY, posZ - i);
-			posList.add(shellThree); 
-			posList.add(shellFour);
+			posList.add(new BlockPos(offsetXSecondHalf + i, posY, posZ + i)); 
+			posList.add(new BlockPos(offsetXSecondHalf + i, posY, posZ - i));
 			
 			for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
-				BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY, posZ + i - placeInwards);
-				BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY, posZ - i + placeInwards);
-				posList.add(fillShellThree);
-				posList.add(fillShellFour);
+				posList.add(new BlockPos(offsetXSecondHalf + i, posY, posZ + i - placeInwards));
+				posList.add(new BlockPos(offsetXSecondHalf + i, posY, posZ - i + placeInwards));
 			}
 		}
 		for(BlockPos b : posList){
@@ -436,24 +420,17 @@ public abstract class TerrainCrystalAbstract extends Item{
 			//Creates a circle and fills it
 			for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
 				//Fills across the circle
-				BlockPos fillShellOne = new BlockPos(offsetXFirstHalf - i, posY, posZ - i + placeInwards);
-				posList.add(fillShellOne);
-				BlockPos fillShellTwo = new BlockPos(offsetXFirstHalf - i, posY, posZ + i - placeInwards);
-				posList.add(fillShellTwo);
+				posList.add(new BlockPos(offsetXFirstHalf - i, posY, posZ - i + placeInwards));
+				posList.add(new BlockPos(offsetXFirstHalf - i, posY, posZ + i - placeInwards));
 			}
 		}
 		//Generates the second half
 		for(int i = 0; i < (center); i ++){
-			BlockPos shellThree = new BlockPos(offsetXSecondHalf + i, posY, posZ  + i);
-			BlockPos shellFour = new BlockPos(offsetXSecondHalf + i, posY, posZ - i);
-			posList.add(shellThree); 
-			posList.add(shellFour);
-			
+			posList.add(new BlockPos(offsetXSecondHalf + i, posY, posZ  + i)); 
+			posList.add(new BlockPos(offsetXSecondHalf + i, posY, posZ - i));
 			for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
-				BlockPos fillShellThree = new BlockPos(offsetXSecondHalf + i, posY, posZ + i - placeInwards);
-				BlockPos fillShellFour = new BlockPos(offsetXSecondHalf + i, posY, posZ - i + placeInwards);
-				posList.add(fillShellThree);
-				posList.add(fillShellFour);
+				posList.add(new BlockPos(offsetXSecondHalf + i, posY, posZ + i - placeInwards));
+				posList.add(new BlockPos(offsetXSecondHalf + i, posY, posZ - i + placeInwards));
 			}
 		}
 		for(BlockPos b : posList){

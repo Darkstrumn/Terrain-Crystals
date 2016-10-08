@@ -1,6 +1,16 @@
-package com.DrasticDemise.TerrainCrystals;
+package com.DrasticDemise.TerrainCrystals.core;
 
-import com.DrasticDemise.TerrainCrystals.Items.*;
+import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalDesert;
+import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalEnd;
+import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalJungle;
+import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalMesa;
+import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalMushroom;
+import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalNether;
+import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalPlains;
+import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalPlainsIceSpikes;
+import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalSwamp;
+import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalTaiga;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

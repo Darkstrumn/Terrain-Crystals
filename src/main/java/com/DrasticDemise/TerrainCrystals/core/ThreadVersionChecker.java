@@ -1,4 +1,4 @@
-package com.DrasticDemise.TerrainCrystals;
+package com.DrasticDemise.TerrainCrystals.core;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
