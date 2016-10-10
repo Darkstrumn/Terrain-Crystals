@@ -19,13 +19,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalNether extends TerrainCrystalAbstract{
 	public TerrainCrystalNether(){
-		setUnlocalizedName("terrainCrystalNether");
-		setRegistryName("terrainCrystalNether");
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-		setHarvestLevel("stone", 0);
-		setMaxStackSize(1);
+		super("Nether");
 		setMaxDamage(ConfigurationFile.netherCrystalDurability);
-        GameRegistry.register(this);
 	}
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){

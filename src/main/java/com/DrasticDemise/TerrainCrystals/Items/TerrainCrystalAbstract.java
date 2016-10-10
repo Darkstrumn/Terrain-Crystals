@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Random;
 
 import com.DrasticDemise.TerrainCrystals.core.ConfigurationFile;
+import com.DrasticDemise.TerrainCrystals.core.TerrainCrystals;
 
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -22,6 +24,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,6 +32,13 @@ public abstract class TerrainCrystalAbstract extends Item{
 	public static HashSet replaceableBlockStates;
 	public static HashSet invalidSpaces;
 	
+	public TerrainCrystalAbstract(String name){
+		setUnlocalizedName("terrainCrystal" + name);
+		setRegistryName(getUnlocalizedName());
+		setCreativeTab(TerrainCrystals.tab);
+		setMaxStackSize(1);
+		GameRegistry.register(this);
+	}
 	/**
 	 * Initializes the hashSet with block states that can be replaced by the platform.
 	 */
@@ -440,7 +450,6 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return true;
 	}
-	
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {

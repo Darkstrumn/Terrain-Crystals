@@ -19,14 +19,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 	public TerrainCrystalDesert(){
-		setUnlocalizedName("terrainCrystalDesert");
-		setRegistryName("terrainCrystalDesert");
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-		setHarvestLevel("stone", 0);
-		setMaxStackSize(1);
-		//setMaxDamage
+		super("Desert");
 		setMaxDamage(ConfigurationFile.desertCrystalDurability);
-        GameRegistry.register(this);
 	}
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){

@@ -21,13 +21,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 	public TerrainCrystalPlains(){
-		setUnlocalizedName("terrainCrystalPlains");
-		setRegistryName("terrainCrystalPlains");
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-		setHarvestLevel("stone", 0);
-		setMaxStackSize(1);
+		super("Plains");
 		setMaxDamage(ConfigurationFile.plainsCrystalDurability);
-        GameRegistry.register(this);
 	}
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){

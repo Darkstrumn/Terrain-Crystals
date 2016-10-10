@@ -19,13 +19,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 	public TerrainCrystalMesa(){
-		setUnlocalizedName("terrainCrystalMesa");
-		setRegistryName("terrainCrystalMesa");
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-		setHarvestLevel("stone", 0);
-		setMaxStackSize(1);
+		super("Mesa");
 		setMaxDamage(ConfigurationFile.mesaCrystalDurability);
-        GameRegistry.register(this);
 	}
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){

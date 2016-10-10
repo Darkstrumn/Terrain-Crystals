@@ -17,16 +17,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	public TerrainCrystalJungle(){
-		setUnlocalizedName("terrainCrystalJungle");
-		setRegistryName("terrainCrystalJungle");
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-		setHarvestLevel("stone", 0);
-		setMaxStackSize(1);
+		super("Jungle");
 		setMaxDamage(ConfigurationFile.jungleCrystalDurability);
-        GameRegistry.register(this);
 	}
-	
-	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
 		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.jungleCrystalDiameter, Biomes.JUNGLE, ConfigurationFile.jungleCrystalChangesBiome);

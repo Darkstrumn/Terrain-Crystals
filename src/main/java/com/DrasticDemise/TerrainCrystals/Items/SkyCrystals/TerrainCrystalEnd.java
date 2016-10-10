@@ -19,13 +19,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 		public TerrainCrystalEnd(){
-			setUnlocalizedName("terrainCrystalEnd");
-			setRegistryName("terrainCrystalEnd");
-			setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-			setHarvestLevel("stone", 0);
-			setMaxStackSize(1);
+			super("End");
 			setMaxDamage(ConfigurationFile.endCrystalDurability);
-	        GameRegistry.register(this);
 		}
 		@Override
 		public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){

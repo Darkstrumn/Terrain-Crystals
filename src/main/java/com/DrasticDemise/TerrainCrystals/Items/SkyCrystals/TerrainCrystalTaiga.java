@@ -19,13 +19,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 	public TerrainCrystalTaiga(){
-		setUnlocalizedName("terrainCrystalTaiga");
-		setRegistryName("terrainCrystalTaiga");
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-		setHarvestLevel("stone", 0);
-		setMaxStackSize(1);
+		super("Taiga");
 		setMaxDamage(ConfigurationFile.taigaCrystalDurability);
-        GameRegistry.register(this);
 	}
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){

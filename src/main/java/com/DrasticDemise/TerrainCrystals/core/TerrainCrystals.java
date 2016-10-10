@@ -2,6 +2,8 @@ package com.DrasticDemise.TerrainCrystals.core;
 
 import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalAbstract;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -15,9 +17,14 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class TerrainCrystals {
 	public static final String MODID = "terrainCrystals";
 	public static final String MODNAME = "Terrain Crystals";
-	public static final String VERSION = "1.1.0";
+	public static final String VERSION = "1.1.1";
 	public static final String URL = "https://raw.githubusercontent.com/DrasticDemise/Terrain-Crystals/master/1.9%20Update%20Handler";
-
+	public static CreativeTabs tab = new CreativeTabs("Terrain Crystals") {
+		@Override
+		public Item getTabIconItem() {
+			return InitItems.terrainCrystalPlains;
+		}
+	};
 	@SidedProxy
 	public static CommonProxy proxy;
 	
