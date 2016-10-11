@@ -44,15 +44,9 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 */
 	public static void initReplaceableBlocks(){
 		replaceableBlockStates = new HashSet();
-		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(1));
-		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(2));
-		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(3));
-		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(4));
-		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(5));
-		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(6));
-		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(7));
-		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(8));
-		replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(9));
+		for(int i = 1; i < 10; i++){
+			replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(i));
+		}
 		replaceableBlockStates.add(Blocks.FLOWING_WATER.getDefaultState());
 		
 		replaceableBlockStates.add(Blocks.TALLGRASS.getDefaultState());

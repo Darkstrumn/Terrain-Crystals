@@ -10,6 +10,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid = TerrainCrystals.MODID, name = TerrainCrystals.MODNAME, useMetadata = true, version = TerrainCrystals.VERSION)
 
@@ -24,7 +26,13 @@ public class TerrainCrystals {
 		public Item getTabIconItem() {
 			return InitItems.terrainCrystalPlains;
 		}
+		@SideOnly(Side.CLIENT)
+	    public String getTranslatedTabLabel()
+	    {
+	        return this.getTabLabel();
+	    }
 	};
+	
 	@SidedProxy
 	public static CommonProxy proxy;
 	
