@@ -24,6 +24,9 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 	public TerrainCrystalPlains(){
 		super("Plains");
 	}
+	public TerrainCrystalPlains(boolean isGroundCrystal){
+		super("Plains", isGroundCrystal);
+	}
 	//Code taken from Lumien's Random Things Nature Core tile entity
 	protected void decoratePlatform(World worldIn, BlockPos pos){
 		if(ConfigurationFile.plainsCrystalGenerateTallGrass){

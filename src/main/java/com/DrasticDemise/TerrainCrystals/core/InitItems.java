@@ -30,6 +30,17 @@ public class InitItems {
 	public static TerrainCrystalPlainsIceSpikes terrainCrystalPlainsIceSpikes;
 	public static TerrainCrystalJungle terrainCrystalJungle;
 	public static TerrainCrystalSwamp terrainCrystalSwamp;
+	
+	public static TerrainCrystalPlains groundCrystalPlains;
+	public static TerrainCrystalNether groundCrystalNether;
+	public static TerrainCrystalDesert groundCrystalDesert;
+	public static TerrainCrystalMesa groundCrystalMesa;
+	public static TerrainCrystalMushroom groundCrystalMushroom;
+	public static TerrainCrystalEnd groundCrystalEnd;
+	public static TerrainCrystalTaiga groundCrystalTaiga;
+	public static TerrainCrystalPlainsIceSpikes groundCrystalIcePlains;
+	public static TerrainCrystalJungle groundCrystalJungle;
+	public static TerrainCrystalSwamp groundCrystalSwamp;
 	public static void init(){
 		terrainCrystalPlains = new TerrainCrystalPlains();
 		terrainCrystalNether = new TerrainCrystalNether();
@@ -41,6 +52,17 @@ public class InitItems {
 		terrainCrystalPlainsIceSpikes = new TerrainCrystalPlainsIceSpikes();
 		terrainCrystalJungle = new TerrainCrystalJungle();
 		terrainCrystalSwamp = new TerrainCrystalSwamp();
+		
+		groundCrystalPlains = new TerrainCrystalPlains(true);
+		groundCrystalNether = new TerrainCrystalNether(true);
+		groundCrystalDesert = new TerrainCrystalDesert(true);
+		groundCrystalMesa = new TerrainCrystalMesa(true);
+		groundCrystalMushroom = new TerrainCrystalMushroom(true);
+		groundCrystalEnd = new TerrainCrystalEnd(true);
+		groundCrystalTaiga = new TerrainCrystalTaiga(true);
+		groundCrystalIcePlains = new TerrainCrystalPlainsIceSpikes(true);
+		groundCrystalJungle = new TerrainCrystalJungle(true);
+		groundCrystalSwamp = new TerrainCrystalSwamp(true);
 	}
 	public static void recipes(){
 		ItemStack dirtStack = new ItemStack(Blocks.DIRT);

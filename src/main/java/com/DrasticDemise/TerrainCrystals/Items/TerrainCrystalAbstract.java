@@ -33,7 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class TerrainCrystalAbstract extends Item{
 	public static HashSet replaceableBlockStates;
 	public static HashSet invalidSpaces;
-	
+	private boolean isGroundCrystal;
 	public TerrainCrystalAbstract(String name){
 		setUnlocalizedName("terrainCrystal" + name);
 		setRegistryName(getUnlocalizedName().substring(5));
@@ -42,6 +42,16 @@ public abstract class TerrainCrystalAbstract extends Item{
 		setMaxDamage(getDurability());
 		GameRegistry.register(this);
 	}
+	public TerrainCrystalAbstract(String name, boolean isGroundCrystal){
+		this.isGroundCrystal = isGroundCrystal;
+		setUnlocalizedName("terrainCrystalGround" + name);
+		setRegistryName(getUnlocalizedName().substring(5));
+		setCreativeTab(TerrainCrystals.tab);
+		setMaxStackSize(1);
+		setMaxDamage(getDurability());
+		GameRegistry.register(this);
+	}
+	
 	/**
 	 * Needs to return the itemstack from the method call gatherBlockGenList with the itemStack,
 	 * world, player, diameter, desired biome type and the biome change boolean.

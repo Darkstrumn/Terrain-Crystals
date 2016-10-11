@@ -21,6 +21,9 @@ public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 	public TerrainCrystalMesa(){
 		super("Mesa");
 	}
+	public TerrainCrystalMesa(boolean isGroundCrystal){
+		super("Mesa", isGroundCrystal);
+	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 										Biome desiredBiome, boolean changeBiome){

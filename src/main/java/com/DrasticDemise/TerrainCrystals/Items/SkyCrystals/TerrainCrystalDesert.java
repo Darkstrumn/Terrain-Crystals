@@ -21,6 +21,9 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 	public TerrainCrystalDesert(){
 		super("Desert");
 	}
+	public TerrainCrystalDesert(boolean isGroundCrystal){
+		super("Desert", isGroundCrystal);
+	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 										Biome desiredBiome, boolean changeBiome) {

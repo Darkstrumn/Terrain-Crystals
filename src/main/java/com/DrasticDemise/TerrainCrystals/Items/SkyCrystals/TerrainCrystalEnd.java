@@ -21,6 +21,9 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 		public TerrainCrystalEnd(){
 			super("End");
 		}
+		public TerrainCrystalEnd(boolean isGroundCrystal){
+			super("End", isGroundCrystal);
+		}
 		@Override
 		protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 											Biome desiredBiome, boolean changeBiome){

@@ -21,6 +21,9 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 	public TerrainCrystalTaiga(){
 		super("Taiga");
 	}
+	public TerrainCrystalTaiga(boolean isGroundCrystal){
+		super("Taiga", isGroundCrystal);
+	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 										Biome desiredBiome, boolean changeBiome){

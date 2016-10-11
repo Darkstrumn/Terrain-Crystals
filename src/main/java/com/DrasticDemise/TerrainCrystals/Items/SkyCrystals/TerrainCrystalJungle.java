@@ -20,6 +20,9 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	public TerrainCrystalJungle(){
 		super("Jungle");
 	}
+	public TerrainCrystalJungle(boolean isGroundCrystal){
+		super("Jungle", isGroundCrystal);
+	}
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		//Generate bush things

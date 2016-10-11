@@ -21,6 +21,9 @@ public class TerrainCrystalPlainsIceSpikes extends TerrainCrystalAbstract{
 	public TerrainCrystalPlainsIceSpikes(){
 		super("PlainsIceSpikes");
 	}
+	public TerrainCrystalPlainsIceSpikes(boolean isGroundCrystal){
+		super("PlainsIceSpikes", isGroundCrystal);
+	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 										Biome desiredBiome, boolean changeBiome) {

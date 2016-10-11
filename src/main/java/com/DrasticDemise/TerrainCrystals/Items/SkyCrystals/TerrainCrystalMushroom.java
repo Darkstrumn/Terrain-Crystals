@@ -22,6 +22,9 @@ public class TerrainCrystalMushroom extends TerrainCrystalAbstract{
 	public TerrainCrystalMushroom(){
 		super("Mushroom_Island");
 	}
+	public TerrainCrystalMushroom(boolean isGroundCrystal){
+		super("Mushroom_Island", isGroundCrystal);
+	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 										Biome desiredBiome, boolean changeBiome){

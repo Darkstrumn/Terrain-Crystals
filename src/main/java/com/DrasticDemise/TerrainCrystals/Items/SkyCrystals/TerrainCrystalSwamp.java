@@ -20,6 +20,9 @@ public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
 	public TerrainCrystalSwamp(){
 		super("Swamp");
 	}
+	public TerrainCrystalSwamp(boolean isGroundCrystal){
+		super("Swamp", isGroundCrystal);
+	}
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		if(Math.random() <= 0.02 && ConfigurationFile.swampCrystalGensWater){

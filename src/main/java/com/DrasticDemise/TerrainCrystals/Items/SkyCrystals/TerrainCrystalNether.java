@@ -21,6 +21,9 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 	public TerrainCrystalNether(){
 		super("Nether");
 	}
+	public TerrainCrystalNether(boolean isGroundCrystal){
+		super("Nether", isGroundCrystal);
+	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 										Biome desiredBiome, boolean changeBiome){
