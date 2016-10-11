@@ -60,6 +60,7 @@ public class ConfigurationFile {
 		
 		boolean propNetherCrystalChangesBiome = config.getBoolean("Nether Crystal Turns Other Biomes Nether", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
 		netherCrystalChangesBiome = propNetherCrystalChangesBiome;
+		
 		//End Crystal
 		int propEndCrystalDurability = config.getInt("End Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
 		endCrystalDurability = propEndCrystalDurability;
