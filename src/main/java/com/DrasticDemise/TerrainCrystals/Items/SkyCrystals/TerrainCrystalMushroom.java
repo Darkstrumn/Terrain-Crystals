@@ -21,12 +21,6 @@ public class TerrainCrystalMushroom extends TerrainCrystalAbstract{
 	
 	public TerrainCrystalMushroom(){
 		super("Mushroom_Island");
-		setMaxDamage(ConfigurationFile.mushroomCrystalDurability);
-	}
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
-		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.mushroomCrystalDiameter, Biomes.MUSHROOM_ISLAND, ConfigurationFile.mushroomCrystalChangesBiome);
-		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
@@ -66,6 +60,22 @@ public class TerrainCrystalMushroom extends TerrainCrystalAbstract{
 				}
 			}
 		}
+	}
+	@Override
+	protected Boolean changesBiomeOnUse() {
+		return ConfigurationFile.mushroomCrystalChangesBiome;
+	}
+	@Override
+	protected Biome getBiomeType() {
+		return Biomes.MUSHROOM_ISLAND;
+	}
+	@Override
+	protected int getDiameter() {
+		return ConfigurationFile.mushroomCrystalDiameter;
+	}
+	@Override
+	protected int getDurability() {
+		return ConfigurationFile.mushroomCrystalDurability;
 	}
 }
 

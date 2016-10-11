@@ -20,14 +20,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class TerrainCrystalPlainsIceSpikes extends TerrainCrystalAbstract{
 	public TerrainCrystalPlainsIceSpikes(){
 		super("PlainsIceSpikes");
-		setMaxDamage(ConfigurationFile.plainsIceCrystalDurability);
 	}
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
-		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.plainsIceCrystalDiameter, Biomes.ICE_PLAINS, ConfigurationFile.plainsIceCrystalChangesBiome);
-		return new ActionResult(EnumActionResult.PASS, itemStackIn);
-	}
-
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 										Biome desiredBiome, boolean changeBiome) {
@@ -128,5 +121,21 @@ public class TerrainCrystalPlainsIceSpikes extends TerrainCrystalAbstract{
 				}
 			}	
 		}
+	}
+	@Override
+	protected Boolean changesBiomeOnUse() {
+		return ConfigurationFile.plainsIceCrystalChangesBiome;
+	}
+	@Override
+	protected Biome getBiomeType() {
+		return Biomes.ICE_PLAINS;
+	}
+	@Override
+	protected int getDiameter() {
+		return ConfigurationFile.plainsIceCrystalDiameter;
+	}
+	@Override
+	protected int getDurability() {
+		return ConfigurationFile.plainsIceCrystalDurability;
 	}
 }

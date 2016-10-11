@@ -13,10 +13,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -37,7 +39,17 @@ public abstract class TerrainCrystalAbstract extends Item{
 		setRegistryName(getUnlocalizedName().substring(5));
 		setCreativeTab(TerrainCrystals.tab);
 		setMaxStackSize(1);
+		setMaxDamage(getDurability());
 		GameRegistry.register(this);
+	}
+	/**
+	 * Needs to return the itemstack from the method call gatherBlockGenList with the itemStack,
+	 * world, player, diameter, desired biome type and the biome change boolean.
+	 */
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
+	    gatherBlockGenList(itemStackIn, worldIn, playerIn, getDiameter(), getBiomeType(), changesBiomeOnUse());
+		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
 	/**
 	 * Initializes the hashSet with block states that can be replaced by the platform.
@@ -123,11 +135,6 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return false;
 	}
-	/**
-	 * Needs to return the itemstack from the method call gatherBlockGenList with the itemStack,
-	 * world, player, diameter, desired biome type and the biome change boolean.
-	 */
-	public abstract ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand);
 	//Each class needs to provide its own platform makeup.
 	/**
 	 * This method is called after the list of positions has been created. Each position is then passed into the method
@@ -444,6 +451,14 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return true;
 	}
+	protected abstract Boolean changesBiomeOnUse();
+	
+	protected abstract Biome getBiomeType();
+	
+	protected abstract int getDiameter();
+	
+	protected abstract int getDurability();
+	
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {

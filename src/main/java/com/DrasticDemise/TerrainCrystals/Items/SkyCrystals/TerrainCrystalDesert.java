@@ -20,14 +20,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 	public TerrainCrystalDesert(){
 		super("Desert");
-		setMaxDamage(ConfigurationFile.desertCrystalDurability);
 	}
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
-		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.desertCrystalDiameter, Biomes.DESERT, ConfigurationFile.desertCrystalChangesBiome);
-		return new ActionResult(EnumActionResult.PASS, itemStackIn);
-	}
-	
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 										Biome desiredBiome, boolean changeBiome) {
@@ -75,5 +68,21 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 				}
 			}
 		}
+	}
+	@Override
+	protected Boolean changesBiomeOnUse() {
+		return ConfigurationFile.desertCrystalChangesBiome;
+	}
+	@Override
+	protected Biome getBiomeType() {
+		return Biomes.DESERT;
+	}
+	@Override
+	protected int getDiameter() {
+		return ConfigurationFile.desertCrystalDiameter;
+	}
+	@Override
+	protected int getDurability() {
+		return ConfigurationFile.desertCrystalDurability;
 	}
 }

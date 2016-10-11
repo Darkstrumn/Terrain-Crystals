@@ -20,12 +20,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 		public TerrainCrystalEnd(){
 			super("End");
-			setMaxDamage(ConfigurationFile.endCrystalDurability);
-		}
-		@Override
-		public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
-			super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.endCrystalDiameter, Biomes.SKY, ConfigurationFile.endCrystalChangesBiome);
-			return new ActionResult(EnumActionResult.PASS, itemStackIn);
 		}
 		@Override
 		protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
@@ -154,5 +148,21 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 					}
 				}
 			}
+		}
+		@Override
+		protected Boolean changesBiomeOnUse() {
+			return ConfigurationFile.endCrystalChangesBiome;
+		}
+		@Override
+		protected Biome getBiomeType() {
+			return Biomes.SKY;
+		}
+		@Override
+		protected int getDiameter() {
+			return ConfigurationFile.endCrystalDiameter;
+		}
+		@Override
+		protected int getDurability() {
+			return ConfigurationFile.endCrystalDurability;
 		}
 	}

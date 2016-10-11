@@ -20,12 +20,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 	public TerrainCrystalMesa(){
 		super("Mesa");
-		setMaxDamage(ConfigurationFile.mesaCrystalDurability);
-	}
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
-		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.mesaCrystalDiameter, Biomes.MESA, ConfigurationFile.mesaCrystalChangesBiome);
-		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
@@ -90,5 +84,21 @@ public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 				}
 			}
 		}
+	}
+	@Override
+	protected Boolean changesBiomeOnUse() {
+		return ConfigurationFile.mesaCrystalChangesBiome;
+	}
+	@Override
+	protected Biome getBiomeType() {
+		return Biomes.MESA;
+	}
+	@Override
+	protected int getDiameter() {
+		return ConfigurationFile.mesaCrystalDiameter;
+	}
+	@Override
+	protected int getDurability() {
+		return ConfigurationFile.mesaCrystalDurability;
 	}
 }

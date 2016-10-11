@@ -17,17 +17,12 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 	public TerrainCrystalPlains(){
 		super("Plains");
-		setMaxDamage(ConfigurationFile.plainsCrystalDurability);
-	}
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
-	    super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.plainsCrystalDiameter, Biomes.PLAINS, ConfigurationFile.plainsCrystalChangesBiome);
-		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
 	//Code taken from Lumien's Random Things Nature Core tile entity
 	protected void decoratePlatform(World worldIn, BlockPos pos){
@@ -63,5 +58,21 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 				}
 			}
 		}
+	}
+	@Override
+	protected Boolean changesBiomeOnUse() {
+		return ConfigurationFile.plainsCrystalChangesBiome;
+	}
+	@Override
+	protected Biome getBiomeType() {
+		return Biomes.PLAINS;
+	}
+	@Override
+	protected int getDiameter() {
+		return ConfigurationFile.plainsCrystalDiameter;
+	}
+	@Override
+	protected int getDurability() {
+		return ConfigurationFile.plainsCrystalDurability;
 	}
 }

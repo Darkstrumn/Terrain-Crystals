@@ -13,20 +13,13 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
 	public TerrainCrystalSwamp(){
 		super("Swamp");
-		setMaxDamage(ConfigurationFile.swampCrystalDurability);
 	}
-
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
-		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.swampCrystalDiameter, Biomes.SWAMPLAND, ConfigurationFile.swampCrystalChangesBiome);
-		return new ActionResult(EnumActionResult.PASS, itemStackIn);
-	}
-
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		if(Math.random() <= 0.02 && ConfigurationFile.swampCrystalGensWater){
@@ -111,5 +104,21 @@ public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
 			plantSugarcane(worldIn, pos.east(2));
 			plantSugarcane(worldIn,pos.south().east());
 		}
+	}
+	@Override
+	protected Boolean changesBiomeOnUse() {
+		return ConfigurationFile.swampCrystalChangesBiome;
+	}
+	@Override
+	protected Biome getBiomeType() {
+		return Biomes.SWAMPLAND;
+	}
+	@Override
+	protected int getDiameter() {
+		return ConfigurationFile.swampCrystalDiameter;
+	}
+	@Override
+	protected int getDurability() {
+		return ConfigurationFile.swampCrystalDurability;
 	}
 }

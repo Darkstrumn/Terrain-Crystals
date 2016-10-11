@@ -20,12 +20,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 	public TerrainCrystalTaiga(){
 		super("Taiga");
-		setMaxDamage(ConfigurationFile.taigaCrystalDurability);
-	}
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
-		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.taigaCrystalDiameter, Biomes.TAIGA, ConfigurationFile.taigaCrystalChangesBiome);
-		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
@@ -78,6 +72,22 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 			}
 		}
 		
+	}
+	@Override
+	protected Boolean changesBiomeOnUse() {
+		return ConfigurationFile.taigaCrystalChangesBiome;
+	}
+	@Override
+	protected Biome getBiomeType() {
+		return Biomes.TAIGA;
+	}
+	@Override
+	protected int getDiameter() {
+		return ConfigurationFile.taigaCrystalDiameter;
+	}
+	@Override
+	protected int getDurability() {
+		return ConfigurationFile.taigaCrystalDurability;
 	}
 }
 

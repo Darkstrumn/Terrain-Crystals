@@ -10,6 +10,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
 public abstract class TerrainCrystalGround extends TerrainCrystalAbstract{
+	public TerrainCrystalGround(String name) {
+		super(name);
+	}
+
 	@Override
 	protected ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, Biome desiredBiome, Boolean changeBiome){
 		if(!worldIn.isRemote){

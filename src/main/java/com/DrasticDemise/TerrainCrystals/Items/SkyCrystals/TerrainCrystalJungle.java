@@ -13,19 +13,13 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	public TerrainCrystalJungle(){
 		super("Jungle");
-		setMaxDamage(ConfigurationFile.jungleCrystalDurability);
 	}
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
-		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.jungleCrystalDiameter, Biomes.JUNGLE, ConfigurationFile.jungleCrystalChangesBiome);
-		return new ActionResult(EnumActionResult.PASS, itemStackIn);
-	}
-
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		//Generate bush things
@@ -95,5 +89,21 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 			}
 			counter++;
 		}
+	}
+	@Override
+	protected Boolean changesBiomeOnUse() {
+		return ConfigurationFile.jungleCrystalChangesBiome;
+	}
+	@Override
+	protected Biome getBiomeType() {
+		return Biomes.JUNGLE;
+	}
+	@Override
+	protected int getDiameter() {
+		return ConfigurationFile.jungleCrystalDiameter;
+	}
+	@Override
+	protected int getDurability() {
+		return ConfigurationFile.jungleCrystalDurability;
 	}
 }

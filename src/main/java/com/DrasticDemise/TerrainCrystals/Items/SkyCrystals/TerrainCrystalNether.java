@@ -20,12 +20,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class TerrainCrystalNether extends TerrainCrystalAbstract{
 	public TerrainCrystalNether(){
 		super("Nether");
-		setMaxDamage(ConfigurationFile.netherCrystalDurability);
-	}
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
-		super.gatherBlockGenList(itemStackIn, worldIn, playerIn, ConfigurationFile.netherCrystalDiameter, Biomes.HELL, ConfigurationFile.netherCrystalChangesBiome);
-		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
@@ -66,5 +60,21 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 				}
 			}
 		}
+	}
+	@Override
+	protected Boolean changesBiomeOnUse() {
+		return ConfigurationFile.netherCrystalChangesBiome;
+	}
+	@Override
+	protected Biome getBiomeType() {
+		return Biomes.HELL;
+	}
+	@Override
+	protected int getDiameter() {
+		return ConfigurationFile.netherCrystalDiameter;
+	}
+	@Override
+	protected int getDurability() {
+		return ConfigurationFile.netherCrystalDurability;
 	}
 }
