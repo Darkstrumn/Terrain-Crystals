@@ -29,15 +29,15 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 			if(posY - pos.getY() == 1){
 				if(Math.random() < .9){
 					worldIn.setBlockState(pos, Blocks.NETHERRACK.getDefaultState());
-					if(ConfigurationFile.netherCrystalChangesBiome){
-						setBiome(worldIn, pos, desiredBiome, changeBiome);
-					}
 					decoratePlatform(worldIn, pos);
 				}else if (Math.random() < 0.3){
 					worldIn.setBlockState(pos, Blocks.SOUL_SAND.getDefaultState());
 					decoratePlatform(worldIn, pos);
 				}else{
 					worldIn.setBlockState(pos, Blocks.GRAVEL.getDefaultState());
+				}
+				if(ConfigurationFile.netherCrystalChangesBiome){
+					setBiome(worldIn, pos, desiredBiome, changeBiome);
 				}
 			}else{
 				if(Math.random() < .95){

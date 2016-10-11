@@ -29,7 +29,6 @@ public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 			int getMetaFromPlayerDistance = posY - pos.getY();
 			if(posY - pos.getY() == 1){
 				if(Math.random() < .7){
-					super.setBiome(worldIn, pos, desiredBiome, changeBiome);
 					worldIn.setBlockState(pos, Blocks.SAND.getStateFromMeta(1));
 					decoratePlatform(worldIn, pos);
 				}else{
@@ -39,6 +38,7 @@ public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 						worldIn.setBlockState(pos, Blocks.STAINED_HARDENED_CLAY.getStateFromMeta(1));
 					}
 				}
+				super.setBiome(worldIn, pos, desiredBiome, changeBiome);
 			}else{
 				if(getMetaFromPlayerDistance == 2){
 					worldIn.setBlockState(pos, Blocks.STAINED_HARDENED_CLAY.getStateFromMeta(getMetaFromPlayerDistance - 1));
