@@ -1,9 +1,9 @@
-package com.DrasticDemise.TerrainCrystals.Items.SkyCrystals;
+package com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals;
 
 import java.util.Random;
 
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalAbstract;
-import com.DrasticDemise.TerrainCrystals.core.ConfigurationFile;
+import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
+import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;

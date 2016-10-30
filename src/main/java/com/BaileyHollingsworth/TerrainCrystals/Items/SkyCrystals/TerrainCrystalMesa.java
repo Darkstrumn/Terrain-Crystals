@@ -1,7 +1,7 @@
-package com.DrasticDemise.TerrainCrystals.Items.SkyCrystals;
+package com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals;
 
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalAbstract;
-import com.DrasticDemise.TerrainCrystals.core.ConfigurationFile;
+import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
+import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -73,7 +73,6 @@ public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 	protected void decoratePlatform(World worldIn, BlockPos pos){
 		if(Blocks.CACTUS.canPlaceBlockAt(worldIn, pos.up())){
 			if(Math.random() < .08){
-				//Reds
 				if(Math.random() < .5){
 					worldIn.setBlockState(pos.up(), Blocks.CACTUS.getDefaultState());
 					if(Math.random() < .5){

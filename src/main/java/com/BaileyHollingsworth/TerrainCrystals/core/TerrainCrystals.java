@@ -1,6 +1,6 @@
-package com.DrasticDemise.TerrainCrystals.core;
+package com.BaileyHollingsworth.TerrainCrystals.core;
 
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalAbstract;
+import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

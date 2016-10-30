@@ -1,7 +1,7 @@
-package com.DrasticDemise.TerrainCrystals.Items.SkyCrystals;
+package com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals;
 
-import com.DrasticDemise.TerrainCrystals.Items.TerrainCrystalAbstract;
-import com.DrasticDemise.TerrainCrystals.core.ConfigurationFile;
+import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
+import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;

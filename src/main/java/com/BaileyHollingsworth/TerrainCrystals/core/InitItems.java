@@ -1,15 +1,15 @@
-package com.DrasticDemise.TerrainCrystals.core;
+package com.BaileyHollingsworth.TerrainCrystals.core;
 
-import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalDesert;
-import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalEnd;
-import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalJungle;
-import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalMesa;
-import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalMushroom;
-import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalNether;
-import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalPlains;
-import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalPlainsIceSpikes;
-import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalSwamp;
-import com.DrasticDemise.TerrainCrystals.Items.SkyCrystals.TerrainCrystalTaiga;
+import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalDesert;
+import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalEnd;
+import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalJungle;
+import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalMesa;
+import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalMushroom;
+import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalNether;
+import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalPlains;
+import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalPlainsIceSpikes;
+import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalSwamp;
+import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalTaiga;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

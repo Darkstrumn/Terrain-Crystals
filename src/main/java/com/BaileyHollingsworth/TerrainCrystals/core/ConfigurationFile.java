@@ -1,4 +1,4 @@
-package com.DrasticDemise.TerrainCrystals.core;
+package com.BaileyHollingsworth.TerrainCrystals.core;
 
 import net.minecraftforge.common.config.Configuration;
 

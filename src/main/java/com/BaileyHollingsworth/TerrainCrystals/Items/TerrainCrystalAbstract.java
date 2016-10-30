@@ -1,12 +1,12 @@
-package com.DrasticDemise.TerrainCrystals.Items;
+package com.BaileyHollingsworth.TerrainCrystals.Items;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-import com.DrasticDemise.TerrainCrystals.core.ConfigurationFile;
-import com.DrasticDemise.TerrainCrystals.core.TerrainCrystals;
+import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
+import com.BaileyHollingsworth.TerrainCrystals.core.TerrainCrystals;
 
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
