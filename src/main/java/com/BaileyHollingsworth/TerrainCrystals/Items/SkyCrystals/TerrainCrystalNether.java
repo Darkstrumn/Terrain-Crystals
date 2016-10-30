@@ -26,39 +26,51 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 	}
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
-										Biome desiredBiome, boolean changeBiome){
-		if(eligibleStateLocation(worldIn, pos)){
-			int posY = MathHelper.floor_double(playerIn.posY);
-			if(posY - pos.getY() == 1){
-				if(Math.random() < .9){
-					worldIn.setBlockState(pos, Blocks.NETHERRACK.getDefaultState());
-					if(ConfigurationFile.generateOres && Math.random() < .05){
-						if(Math.random() < 0.5){
-							worldIn.setBlockState(pos, Blocks.QUARTZ_ORE.getDefaultState());
-						}else{
-							worldIn.setBlockState(pos, Blocks.GLOWSTONE.getDefaultState());
+			Biome desiredBiome, boolean changeBiome){
+		if(checkIfDimensionMatters(playerIn)){
+			if(eligibleStateLocation(worldIn, pos)){
+				int posY = MathHelper.floor_double(playerIn.posY);
+				if(posY - pos.getY() == 1){
+					if(Math.random() < .9){
+						worldIn.setBlockState(pos, Blocks.NETHERRACK.getDefaultState());
+						if(ConfigurationFile.generateOres && Math.random() < .05){
+							if(Math.random() < 0.5){
+								worldIn.setBlockState(pos, Blocks.QUARTZ_ORE.getDefaultState());
+							}else{
+								worldIn.setBlockState(pos, Blocks.GLOWSTONE.getDefaultState());
+							}
 						}
+						decoratePlatform(worldIn, pos);
+					}else if (Math.random() < 0.3){
+						worldIn.setBlockState(pos, Blocks.SOUL_SAND.getDefaultState());
+						decoratePlatform(worldIn, pos);
+					}else{
+						worldIn.setBlockState(pos, Blocks.GRAVEL.getDefaultState());
 					}
-					decoratePlatform(worldIn, pos);
-				}else if (Math.random() < 0.3){
-					worldIn.setBlockState(pos, Blocks.SOUL_SAND.getDefaultState());
-					decoratePlatform(worldIn, pos);
+					if(ConfigurationFile.netherCrystalChangesBiome){
+						setBiome(worldIn, pos, desiredBiome, changeBiome);
+					}
 				}else{
-					worldIn.setBlockState(pos, Blocks.GRAVEL.getDefaultState());
+					if(Math.random() < .95){
+						worldIn.setBlockState(pos, Blocks.NETHERRACK.getDefaultState());
+					}else{
+						worldIn.setBlockState(pos, Blocks.SOUL_SAND.getDefaultState());
+					}
 				}
-				if(ConfigurationFile.netherCrystalChangesBiome){
-					setBiome(worldIn, pos, desiredBiome, changeBiome);
-				}
-			}else{
-				if(Math.random() < .95){
-					worldIn.setBlockState(pos, Blocks.NETHERRACK.getDefaultState());
-				}else{
-					worldIn.setBlockState(pos, Blocks.SOUL_SAND.getDefaultState());
-				}
+				blocksGenerated += 1;
 			}
-			blocksGenerated += 1;
 		}
 		return blocksGenerated;
+	}
+	private boolean checkIfDimensionMatters(EntityPlayer playerIn){
+		if(ConfigurationFile.netherCrystalRestrictedToNether){
+			if(playerIn.dimension == -1){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		return true;
 	}
 	protected void decoratePlatform(World worldIn, BlockPos pos){
 		if(Blocks.BROWN_MUSHROOM.canPlaceBlockAt(worldIn, pos.up())){
