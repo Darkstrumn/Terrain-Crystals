@@ -69,7 +69,6 @@ public abstract class TerrainCrystalAbstract extends Item{
 		for(int i = 1; i < 10; i++){
 			replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(i));
 		}
-		replaceableBlockStates.add(Blocks.FLOWING_WATER.getDefaultState());
 		
 		replaceableBlockStates.add(Blocks.TALLGRASS.getDefaultState());
 		replaceableBlockStates.add(Blocks.TALLGRASS.getStateFromMeta(1));
