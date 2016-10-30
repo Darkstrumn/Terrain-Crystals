@@ -7,149 +7,68 @@ public class ConfigurationFile {
 		config.load();
 		
 		//Plains Crystal
-		int propPlainsCrystalDurability = config.getInt("Plains Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
-		plainsCrystalDurability = propPlainsCrystalDurability;
-		
-		int propPlainsCrystalDiameter = config.getInt("Plains Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
-		plainsCrystalDiameter = propPlainsCrystalDiameter;
-		
-		boolean propPlainsCrystalGenerateTallGrass = config.getBoolean("Plains Crystal generate tall grass", Configuration.CATEGORY_GENERAL, true, "Should platforms have a bonemeal effect on the surface?");
-		plainsCrystalGenerateTallGrass = propPlainsCrystalGenerateTallGrass;
-		//This needs tested
-		boolean propPlainsCrystalGenerateTrees = config.getBoolean("Plains Crystal Spawns Trees", Configuration.CATEGORY_GENERAL, true, "Should the plains biome have a chance to spawn trees? Tall Grass must be enabled.");
-		plainsCrystalGenerateTrees = propPlainsCrystalGenerateTrees;
-		
-		boolean propPlainsCrystalChangesBiome = config.getBoolean("Plains Crystal Turns Other Biomes Plains", Configuration.CATEGORY_GENERAL, true, "Should the plains biome change biomes? Changes biomes in each location of a spawned surface block.");
-		plainsCrystalChangesBiome = propPlainsCrystalChangesBiome;
+	    plainsCrystalDurability = config.getInt("Plains Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+	    plainsCrystalDiameter = config.getInt("Plains Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+	    plainsCrystalGenerateTallGrass = config.getBoolean("Plains Crystal generate tall grass", Configuration.CATEGORY_GENERAL, true, "Should platforms have a bonemeal effect on the surface?");
+		plainsCrystalGenerateTrees = config.getBoolean("Plains Crystal Spawns Trees", Configuration.CATEGORY_GENERAL, true, "Should the plains biome have a chance to spawn trees? Tall Grass must be enabled.");
+		plainsCrystalChangesBiome = config.getBoolean("Plains Crystal Turns Other Biomes Plains", Configuration.CATEGORY_GENERAL, true, "Should the plains biome change biomes? Changes biomes in each location of a spawned surface block.");
 		//Desert Crystal
-		int propDesertCrystalDurability = config.getInt("Desert Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
-		desertCrystalDurability = propDesertCrystalDurability;
-		
-		int propDesertCrystalDiameter = config.getInt("Desert Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
-		desertCrystalDiameter = propDesertCrystalDiameter;
-		
-		boolean propDesertCrystalGenerateCactus = config.getBoolean("Desert Crystal Generates Cactus", Configuration.CATEGORY_GENERAL, true, "Should platform have cactus on it?");
-		desertCrystalGenerateCactus = propDesertCrystalGenerateCactus;
-		
-		boolean propDesertCrystalChangesBiome = config.getBoolean("Desert Crystal Turns Other Biomes Desert", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
-		desertCrystalChangesBiome = propDesertCrystalChangesBiome;
-		
+		desertCrystalDurability = config.getInt("Desert Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+	 	desertCrystalDiameter = config.getInt("Desert Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+		desertCrystalGenerateCactus = config.getBoolean("Desert Crystal Generates Cactus", Configuration.CATEGORY_GENERAL, true, "Should platform have cactus on it?");
+		desertCrystalChangesBiome = config.getBoolean("Desert Crystal Turns Other Biomes Desert", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
 		//Mesa Crystal
-		int propMesaCrystalDurability = config.getInt("Mesa Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
-		mesaCrystalDurability = propMesaCrystalDurability;
-		
-		int propMesaCrystalDiameter = config.getInt("Mesa Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
-		mesaCrystalDiameter = propMesaCrystalDiameter;
-		boolean propMesaCrystalChangesBiome = config.getBoolean("Mesa Crystal Turns Other Biomes Mesa", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
-		mesaCrystalChangesBiome = propMesaCrystalChangesBiome;
+		mesaCrystalDurability = config.getInt("Mesa Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+		mesaCrystalDiameter = config.getInt("Mesa Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+		mesaCrystalChangesBiome = config.getBoolean("Mesa Crystal Turns Other Biomes Mesa", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
 		//Mushroom Crystal
-		int propMushroomCrystalDurability = config.getInt("Mushroom Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
-		mushroomCrystalDurability = propMushroomCrystalDurability;
-		
-		int propMushroomCrystalDiameter = config.getInt("Mushroom Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
-		mushroomCrystalDiameter = propMushroomCrystalDiameter;
-		
-		boolean propMushroomCrystalChangesBiome = config.getBoolean("Mushroom Crystal Turns Other Biomes Mushroom", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
-		mushroomCrystalChangesBiome = propMushroomCrystalChangesBiome;
+		mushroomCrystalDurability = config.getInt("Mushroom Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+		mushroomCrystalDiameter = config.getInt("Mushroom Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+		mushroomCrystalChangesBiome = config.getBoolean("Mushroom Crystal Turns Other Biomes Mushroom", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
 		//Nether Crystal
-		int propNetherCrystalDurability = config.getInt("Nether Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
-		netherCrystalDurability = propNetherCrystalDurability;
-		
-		int propNetherCrystalDiameter = config.getInt("Nether Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
-		netherCrystalDiameter = propNetherCrystalDiameter;
-		
-		boolean propNetherCrystalChangesBiome = config.getBoolean("Nether Crystal Turns Other Biomes Nether", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
-		netherCrystalChangesBiome = propNetherCrystalChangesBiome;
-		
+		netherCrystalDurability = config.getInt("Nether Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+		netherCrystalDiameter = config.getInt("Nether Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+		netherCrystalChangesBiome = config.getBoolean("Nether Crystal Turns Other Biomes Nether", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
+		netherCrystalRestrictedToNether = config.getBoolean("If The Nether Crystal only works in the Nether", Configuration.CATEGORY_GENERAL, false, "Can Restrict the Nether Crystal to only function in the Nether");
 		//End Crystal
-		int propEndCrystalDurability = config.getInt("End Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
-		endCrystalDurability = propEndCrystalDurability;
-		
-		int propEndCrystalDiameter = config.getInt("End Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
-		endCrystalDiameter = propEndCrystalDiameter;
-		
-		boolean propEndCrystalGenerateObsidianSpikes = config.getBoolean("End Crystal Generates Obsidian Spikes", Configuration.CATEGORY_GENERAL, true, "Should platforms have ruin-like structures on top?");
-		endCrystalGenerateObsidianSpikes = propEndCrystalGenerateObsidianSpikes;
-		
-		boolean propEndCrystalChangesBiome = config.getBoolean("End Crystal Turns Other Biomes End", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
-		endCrystalChangesBiome = propEndCrystalChangesBiome;
-		
-		
-		int propTaigaCrystalDurability = config.getInt("Taiga Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
-		taigaCrystalDurability = propTaigaCrystalDurability;
-		
-		int propTaigaCrystalDiameter = config.getInt("Taiga Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
-		taigaCrystalDiameter = propTaigaCrystalDiameter;
-		
-		boolean propTaigaCrystalGeneratesTrees = config.getBoolean("Taiga Crystal Generates Trees", Configuration.CATEGORY_GENERAL, true, "Should platform have spruce trees on it?");
-		taigaCrystalGeneratesTrees = propTaigaCrystalGeneratesTrees;
-		
-		boolean propTaigaCrystalChangesBiome = config.getBoolean("Taiga Crystal Turns Other Biomes Cold Taiga", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
-		taigaCrystalChangesBiome = propTaigaCrystalChangesBiome;
-		
+		endCrystalDurability = config.getInt("End Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+	    endCrystalDiameter = config.getInt("End Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+	    endCrystalGenerateObsidianSpikes = config.getBoolean("End Crystal Generates Obsidian Spikes", Configuration.CATEGORY_GENERAL, true, "Should platforms have ruin-like structures on top?");
+		endCrystalChangesBiome = config.getBoolean("End Crystal Turns Other Biomes End", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
+		endCrystalRestrictedToEnd = config.getBoolean("End Crystal Restricted to End Dimension", Configuration.CATEGORY_GENERAL, false, "If End Crystal only works in End");
+		//Taiga
+		taigaCrystalDurability = config.getInt("Taiga Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+		taigaCrystalDiameter = config.getInt("Taiga Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+		taigaCrystalGeneratesTrees = config.getBoolean("Taiga Crystal Generates Trees", Configuration.CATEGORY_GENERAL, true, "Should platform have spruce trees on it?");
+		taigaCrystalChangesBiome = config.getBoolean("Taiga Crystal Turns Other Biomes Cold Taiga", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
 		//Ice Plains Spikes
-		int propPlainsIceCrystalDurability = config.getInt("Ice Plains Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
-		plainsIceCrystalDurability = propPlainsIceCrystalDurability;
-		
-		int propPlainsIceCrystalDiameter = config.getInt("Ice Plains Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
-		plainsIceCrystalDiameter = propPlainsIceCrystalDiameter;
-		
-		boolean propPlainsIceCrystalChangesBiome = config.getBoolean("Ice Plains Crystal Turns Other Biomes Ice Plains", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
-		plainsIceCrystalChangesBiome = propPlainsIceCrystalChangesBiome;
-		
+		plainsIceCrystalDurability = config.getInt("Ice Plains Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+		plainsIceCrystalDiameter = config.getInt("Ice Plains Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+		plainsIceCrystalChangesBiome = config.getBoolean("Ice Plains Crystal Turns Other Biomes Ice Plains", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
 		//Jungle
-		int propJungleCrystalDurability = config.getInt("Jungle Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
-		jungleCrystalDurability = propJungleCrystalDurability;
-		
-		int propJungleCrystalDiameter = config.getInt("Jungle Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
-		jungleCrystalDiameter = propJungleCrystalDiameter;
-		
-		boolean propJungleCrystalChangesBiome = config.getBoolean("Jungle Crystal Turns Other Biomes Jungle", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
-		jungleCrystalChangesBiome = propJungleCrystalChangesBiome;
-		
-		boolean propJungleCrystalGeneratesTrees = config.getBoolean("Jungle Crystal Generates Trees", Configuration.CATEGORY_GENERAL, true, "Should platform have spruce trees on it?");
-		jungleCrystalGeneratesTrees = propJungleCrystalGeneratesTrees;
-		
-		boolean propJungleCrystalGeneratesMelon = config.getBoolean("Jungle Crystal Generates Melon", Configuration.CATEGORY_GENERAL, true, "Should platform have melons on it?");
-		jungleCrystalGeneratesMelon = propJungleCrystalGeneratesMelon;
-		
-		boolean propJungleCrystalGeneratesCocoa = config.getBoolean("Jungle Crystal Generates Cocoa Beans", Configuration.CATEGORY_GENERAL, true, "Should Jungle trees have cocoa beans?");
-		jungleCrystalGeneratesCocoa = propJungleCrystalGeneratesCocoa;
-		
-		boolean propJungleCrystalGeneratesBushes = config.getBoolean("Jungle Crystal Generates small bushes", Configuration.CATEGORY_GENERAL, true, "Should platform have bushes?");
-		jungleCrystalGeneratesBushes = propJungleCrystalGeneratesBushes;
-		
-		int propSwampCrystalDurability = config.getInt("Swamp Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
-		swampCrystalDurability = propSwampCrystalDurability;
-		
-		int propSwampCrystalDiameter = config.getInt("Swamp Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
-		swampCrystalDiameter = propSwampCrystalDiameter;
-		
-		boolean propSwampCrystalGensWater = config.getBoolean("Swamp Crystal Generates water pools", Configuration.CATEGORY_GENERAL, true, "Creates small water pools");
-		swampCrystalGensWater = propSwampCrystalGensWater;
-		
-		boolean propSwampCrystalGensClay = config.getBoolean("Swamp Crystal Generates Clay", Configuration.CATEGORY_GENERAL, true, "If water pools can generate clay");
-		swampCrystalGensClay = propSwampCrystalGensClay;
-		
-		boolean propSwampCrystalChangesBiome = config.getBoolean("Swamp Crystal Turns Other Biomes Swamplands", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
-		swampCrystalChangesBiome = propSwampCrystalChangesBiome;
-		
-		boolean propGenerateStone = config.getBoolean("Have the islands generate stone by default", Configuration.CATEGORY_GENERAL, true, "Forces stone to spawn beneath certain crystals");
-		generateStone = propGenerateStone;
-		
-		boolean propGenerateOres = config.getBoolean("Have stone generating islands also spawn ore", Configuration.CATEGORY_GENERAL, false, "Generate stone must be enabled.");
-		generateOres = propGenerateOres;
-		
-		int propStoneSpawnDepth = config.getInt("How far down islands start to spawn stone. Does nothing if GenerateStone is not enabled.", Configuration.CATEGORY_GENERAL, 3, 2, 9999, "Must be atleast 2. Keep within range of the island depth. Default: 3");;
-		stoneSpawnDepth = propStoneSpawnDepth;
-		
-		boolean propVersionChecker = config.getBoolean("Version Checker Enabled", Configuration.CATEGORY_CLIENT, true, "If you want to be notified when a new version is available");
-		versionChecker = propVersionChecker;
-		
+		jungleCrystalDurability = config.getInt("Jungle Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+		jungleCrystalDiameter = config.getInt("Jungle Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+		jungleCrystalChangesBiome = config.getBoolean("Jungle Crystal Turns Other Biomes Jungle", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
+		jungleCrystalGeneratesTrees = config.getBoolean("Jungle Crystal Generates Trees", Configuration.CATEGORY_GENERAL, true, "Should platform have spruce trees on it?");
+		jungleCrystalGeneratesMelon = config.getBoolean("Jungle Crystal Generates Melon", Configuration.CATEGORY_GENERAL, true, "Should platform have melons on it?");
+		jungleCrystalGeneratesCocoa = config.getBoolean("Jungle Crystal Generates Cocoa Beans", Configuration.CATEGORY_GENERAL, true, "Should Jungle trees have cocoa beans?");
+		jungleCrystalGeneratesBushes = config.getBoolean("Jungle Crystal Generates small bushes", Configuration.CATEGORY_GENERAL, true, "Should platform have bushes?");
+		//Swamp Crystal
+		swampCrystalDurability = config.getInt("Swamp Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+		swampCrystalDiameter = config.getInt("Swamp Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
+		swampCrystalGensWater = config.getBoolean("Swamp Crystal Generates water pools", Configuration.CATEGORY_GENERAL, true, "Creates small water pools");
+		swampCrystalGensClay = config.getBoolean("Swamp Crystal Generates Clay", Configuration.CATEGORY_GENERAL, true, "If water pools can generate clay");
+		swampCrystalChangesBiome = config.getBoolean("Swamp Crystal Turns Other Biomes Swamplands", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
+		//Misc
+		generateStone = config.getBoolean("Have the islands generate stone by default", Configuration.CATEGORY_GENERAL, true, "Forces stone to spawn beneath certain crystals");
+		generateOres = config.getBoolean("Have stone generating islands also spawn ore", Configuration.CATEGORY_GENERAL, false, "Generate stone must be enabled.");
+		stoneSpawnDepth = config.getInt("How far down islands start to spawn stone. Does nothing if GenerateStone is not enabled.", Configuration.CATEGORY_GENERAL, 3, 2, 9999, "Must be atleast 2. Keep within range of the island depth. Default: 3");;
+		versionChecker = config.getBoolean("Version Checker Enabled", Configuration.CATEGORY_CLIENT, true, "If you want to be notified when a new version is available");
 		if(config.hasChanged()){
 			config.save();
 		}
 	}
+	//Misc
 	public static boolean versionChecker;
 	public static boolean generateStone;
 	public static boolean generateOres;
@@ -184,10 +103,12 @@ public class ConfigurationFile {
 	public static int endCrystalDiameter;
 	public static boolean endCrystalGenerateObsidianSpikes;
     public static boolean endCrystalChangesBiome;
+    public static boolean endCrystalRestrictedToEnd;
     //Nether
     public static int netherCrystalDurability;
 	public static int netherCrystalDiameter;
     public static boolean netherCrystalChangesBiome;
+    public static boolean netherCrystalRestrictedToNether;
     //Taiga
     public static int taigaCrystalDurability;
     public static int taigaCrystalDiameter;
