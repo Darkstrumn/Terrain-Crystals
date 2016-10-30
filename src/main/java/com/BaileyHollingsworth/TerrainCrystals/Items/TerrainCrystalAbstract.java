@@ -69,7 +69,6 @@ public abstract class TerrainCrystalAbstract extends Item{
 		for(int i = 1; i < 10; i++){
 			replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(i));
 		}
-		
 		replaceableBlockStates.add(Blocks.TALLGRASS.getDefaultState());
 		replaceableBlockStates.add(Blocks.TALLGRASS.getStateFromMeta(1));
 		replaceableBlockStates.add(Blocks.RED_MUSHROOM.getDefaultState());
@@ -473,7 +472,6 @@ public abstract class TerrainCrystalAbstract extends Item{
     {
 		tooltip.add("Relog for client sync.");
     }
-	
 	@SideOnly(Side.CLIENT)
     public void initModel() {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));

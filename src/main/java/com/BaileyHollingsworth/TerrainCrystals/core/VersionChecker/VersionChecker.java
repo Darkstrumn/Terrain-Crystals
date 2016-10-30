@@ -1,6 +1,9 @@
-package com.BaileyHollingsworth.TerrainCrystals.core;
+package com.BaileyHollingsworth.TerrainCrystals.core.VersionChecker;
 
 import java.io.IOException;
+
+import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
+import com.BaileyHollingsworth.TerrainCrystals.core.TerrainCrystals;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;

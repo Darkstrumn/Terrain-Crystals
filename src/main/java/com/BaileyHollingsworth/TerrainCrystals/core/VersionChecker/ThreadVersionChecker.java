@@ -1,8 +1,10 @@
-package com.BaileyHollingsworth.TerrainCrystals.core;
+package com.BaileyHollingsworth.TerrainCrystals.core.VersionChecker;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+
+import com.BaileyHollingsworth.TerrainCrystals.core.TerrainCrystals;
 
 public class ThreadVersionChecker extends Thread{
 	public ThreadVersionChecker() {
