@@ -3,27 +3,24 @@ package com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals;
 import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
 import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalMesa extends TerrainCrystalAbstract{
+	
 	public TerrainCrystalMesa(){
 		super("Mesa");
 	}
+	
 	public TerrainCrystalMesa(boolean isGroundCrystal){
 		super("Mesa", isGroundCrystal);
 	}
+	
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 										Biome desiredBiome, boolean changeBiome){
@@ -69,6 +66,7 @@ public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 		}
 		return blocksGenerated;
 	}
+	
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos){
 		if(Blocks.CACTUS.canPlaceBlockAt(worldIn, pos.up())){
@@ -87,18 +85,22 @@ public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 			}
 		}
 	}
+	
 	@Override
 	protected Boolean changesBiomeOnUse() {
 		return ConfigurationFile.mesaCrystalChangesBiome;
 	}
+	
 	@Override
 	protected Biome getBiomeType() {
 		return Biomes.MESA;
 	}
+	
 	@Override
 	protected int getDiameter() {
 		return ConfigurationFile.mesaCrystalDiameter;
 	}
+	
 	@Override
 	protected int getDurability() {
 		return ConfigurationFile.mesaCrystalDurability;

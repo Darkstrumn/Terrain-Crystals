@@ -3,26 +3,22 @@ package com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals;
 import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
 import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
+	
 	public TerrainCrystalSwamp(){
 		super("Swamp");
 	}
+	
 	public TerrainCrystalSwamp(boolean isGroundCrystal){
 		super("Swamp", isGroundCrystal);
 	}
+	
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		if(Math.random() <= 0.02 && ConfigurationFile.swampCrystalGensWater){
@@ -56,6 +52,7 @@ public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
 				}
 			}
 	}
+	
 	private void generateWaterLily(World worldIn, BlockPos pos){
 		worldIn.setBlockState(pos.up(), Blocks.WATERLILY.getDefaultState());
 		if(Math.random() < 0.50){
@@ -66,6 +63,7 @@ public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
 			worldIn.setBlockState(pos.east().up(), Blocks.WATERLILY.getDefaultState());
 		}
 	}
+	
 	private void generateClay(World worldIn, BlockPos pos){
 		worldIn.setBlockState(pos.down(), Blocks.CLAY.getDefaultState());
 		worldIn.setBlockState(pos.down(2).east(), Blocks.CLAY.getDefaultState());
@@ -82,6 +80,7 @@ public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
 		worldIn.setBlockState(pos.east(), Blocks.WATER.getDefaultState());
 		generateWaterLily(worldIn, pos);
 	}
+	
 	private void generateSand(World worldIn, BlockPos pos){
 		if(Math.random() < 0.25){
 			worldIn.setBlockState(pos.north(2).down(), Blocks.DIRT.getDefaultState());
@@ -108,18 +107,22 @@ public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
 			plantSugarcane(worldIn,pos.south().east());
 		}
 	}
+	
 	@Override
 	protected Boolean changesBiomeOnUse() {
 		return ConfigurationFile.swampCrystalChangesBiome;
 	}
+	
 	@Override
 	protected Biome getBiomeType() {
 		return Biomes.SWAMPLAND;
 	}
+	
 	@Override
 	protected int getDiameter() {
 		return ConfigurationFile.swampCrystalDiameter;
 	}
+	
 	@Override
 	protected int getDurability() {
 		return ConfigurationFile.swampCrystalDurability;

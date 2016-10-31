@@ -3,26 +3,22 @@ package com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals;
 import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
 import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalJungle extends TerrainCrystalAbstract{
+	
 	public TerrainCrystalJungle(){
 		super("Jungle");
 	}
+	
 	public TerrainCrystalJungle(boolean isGroundCrystal){
 		super("Jungle", isGroundCrystal);
 	}
+	
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
 		//Generate bush things
@@ -55,6 +51,7 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 			growTree(worldIn, pos);
 		}
 	}
+	
 	private void growTree(World worldIn, BlockPos pos) {
 			if (Blocks.SAPLING.canPlaceBlockAt(worldIn, pos.up())){
 				worldIn.setBlockState(pos.up(), Blocks.SAPLING.getStateFromMeta(3));
@@ -62,6 +59,7 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 				generateCocoaBeans(worldIn, pos.up());
 			}
 	}
+	
 	private boolean safelyExpandPlatform(World worldIn, BlockPos pos){
 		if(worldIn.getBlockState(pos) == Blocks.AIR.getDefaultState() || worldIn.getBlockState(pos) == Blocks.GRASS.getDefaultState()
 				|| worldIn.getBlockState(pos) == Blocks.DIRT.getDefaultState()){
@@ -70,6 +68,7 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 		}
 		return false;
 	}
+	
 	private void generateCocoaBeans(World worldIn, BlockPos pos){
 		int counter = 2;
 		while((worldIn.getBlockState(pos.up(counter)) == Blocks.LOG.getStateFromMeta(3)) && counter < 16 && ConfigurationFile.jungleCrystalGeneratesCocoa){
@@ -93,18 +92,22 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 			counter++;
 		}
 	}
+	
 	@Override
 	protected Boolean changesBiomeOnUse() {
 		return ConfigurationFile.jungleCrystalChangesBiome;
 	}
+	
 	@Override
 	protected Biome getBiomeType() {
 		return Biomes.JUNGLE;
 	}
+	
 	@Override
 	protected int getDiameter() {
 		return ConfigurationFile.jungleCrystalDiameter;
 	}
+	
 	@Override
 	protected int getDurability() {
 		return ConfigurationFile.jungleCrystalDurability;

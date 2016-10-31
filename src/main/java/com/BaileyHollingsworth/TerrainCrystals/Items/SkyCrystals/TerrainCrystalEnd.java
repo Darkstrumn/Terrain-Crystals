@@ -1,35 +1,29 @@
 package com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals;
 
-import java.awt.Dimension;
 import java.util.Random;
 
 import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
 import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 
 import net.minecraft.block.BlockChorusFlower;
-import net.minecraft.block.IGrowable;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalEnd extends TerrainCrystalAbstract{
+	
 	public TerrainCrystalEnd(){
 		super("End");
 	}
+	
 	public TerrainCrystalEnd(boolean isGroundCrystal){
 		super("End", isGroundCrystal);
 	}
+	
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			Biome desiredBiome, boolean changeBiome){
@@ -59,32 +53,35 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 		}
 		return true;
 	}
+	
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos){
 
 		if(ConfigurationFile.endCrystalGenerateChorus && spacedFarEnough(worldIn, pos.up())){
 			if(Math.random() > .98){
 				try{
-				worldIn.setBlockState(pos.up(), Blocks.CHORUS_FLOWER.getDefaultState());
-				Random rand = new Random();	
-				BlockChorusFlower block = (BlockChorusFlower) worldIn.getBlockState(pos.up());
-				block.generatePlant(worldIn, pos, rand, 1);
+					Random rand = new Random();	
+					BlockChorusFlower.generatePlant(worldIn, pos.up(), rand, 1);
 				}catch(Exception e){}
 			}
 		}
 	}
+	
 	@Override
 	protected Boolean changesBiomeOnUse() {
 		return ConfigurationFile.endCrystalChangesBiome;
 	}
+	
 	@Override
 	protected Biome getBiomeType() {
 		return Biomes.SKY;
 	}
+	
 	@Override
 	protected int getDiameter() {
 		return ConfigurationFile.endCrystalDiameter;
 	}
+	
 	@Override
 	protected int getDurability() {
 		return ConfigurationFile.endCrystalDurability;

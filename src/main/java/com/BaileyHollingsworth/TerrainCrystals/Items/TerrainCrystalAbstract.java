@@ -11,9 +11,7 @@ import com.BaileyHollingsworth.TerrainCrystals.core.TerrainCrystals;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,10 +29,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class TerrainCrystalAbstract extends Item{
+	
 	public static HashSet replaceableBlockStates;
 	public static HashSet invalidSpaces;
 	private boolean isGroundCrystal;
+	
 	public TerrainCrystalAbstract(String name){
+		this.isGroundCrystal = false;
 		setUnlocalizedName("terrainCrystal" + name);
 		setRegistryName(getUnlocalizedName().substring(5));
 		setCreativeTab(TerrainCrystals.tab);
@@ -42,6 +43,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 		setMaxDamage(getDurability());
 		GameRegistry.register(this);
 	}
+	
 	public TerrainCrystalAbstract(String name, boolean isGroundCrystal){
 		this.isGroundCrystal = isGroundCrystal;
 		setUnlocalizedName("terrainCrystalGround" + name);
@@ -61,6 +63,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	    gatherBlockGenList(itemStackIn, worldIn, playerIn, getDiameter(), getBiomeType(), changesBiomeOnUse());
 		return new ActionResult(EnumActionResult.PASS, itemStackIn);
 	}
+	
 	/**
 	 * Initializes the hashSet with block states that can be replaced by the platform.
 	 */
@@ -90,6 +93,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 			replaceableBlockStates.add(Blocks.RED_FLOWER.getStateFromMeta(i));
 		}
 	}
+	
 	public static void initInvalidSpaces(){
 		invalidSpaces = new HashSet();
 		invalidSpaces.add(Blocks.LOG.getDefaultState());
@@ -115,6 +119,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 		invalidSpaces.add(Blocks.RED_MUSHROOM_BLOCK.getDefaultState());
 		invalidSpaces.add(Blocks.BROWN_MUSHROOM_BLOCK.getDefaultState());
 	}
+	
 	/**
 	 * If the block given has enough room around it to generate a tree.
 	 * @param blockState Takes a block state
@@ -130,6 +135,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return false;
 	}
+	
 	/**
 	 * Returns if the state is eligible for replacing. Checks Y Level and block state
 	 * @param pos Takes the intended block state from the position in the world
@@ -143,7 +149,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return false;
 	}
-	//Each class needs to provide its own platform makeup.
+	
 	/**
 	 * This method is called after the list of positions has been created. Each position is then passed into the method
 	 * and needs to be set the world as a blockstate. The positions need to have a Y value greater than 1.
@@ -179,6 +185,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return blocksGenerated;
 	}
+	
 	public static IBlockState oreListHelper(){
 		double oreType = Math.random();
 		if(oreType < .40){
@@ -197,13 +204,13 @@ public abstract class TerrainCrystalAbstract extends Item{
 		return Blocks.COAL_ORE.getDefaultState();
 	}
 		
-	//Each class needs to provide its own decoration rules
 	/**
 	 * Optional implementation that needs to be called by generateBlocksInWorld on the SURFACE of the platform.
 	 * @param worldIn The world
 	 * @param pos The SURFACE block to be decorated.
 	 */
 	protected abstract void decoratePlatform(World worldIn, BlockPos pos);
+	
 	//Code taken from Lumien's Random Things Nature Core tile entity
 	/**
 	 * Bonemeals the grass at a given position
@@ -227,6 +234,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}catch(Exception e){
 		}
 	}
+	
 	protected void bonemealTree(World worldIn, BlockPos pos){
 		try{
 			IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
@@ -243,6 +251,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 			
 		}
 	}
+	
 	protected void bonemealBlockNoRemoval(World worldIn, BlockPos pos){
 		try{
 			IGrowable growable = (IGrowable) worldIn.getBlockState(pos.up()).getBlock();
@@ -309,6 +318,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return itemStackIn;
 	}
+	
 	/**
 	 * Converts the list of positions into blocks in the shape of a spike.
 	 * @param posList List of positions
@@ -321,33 +331,33 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @return Returns an int, usually the number of blocks generated in the world.
 	 */
 	protected int generateSpike(ArrayList<BlockPos> posList, World worldIn, EntityPlayer playerIn, int blocksGenerated, ItemStack itemStackIn, Biome desiredBiome, boolean changeBiome){
-		ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
-		for(BlockPos pos : posList){
-			int surroundingBlocks = 0;
-			blocksGenerated = generateBlocksInWorld(pos, worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
-			if(worldIn.getBlockState(pos.north()) != Blocks.AIR.getDefaultState()){
-				surroundingBlocks++;
+			ArrayList<BlockPos> recursiveList = new ArrayList<BlockPos>();
+			for(BlockPos pos : posList){
+				int surroundingBlocks = 0;
+				blocksGenerated = generateBlocksInWorld(pos, worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
+				if(worldIn.getBlockState(pos.north()) != Blocks.AIR.getDefaultState()){
+					surroundingBlocks++;
+				}
+				
+				if(worldIn.getBlockState(pos.east()) != Blocks.AIR.getDefaultState()){
+					surroundingBlocks++;
+				}
+				
+				if(worldIn.getBlockState(pos.south()) != Blocks.AIR.getDefaultState()){
+					surroundingBlocks++;
+				}
+				
+				if(worldIn.getBlockState(pos.west()) != Blocks.AIR.getDefaultState()){
+					surroundingBlocks++;
+				}
+				if((surroundingBlocks >= 3 || Math.random() < 0.05) && pos.getY() > 1){
+					blocksGenerated = generateBlocksInWorld(pos.down(), worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
+					recursiveList.add(pos.down());
+				}
 			}
-			
-			if(worldIn.getBlockState(pos.east()) != Blocks.AIR.getDefaultState()){
-				surroundingBlocks++;
+			if(!recursiveList.isEmpty()){
+				blocksGenerated = generateSpike(recursiveList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
 			}
-			
-			if(worldIn.getBlockState(pos.south()) != Blocks.AIR.getDefaultState()){
-				surroundingBlocks++;
-			}
-			
-			if(worldIn.getBlockState(pos.west()) != Blocks.AIR.getDefaultState()){
-				surroundingBlocks++;
-			}
-			if((surroundingBlocks >= 3 || Math.random() < 0.05) && pos.getY() > 1){
-				blocksGenerated = generateBlocksInWorld(pos.down(), worldIn, playerIn, blocksGenerated, desiredBiome, changeBiome);
-				recursiveList.add(pos.down());
-			}
-		}
-		if(!recursiveList.isEmpty()){
-			blocksGenerated = generateSpike(recursiveList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
-		}
 		return blocksGenerated;
 	}
 	
@@ -366,13 +376,14 @@ public abstract class TerrainCrystalAbstract extends Item{
 			Chunk chunk = worldIn.getChunkFromBlockCoords(position);
 	        if ((chunk != null) && (chunk.isLoaded())) {
 	        	if(Biome.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != Biome.getIdForBiome(desiredBiome)){
-	        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) desiredBiome.getIdForBiome(desiredBiome);
+	        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) Biome.getIdForBiome(desiredBiome);
 		            return true;
 	        	}
 	        }
         }
         return false;
     }
+	
 	/**
 	 * Pass this method the position that the sapling will OCCUPY, not REST ON. Meaning Pos.UP of the platform position.
 	 * @param worldIn World
@@ -420,6 +431,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return true;
 	}
+	
 	protected boolean spacedFarEnough(World worldIn, BlockPos pos, int diameter){
 		int posX = pos.getX();
 		int posY = pos.getY();
@@ -459,6 +471,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return true;
 	}
+	
 	protected abstract Boolean changesBiomeOnUse();
 	
 	protected abstract Biome getBiomeType();
@@ -467,11 +480,13 @@ public abstract class TerrainCrystalAbstract extends Item{
 	
 	protected abstract int getDurability();
 	
+	@Override
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
 		tooltip.add("Relog for client sync.");
     }
+	
 	@SideOnly(Side.CLIENT)
     public void initModel() {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));

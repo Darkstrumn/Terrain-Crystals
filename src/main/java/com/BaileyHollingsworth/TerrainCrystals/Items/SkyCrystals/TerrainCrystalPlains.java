@@ -7,27 +7,24 @@ import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TerrainCrystalPlains extends TerrainCrystalAbstract{
+	
 	public TerrainCrystalPlains(){
 		super("Plains");
 	}
+	
 	public TerrainCrystalPlains(boolean isGroundCrystal){
 		super("Plains", isGroundCrystal);
 	}
+	
 	//Code taken from Lumien's Random Things Nature Core tile entity
+	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos){
 		if(ConfigurationFile.plainsCrystalGenerateTallGrass){
 			IBlockState state = worldIn.getBlockState(pos);
@@ -43,6 +40,7 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 			}catch(Exception e){}
 		}
 	}
+	
 	private void growTree(World worldIn, BlockPos pos){
 		if(ConfigurationFile.plainsCrystalGenerateTrees){
 			//spacedFarEnough(worldIn, pos.up())
@@ -62,18 +60,22 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 			}
 		}
 	}
+	
 	@Override
 	protected Boolean changesBiomeOnUse() {
 		return ConfigurationFile.plainsCrystalChangesBiome;
 	}
+	
 	@Override
 	protected Biome getBiomeType() {
 		return Biomes.PLAINS;
 	}
+	
 	@Override
 	protected int getDiameter() {
 		return ConfigurationFile.plainsCrystalDiameter;
 	}
+	
 	@Override
 	protected int getDurability() {
 		return ConfigurationFile.plainsCrystalDurability;
