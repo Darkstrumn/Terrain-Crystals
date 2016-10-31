@@ -7,6 +7,7 @@ import java.net.URL;
 import com.BaileyHollingsworth.TerrainCrystals.core.TerrainCrystals;
 
 public class ThreadVersionChecker extends Thread{
+	
 	public ThreadVersionChecker() {
 		setName("Terrain Crystals Checking Thread");
 		setDaemon(true);

@@ -3,6 +3,7 @@ package com.BaileyHollingsworth.TerrainCrystals.core;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigurationFile {
+	
 	public static void configFile(Configuration config){
 		config.load();
 		
@@ -68,6 +69,7 @@ public class ConfigurationFile {
 			config.save();
 		}
 	}
+	
 	//Misc
 	public static boolean versionChecker;
 	public static boolean generateStone;

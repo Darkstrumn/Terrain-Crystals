@@ -22,11 +22,13 @@ public class TerrainCrystals {
 	public static final String MODNAME = "Terrain Crystals";
 	public static final String VERSION = "1.2.0";
 	public static final String URL = "https://raw.githubusercontent.com/DrasticDemise/Terrain-Crystals/master/1.9%20Update%20Handler";
+	
 	public static CreativeTabs tab = new CreativeTabs("Terrain Crystals") {
 		@Override
 		public Item getTabIconItem() {
 			return InitItems.terrainCrystalPlains;
 		}
+		@Override
 		@SideOnly(Side.CLIENT)
 	    public String getTranslatedTabLabel()
 	    {

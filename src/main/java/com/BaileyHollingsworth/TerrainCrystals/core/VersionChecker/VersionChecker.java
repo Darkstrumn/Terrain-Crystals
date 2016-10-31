@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 
 public class VersionChecker {
+	
 	public static String version = "";
 	public static boolean doneChecking = false;
 	

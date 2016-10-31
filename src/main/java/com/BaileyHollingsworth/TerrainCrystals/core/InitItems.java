@@ -41,6 +41,7 @@ public class InitItems {
 	public static TerrainCrystalPlainsIceSpikes groundCrystalIcePlains;
 	public static TerrainCrystalJungle groundCrystalJungle;
 	public static TerrainCrystalSwamp groundCrystalSwamp;
+	
 	public static void init(){
 		terrainCrystalPlains = new TerrainCrystalPlains();
 		terrainCrystalNether = new TerrainCrystalNether();
@@ -52,7 +53,7 @@ public class InitItems {
 		terrainCrystalPlainsIceSpikes = new TerrainCrystalPlainsIceSpikes();
 		terrainCrystalJungle = new TerrainCrystalJungle();
 		terrainCrystalSwamp = new TerrainCrystalSwamp();
-		
+		/*
 		groundCrystalPlains = new TerrainCrystalPlains(true);
 		groundCrystalNether = new TerrainCrystalNether(true);
 		groundCrystalDesert = new TerrainCrystalDesert(true);
@@ -63,7 +64,9 @@ public class InitItems {
 		groundCrystalIcePlains = new TerrainCrystalPlainsIceSpikes(true);
 		groundCrystalJungle = new TerrainCrystalJungle(true);
 		groundCrystalSwamp = new TerrainCrystalSwamp(true);
+		*/
 	}
+	
 	public static void recipes(){
 		ItemStack dirtStack = new ItemStack(Blocks.DIRT);
 		ItemStack sandStack = new ItemStack(Blocks.SAND);
