@@ -34,7 +34,7 @@ public class ConfigurationFile {
 		//End Crystal
 		endCrystalDurability = config.getInt("End Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
 	    endCrystalDiameter = config.getInt("End Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
-	    endCrystalGenerateChorus = config.getBoolean("End Crystal Generates Obsidian Spikes", Configuration.CATEGORY_GENERAL, true, "Should platforms have ruin-like structures on top?");
+	    endCrystalGenerateChorus = config.getBoolean("End Crystal Generates Chorus", Configuration.CATEGORY_GENERAL, true, "Should platforms have chorus plants on top?");
 		endCrystalChangesBiome = config.getBoolean("End Crystal Turns Other Biomes End", Configuration.CATEGORY_GENERAL, true, "Changes biomes in each location of a spawned surface block.");
 		endCrystalRestrictedToEnd = config.getBoolean("End Crystal Restricted to End Dimension", Configuration.CATEGORY_GENERAL, false, "If End Crystal only works in End");
 		//Taiga
@@ -63,7 +63,7 @@ public class ConfigurationFile {
 		//Misc
 		generateStone = config.getBoolean("Have the islands generate stone by default", Configuration.CATEGORY_GENERAL, true, "Forces stone to spawn beneath certain crystals");
 		generateOres = config.getBoolean("Have stone generating islands also spawn ore", Configuration.CATEGORY_GENERAL, false, "Generate stone must be enabled.");
-		stoneSpawnDepth = config.getInt("How far down islands start to spawn stone. Does nothing if GenerateStone is not enabled.", Configuration.CATEGORY_GENERAL, 3, 2, 9999, "Must be atleast 2. Keep within range of the island depth. Default: 3");;
+		stoneSpawnDepth = config.getInt("How far down islands start to spawn stone. Does nothing if GenerateStone is not enabled.", Configuration.CATEGORY_GENERAL, 3, 2, 9999, "Must be at least 2. Keep within range of the island depth. Default: 3");;
 		versionChecker = config.getBoolean("Version Checker Enabled", Configuration.CATEGORY_CLIENT, true, "If you want to be notified when a new version is available");
 		if(config.hasChanged()){
 			config.save();
