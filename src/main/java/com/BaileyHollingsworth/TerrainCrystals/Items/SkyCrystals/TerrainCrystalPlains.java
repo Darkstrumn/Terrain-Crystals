@@ -26,24 +26,18 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 	//Code taken from Lumien's Random Things Nature Core tile entity
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos){
-		if(ConfigurationFile.plainsCrystalGenerateTallGrass){
-			IBlockState state = worldIn.getBlockState(pos);
-			Random rand = new Random();
-			//Try-catching our worries away!
-			try{
-				if(Math.random() < 0.10){
-					bonemeal(worldIn, pos);
-				}
-				if(Math.random() <= 0.05){
-					growTree(worldIn, pos);
-				}
-			}catch(Exception e){}
-		}
+		try{
+			if(Math.random() < 0.06 && ConfigurationFile.plainsCrystalGenerateTallGrass){
+				bonemeal(worldIn, pos);
+			}
+			if(Math.random() <= 0.01){
+				growTree(worldIn, pos);
+			}
+		}catch(Exception e){}
 	}
 	
 	private void growTree(World worldIn, BlockPos pos){
 		if(ConfigurationFile.plainsCrystalGenerateTrees){
-			//spacedFarEnough(worldIn, pos.up())
 			if (spacedFarEnough(worldIn, pos.up())){
 				if(Math.random() < .5){
 					worldIn.setBlockState(pos.up(), Blocks.SAPLING.getStateFromMeta(2));

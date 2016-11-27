@@ -1,15 +1,6 @@
 package com.BaileyHollingsworth.TerrainCrystals.core;
 
-import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalDesert;
-import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalEnd;
-import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalJungle;
-import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalMesa;
-import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalMushroom;
-import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalNether;
-import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalPlains;
-import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalPlainsIceSpikes;
-import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalSwamp;
-import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.TerrainCrystalTaiga;
+import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.*;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -30,7 +21,8 @@ public class InitItems {
 	public static TerrainCrystalPlainsIceSpikes terrainCrystalPlainsIceSpikes;
 	public static TerrainCrystalJungle terrainCrystalJungle;
 	public static TerrainCrystalSwamp terrainCrystalSwamp;
-	
+	public static TerrainCrystalSavanna terrainCrystalSavanna;
+
 	public static TerrainCrystalPlains groundCrystalPlains;
 	public static TerrainCrystalNether groundCrystalNether;
 	public static TerrainCrystalDesert groundCrystalDesert;
@@ -41,7 +33,8 @@ public class InitItems {
 	public static TerrainCrystalPlainsIceSpikes groundCrystalIcePlains;
 	public static TerrainCrystalJungle groundCrystalJungle;
 	public static TerrainCrystalSwamp groundCrystalSwamp;
-	
+	public static TerrainCrystalSavanna groundCrystalSavanna;
+
 	public static void init(){
 		terrainCrystalPlains = new TerrainCrystalPlains();
 		terrainCrystalNether = new TerrainCrystalNether();
@@ -53,6 +46,7 @@ public class InitItems {
 		terrainCrystalPlainsIceSpikes = new TerrainCrystalPlainsIceSpikes();
 		terrainCrystalJungle = new TerrainCrystalJungle();
 		terrainCrystalSwamp = new TerrainCrystalSwamp();
+        terrainCrystalSavanna = new TerrainCrystalSavanna();
 		/*
 		groundCrystalPlains = new TerrainCrystalPlains(true);
 		groundCrystalNether = new TerrainCrystalNether(true);
@@ -64,6 +58,7 @@ public class InitItems {
 		groundCrystalIcePlains = new TerrainCrystalPlainsIceSpikes(true);
 		groundCrystalJungle = new TerrainCrystalJungle(true);
 		groundCrystalSwamp = new TerrainCrystalSwamp(true);
+		groundCrystalSavanna = new TerrainCrystalSavanna(true);
 		*/
 	}
 	

@@ -3,17 +3,17 @@ package com.BaileyHollingsworth.TerrainCrystals.core;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigurationFile {
-	public static final String DURABILITY = "Durability";
-    public static final String DIAMETER = "Diameter";
-    public static final String BIOME_CONVERSION = "Biome";
-    public static final String DECORATION = "Decoration";
-    public static final String MISC = "Misc";
+	private static final String DURABILITY = "durability";
+    private static final String DIAMETER = "diameter";
+    private static final String BIOME_CONVERSION = "biome";
+    private static final String DECORATION = "decoration";
+    private static final String MISC = "misc";
+
 	public static void configFile(Configuration config){
 		config.load();
-
 		//Durabilities
-		plainsCrystalDurability = config.getInt("Plains Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
-		desertCrystalDurability = config.getInt("Desert Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
+		plainsCrystalDurability = config.getInt("Plains Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
+		desertCrystalDurability = config.getInt("Desert Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
 		mesaCrystalDurability = config.getInt("Mesa Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
 		mushroomCrystalDurability = config.getInt("Mushroom Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
 		netherCrystalDurability = config.getInt("Nether Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
@@ -22,7 +22,7 @@ public class ConfigurationFile {
         plainsIceCrystalDurability = config.getInt("Ice Plains Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
         jungleCrystalDurability = config.getInt("Jungle Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
         swampCrystalDurability = config.getInt("Swamp Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
-
+        savannaCrystalDurability = config.getInt("Savanna Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
 
 		//Diameters
 		plainsCrystalDiameter = config.getInt("Plains Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "Odd numbers work best. Default: 11");
@@ -35,7 +35,7 @@ public class ConfigurationFile {
         plainsIceCrystalDiameter = config.getInt("Ice Plains Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
         jungleCrystalDiameter = config.getInt("Jungle Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
         swampCrystalDiameter = config.getInt("Swamp Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
-
+        savannaCrystalDiameter = config.getInt("Savanna Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
 
 		//Changes Biome
 		plainsCrystalChangesBiome = config.getBoolean("Plains Crystal Turns Other Biomes Plains", ConfigurationFile.BIOME_CONVERSION, true, "Should this crystal transform other biomes when blocks spawn?");
@@ -48,11 +48,12 @@ public class ConfigurationFile {
         plainsIceCrystalChangesBiome = config.getBoolean("Ice Plains Crystal Turns Other Biomes Ice Plains", ConfigurationFile.BIOME_CONVERSION, true, "");
         jungleCrystalChangesBiome = config.getBoolean("Jungle Crystal Turns Other Biomes Jungle", ConfigurationFile.BIOME_CONVERSION, true, "");
         swampCrystalChangesBiome = config.getBoolean("Swamp Crystal Turns Other Biomes Swamplands", ConfigurationFile.BIOME_CONVERSION, true, "");
+        savannaCrystalChangesBiome = config.getBoolean("Savanna Crystal Turns Other Biomes Swamplands", ConfigurationFile.BIOME_CONVERSION, true, "");
 
 
-		//Foliage
+        //Foliage
 		plainsCrystalGenerateTallGrass = config.getBoolean("Plains Crystal generate tall grass", ConfigurationFile.DECORATION, true, "");
-		plainsCrystalGenerateTrees = config.getBoolean("Plains Crystal Spawns Trees", ConfigurationFile.DECORATION, true, "Should the plains biome have a chance to spawn trees? Tall Grass must be enabled.");
+		plainsCrystalGenerateTrees = config.getBoolean("Plains Crystal Spawns Trees", ConfigurationFile.DECORATION, true, "");
 		desertCrystalGenerateCactus = config.getBoolean("Desert Crystal Generates Cactus", ConfigurationFile.DECORATION, true, "");
 		endCrystalGenerateChorus = config.getBoolean("End Crystal Generates Chorus", ConfigurationFile.DECORATION, true, "");
         taigaCrystalGeneratesTrees = config.getBoolean("Taiga Crystal Generates Spruce Trees", ConfigurationFile.DECORATION, true, "");
@@ -62,7 +63,7 @@ public class ConfigurationFile {
         jungleCrystalGeneratesBushes = config.getBoolean("Jungle Crystal Generates small bushes", ConfigurationFile.DECORATION, true, "");
         swampCrystalGensWater = config.getBoolean("Swamp Crystal Generates water pools", ConfigurationFile.DECORATION, true, "");
         swampCrystalGensClay = config.getBoolean("Swamp Crystal Generates Clay", ConfigurationFile.DECORATION, true, "");
-
+        savannaCrystalGeneratesTrees = config.getBoolean("Savanna Crystal Generates Acacia Trees", ConfigurationFile.DECORATION, true, "");
 		//Nether Crystal
 		netherCrystalRestrictedToNether = config.getBoolean("If The Nether Crystal only works in the Nether", ConfigurationFile.MISC, false, "");
 		//End Crystal
@@ -135,4 +136,11 @@ public class ConfigurationFile {
     public static boolean jungleCrystalGeneratesMelon;
     public static boolean jungleCrystalGeneratesCocoa;
     public static boolean jungleCrystalGeneratesBushes;
+
+    //Savanna
+    public static int savannaCrystalDurability;
+    public static int savannaCrystalDiameter;
+    public static boolean savannaCrystalChangesBiome;
+    public static boolean savannaCrystalGeneratesTrees;
+
 }
