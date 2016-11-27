@@ -1,7 +1,6 @@
 package com.BaileyHollingsworth.TerrainCrystals.core;
 
 import com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals.*;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

@@ -1,11 +1,7 @@
 package com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals;
 
-import java.util.List;
-import java.util.Random;
-
 import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
 import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
-
 import net.minecraft.block.BlockChorusFlower;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
@@ -18,6 +14,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
+import java.util.Random;
 
 public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 	
@@ -68,7 +67,7 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 				try{
 					Random rand = new Random();	
 					BlockChorusFlower.generatePlant(worldIn, pos.up(), rand, 1);
-				}catch(Exception e){}
+				}catch(Exception ignored){}
 			}
 		}
 	}

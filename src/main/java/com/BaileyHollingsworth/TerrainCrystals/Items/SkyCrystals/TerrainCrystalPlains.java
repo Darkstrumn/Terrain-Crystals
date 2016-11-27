@@ -1,17 +1,15 @@
 package com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals;
 
-import java.util.Random;
-
 import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
 import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
-
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+
+import java.util.Random;
 
 public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 	
@@ -33,7 +31,7 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 			if(Math.random() <= 0.01){
 				growTree(worldIn, pos);
 			}
-		}catch(Exception e){}
+		}catch(Exception ignored){}
 	}
 	
 	private void growTree(World worldIn, BlockPos pos){

@@ -8,7 +8,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeCache;
 
 import java.util.Random;
 
@@ -28,7 +27,7 @@ public class TerrainCrystalRoofedForest extends TerrainCrystalAbstract{
             if(Math.random() <= 0.04){
                 growTree(worldIn, pos);
             }
-        }catch(Exception e){}
+        }catch(Exception ignored){}
     }
     private void growTree(World worldIn, BlockPos pos){
         if(ConfigurationFile.roofedForestGeneratesTrees){

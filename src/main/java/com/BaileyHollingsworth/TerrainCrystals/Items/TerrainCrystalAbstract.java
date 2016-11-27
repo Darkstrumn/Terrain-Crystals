@@ -1,13 +1,8 @@
 package com.BaileyHollingsworth.TerrainCrystals.Items;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-
 import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 import com.BaileyHollingsworth.TerrainCrystals.core.TerrainCrystals;
-
+import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -28,6 +23,11 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 
 public abstract class TerrainCrystalAbstract extends Item{
 	
@@ -69,7 +69,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * Initializes the hashSet with block states that can be replaced by the platform.
 	 */
 	public static void initReplaceableBlocks(){
-		replaceableBlockStates = new HashSet();
+		replaceableBlockStates = new HashSet<Block>();
 		for(int i = 1; i < 10; i++){
 			replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(i));
 		}
@@ -127,14 +127,8 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param pos Position
 	 * @return Returns a boolean if the blockstate given is an eligble location for a tree.
 	 */
-	protected static boolean eligibleSpaceForTree(IBlockState blockState, BlockPos pos){
-		if(pos.getY() > 1){
-			if(invalidSpaces.contains(blockState)){
-				return false;
-			}
-			return true;
-		}
-		return false;
+	protected static boolean eligibleSpaceForTree(IBlockState blockState, BlockPos pos) {
+		return pos.getY() > 1 && !invalidSpaces.contains(blockState);
 	}
 	
 	/**
@@ -232,7 +226,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 					growable.grow(worldIn, rand, pos, state);
 				}
 			}
-		}catch(Exception e){
+		}catch(Exception ignored){
 		}
 	}
 	
@@ -248,7 +242,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 			if(attemptCap > 8){
 				worldIn.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
 			}
-		}catch(Exception e){
+		}catch(Exception ignored){
 			
 		}
 	}
@@ -262,7 +256,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 				growable.grow(worldIn, rand, pos.up(), worldIn.getBlockState(pos.up()));
 				attemptCap++;
 			}
-		}catch(Exception e){
+		}catch(Exception ignored){
 			
 		}
 	}

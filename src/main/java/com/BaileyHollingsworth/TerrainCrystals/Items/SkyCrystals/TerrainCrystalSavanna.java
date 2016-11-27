@@ -29,7 +29,7 @@ public class TerrainCrystalSavanna extends TerrainCrystalAbstract{
             if(Math.random() <= 0.01){
                 growTree(worldIn, pos);
             }
-        }catch(Exception e){}
+        }catch(Exception ignored){}
     }
     private void growTree(World worldIn, BlockPos pos){
         if(ConfigurationFile.savannaCrystalGeneratesTrees){

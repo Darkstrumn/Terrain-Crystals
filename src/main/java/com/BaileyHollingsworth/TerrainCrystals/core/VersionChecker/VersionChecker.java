@@ -1,16 +1,15 @@
 package com.BaileyHollingsworth.TerrainCrystals.core.VersionChecker;
 
-import java.io.IOException;
-
 import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 import com.BaileyHollingsworth.TerrainCrystals.core.TerrainCrystals;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
+
+import java.io.IOException;
 
 public class VersionChecker {
 	

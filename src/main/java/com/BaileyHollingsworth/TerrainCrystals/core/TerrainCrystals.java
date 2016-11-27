@@ -2,7 +2,6 @@ package com.BaileyHollingsworth.TerrainCrystals.core;
 
 import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
 import com.BaileyHollingsworth.TerrainCrystals.core.VersionChecker.VersionChecker;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
