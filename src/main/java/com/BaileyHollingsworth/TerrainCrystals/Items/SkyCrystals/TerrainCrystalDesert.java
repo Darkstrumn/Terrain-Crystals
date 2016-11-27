@@ -34,17 +34,18 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 				}else{
 					worldIn.setBlockState(pos, Blocks.SANDSTONE.getDefaultState());
 				}
-			}else{
-				if(Math.random() < .9){
-					worldIn.setBlockState(pos, Blocks.SANDSTONE.getDefaultState());
-				}else{
-					if(worldIn.getBlockState(pos.down()).equals(Blocks.AIR.getDefaultState())){
-						worldIn.setBlockState(pos, Blocks.SANDSTONE.getDefaultState());
-					}else{
-						worldIn.setBlockState(pos, Blocks.SAND.getDefaultState());
-					}
-				}
-			}
+			}else if (posY - pos.getY() < 4){
+                worldIn.setBlockState(pos, Blocks.SANDSTONE.getDefaultState());
+			}else if(ConfigurationFile.generateStone && posY - pos.getY() >= ConfigurationFile.stoneSpawnDepth){
+                if(ConfigurationFile.generateOres && Math.random() < 0.05){
+                    worldIn.setBlockState(pos, oreListHelper());
+                }else{
+                    worldIn.setBlockState(pos, Blocks.STONE.getDefaultState());
+                }
+            }
+            else{
+                worldIn.setBlockState(pos, Blocks.SANDSTONE.getDefaultState());
+            }
 			blocksGenerated += 1;
 		}
 		return blocksGenerated;
