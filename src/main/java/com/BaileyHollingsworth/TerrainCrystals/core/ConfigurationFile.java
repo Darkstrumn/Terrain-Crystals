@@ -49,7 +49,7 @@ public class ConfigurationFile {
         jungleCrystalChangesBiome = config.getBoolean("Jungle Crystal Turns Other Biomes Jungle", ConfigurationFile.BIOME_CONVERSION, true, "");
         swampCrystalChangesBiome = config.getBoolean("Swamp Crystal Turns Other Biomes Swamplands", ConfigurationFile.BIOME_CONVERSION, true, "");
         savannaCrystalChangesBiome = config.getBoolean("Savanna Crystal Turns Other Biomes Swamplands", ConfigurationFile.BIOME_CONVERSION, true, "");
-
+        onlyOverrideVoid = config.getBoolean("Biomes can only Override the Minecraft Void Biome", ConfigurationFile.BIOME_CONVERSION, false, "Do not use this unless you know what you are doing.");
 
         //Foliage
 		plainsCrystalGenerateTallGrass = config.getBoolean("Plains Crystal generate tall grass", ConfigurationFile.DECORATION, true, "");
@@ -83,6 +83,7 @@ public class ConfigurationFile {
 	public static boolean generateStone;
 	public static boolean generateOres;
 	public static int stoneSpawnDepth;
+    public static boolean onlyOverrideVoid;
 	//Swamp
 	public static int swampCrystalDurability;
 	public static int swampCrystalDiameter;

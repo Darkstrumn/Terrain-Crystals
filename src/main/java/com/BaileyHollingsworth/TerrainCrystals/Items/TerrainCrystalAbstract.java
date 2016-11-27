@@ -12,6 +12,7 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -372,15 +373,27 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @return Returns whether or not the biome was changed.
 	 */
 	protected boolean setBiome(World worldIn, BlockPos position, Biome desiredBiome, Boolean changeBiome) {
-        if(changeBiome){
-			Chunk chunk = worldIn.getChunkFromBlockCoords(position);
-	        if ((chunk != null) && (chunk.isLoaded())) {
-	        	if(Biome.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != Biome.getIdForBiome(desiredBiome)){
-	        		chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) Biome.getIdForBiome(desiredBiome);
-		            return true;
-	        	}
-	        }
-        }
+		if(ConfigurationFile.onlyOverrideVoid){
+			if(changeBiome && (worldIn.getBiomeGenForCoords(position).equals(Biomes.VOID) || worldIn.getBiomeGenForCoords(position) == Biomes.VOID)){
+				Chunk chunk = worldIn.getChunkFromBlockCoords(position);
+				if ((chunk != null) && (chunk.isLoaded())) {
+					if (Biome.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != Biome.getIdForBiome(desiredBiome)) {
+						chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) Biome.getIdForBiome(desiredBiome);
+						return true;
+					}
+				}
+			}
+		}else {
+			if (changeBiome) {
+				Chunk chunk = worldIn.getChunkFromBlockCoords(position);
+				if ((chunk != null) && (chunk.isLoaded())) {
+					if (Biome.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != Biome.getIdForBiome(desiredBiome)) {
+						chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) Biome.getIdForBiome(desiredBiome);
+						return true;
+					}
+				}
+			}
+		}
         return false;
     }
 	
