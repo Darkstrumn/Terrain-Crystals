@@ -27,7 +27,7 @@ public class VersionChecker {
 			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 			if(!VersionChecker.version.equals(TerrainCrystals.VERSION) && ConfigurationFile.versionChecker){
 				System.out.println("VC: " + VersionChecker.version + " " + "TC V: " + TerrainCrystals.VERSION);
-				player.addChatComponentMessage(new TextComponentTranslation("There is a new version for Terrain Crystals Available!"));
+				player.addChatComponentMessage(new TextComponentTranslation("There is a new version of Terrain Crystals Available!"));
 			}
 			VersionChecker.doneChecking = true;
 		}
