@@ -1,5 +1,6 @@
 package com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals;
 
+import java.util.List;
 import java.util.Random;
 
 import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
@@ -9,10 +10,14 @@ import net.minecraft.block.BlockChorusFlower;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 	
@@ -48,6 +53,7 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 			if(playerIn.dimension == 1){
 				return true;
 			}else{
+				playerIn.addChatComponentMessage(new TextComponentTranslation("This crystal is only available for use in the End."));
 				return false;
 			}
 		}
@@ -85,5 +91,15 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 	@Override
 	protected int getDurability() {
 		return ConfigurationFile.endCrystalDurability;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+	{
+		if(ConfigurationFile.endCrystalRestrictedToEnd){
+			tooltip.add("Can only be used in the End.");
+		}
+		tooltip.add("Relog for client sync.");
 	}
 }
