@@ -23,8 +23,9 @@ public class ConfigurationFile {
         jungleCrystalDurability = config.getInt("Jungle Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
         swampCrystalDurability = config.getInt("Swamp Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
         savannaCrystalDurability = config.getInt("Savanna Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
+        roofedForestDurability = config.getInt("Roofed Forest Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
 
-		//Diameters
+        //Diameters
 		plainsCrystalDiameter = config.getInt("Plains Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "Odd numbers work best. Default: 11");
 		desertCrystalDiameter = config.getInt("Desert Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
 		mesaCrystalDiameter = config.getInt("Mesa Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
@@ -36,6 +37,7 @@ public class ConfigurationFile {
         jungleCrystalDiameter = config.getInt("Jungle Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
         swampCrystalDiameter = config.getInt("Swamp Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
         savannaCrystalDiameter = config.getInt("Savanna Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
+        roofedForestDiameter = config.getInt("Roofed Forest Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
 
 		//Changes Biome
 		plainsCrystalChangesBiome = config.getBoolean("Plains Crystal Turns Other Biomes Plains", ConfigurationFile.BIOME_CONVERSION, true, "Should this crystal transform other biomes when blocks spawn?");
@@ -50,6 +52,7 @@ public class ConfigurationFile {
         swampCrystalChangesBiome = config.getBoolean("Swamp Crystal Turns Other Biomes Swamplands", ConfigurationFile.BIOME_CONVERSION, true, "");
         savannaCrystalChangesBiome = config.getBoolean("Savanna Crystal Turns Other Biomes Swamplands", ConfigurationFile.BIOME_CONVERSION, true, "");
         onlyOverrideVoid = config.getBoolean("Biomes can only Override the Minecraft Void Biome", ConfigurationFile.BIOME_CONVERSION, false, "Do not use this unless you know what you are doing.");
+        roofedForestChangesBiome = config.getBoolean("Roofed Forest Crystal Turns Other Biomes Roofed Forest", ConfigurationFile.BIOME_CONVERSION, true, "");
 
         //Foliage
 		plainsCrystalGenerateTallGrass = config.getBoolean("Plains Crystal generate tall grass", ConfigurationFile.DECORATION, true, "");
@@ -64,7 +67,10 @@ public class ConfigurationFile {
         swampCrystalGensWater = config.getBoolean("Swamp Crystal Generates water pools", ConfigurationFile.DECORATION, true, "");
         swampCrystalGensClay = config.getBoolean("Swamp Crystal Generates Clay", ConfigurationFile.DECORATION, true, "");
         savannaCrystalGeneratesTrees = config.getBoolean("Savanna Crystal Generates Acacia Trees", ConfigurationFile.DECORATION, true, "");
-		//Nether Crystal
+        roofedForestGeneratesTrees = config.getBoolean("Roofed Forest Crystal Generates Dark Oak Trees", ConfigurationFile.DECORATION, true, "");
+
+
+        //Nether Crystal
 		netherCrystalRestrictedToNether = config.getBoolean("If The Nether Crystal only works in the Nether", ConfigurationFile.MISC, false, "");
 		//End Crystal
 		endCrystalRestrictedToEnd = config.getBoolean("End Crystal Restricted to End Dimension", ConfigurationFile.MISC, false, "");
@@ -84,6 +90,11 @@ public class ConfigurationFile {
 	public static boolean generateOres;
 	public static int stoneSpawnDepth;
     public static boolean onlyOverrideVoid;
+    //Roofed Forest
+    public static int roofedForestDurability;
+    public static int roofedForestDiameter;
+    public static boolean roofedForestChangesBiome;
+    public static boolean roofedForestGeneratesTrees;
 	//Swamp
 	public static int swampCrystalDurability;
 	public static int swampCrystalDiameter;

@@ -22,8 +22,9 @@ public class InitItems {
 	public static TerrainCrystalJungle terrainCrystalJungle;
 	public static TerrainCrystalSwamp terrainCrystalSwamp;
 	public static TerrainCrystalSavanna terrainCrystalSavanna;
+    public static TerrainCrystalRoofedForest terrainCrystalRoofedForest;
 
-	public static TerrainCrystalPlains groundCrystalPlains;
+    public static TerrainCrystalPlains groundCrystalPlains;
 	public static TerrainCrystalNether groundCrystalNether;
 	public static TerrainCrystalDesert groundCrystalDesert;
 	public static TerrainCrystalMesa groundCrystalMesa;
@@ -34,7 +35,7 @@ public class InitItems {
 	public static TerrainCrystalJungle groundCrystalJungle;
 	public static TerrainCrystalSwamp groundCrystalSwamp;
 	public static TerrainCrystalSavanna groundCrystalSavanna;
-
+    public static TerrainCrystalRoofedForest groundCrystalRoofedForest;
 	public static void init(){
 		terrainCrystalPlains = new TerrainCrystalPlains();
 		terrainCrystalNether = new TerrainCrystalNether();
@@ -47,6 +48,8 @@ public class InitItems {
 		terrainCrystalJungle = new TerrainCrystalJungle();
 		terrainCrystalSwamp = new TerrainCrystalSwamp();
         terrainCrystalSavanna = new TerrainCrystalSavanna();
+        terrainCrystalRoofedForest = new TerrainCrystalRoofedForest();
+
 		/*
 		groundCrystalPlains = new TerrainCrystalPlains(true);
 		groundCrystalNether = new TerrainCrystalNether(true);
@@ -80,7 +83,8 @@ public class InitItems {
 		ItemStack bRodStack = new ItemStack(Items.BLAZE_ROD);
 		ItemStack pearlStack = new ItemStack(Items.ENDER_PEARL);
 		ItemStack melonSeedStack = new ItemStack(Items.MELON_SEEDS);
-		
+		ItemStack tallGrassStack = new ItemStack(Blocks.TALLGRASS);
+        ItemStack saplingStack = new ItemStack(Blocks.SAPLING);
 		ItemStack goldBlockStack = new ItemStack(Blocks.GOLD_BLOCK);
 		//Plains Crystal
 		GameRegistry.addRecipe(
@@ -143,6 +147,16 @@ public class InitItems {
 				"xwx",
 				"xxx",
 				'w', goldBlockStack, 'x',melonSeedStack);
+        GameRegistry.addRecipe(new ItemStack(InitItems.terrainCrystalSavanna),
+                "xxx",
+                "xwx",
+                "xxx",
+                'w', goldBlockStack, 'x',tallGrassStack);
+        GameRegistry.addRecipe(new ItemStack(InitItems.terrainCrystalRoofedForest),
+                "yxy",
+                "xwx",
+                "yxy",
+                'w', goldBlockStack, 'x',tallGrassStack, 'y',saplingStack);
 	}
 
 	@SideOnly(Side.CLIENT)
