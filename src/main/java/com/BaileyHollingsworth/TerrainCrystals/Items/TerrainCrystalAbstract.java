@@ -31,8 +31,8 @@ import java.util.Random;
 
 public abstract class TerrainCrystalAbstract extends Item{
 	
-	public static HashSet replaceableBlockStates;
-	public static HashSet invalidSpaces;
+	public static HashSet<IBlockState> replaceableBlockStates;
+	public static HashSet<IBlockState> invalidSpaces;
 	private boolean isGroundCrystal;
 	
 	public TerrainCrystalAbstract(String name){
@@ -69,7 +69,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * Initializes the hashSet with block states that can be replaced by the platform.
 	 */
 	public static void initReplaceableBlocks(){
-		replaceableBlockStates = new HashSet<Block>();
+		replaceableBlockStates = new HashSet<IBlockState>();
 		for(int i = 1; i < 10; i++){
 			replaceableBlockStates.add(Blocks.FLOWING_WATER.getStateFromMeta(i));
 		}
@@ -96,7 +96,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	}
 	
 	public static void initInvalidSpaces(){
-		invalidSpaces = new HashSet();
+		invalidSpaces = new HashSet<IBlockState>();
 		invalidSpaces.add(Blocks.LOG.getDefaultState());
 		invalidSpaces.add(Blocks.LOG.getStateFromMeta(1));
 		invalidSpaces.add(Blocks.LOG.getStateFromMeta(2));
@@ -127,8 +127,11 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @param pos Position
 	 * @return Returns a boolean if the blockstate given is an eligble location for a tree.
 	 */
-	protected static boolean eligibleSpaceForTree(IBlockState blockState, BlockPos pos) {
-		return pos.getY() > 1 && !invalidSpaces.contains(blockState);
+	protected static boolean eligibleSpaceForTree(IBlockState blockState, BlockPos pos){
+		if(pos.getY() > 1){
+			return !invalidSpaces.contains(blockState);
+		}
+		return false;
 	}
 	
 	/**
