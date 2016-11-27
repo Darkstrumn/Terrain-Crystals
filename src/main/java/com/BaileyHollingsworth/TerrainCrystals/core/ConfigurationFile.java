@@ -3,72 +3,75 @@ package com.BaileyHollingsworth.TerrainCrystals.core;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigurationFile {
-	
+	public static final String DURABILITY = "Durability";
+    public static final String DIAMETER = "Diameter";
+    public static final String BIOME_CONVERSION = "Biome";
+    public static final String DECORATION = "Decoration";
+    public static final String MISC = "Misc";
 	public static void configFile(Configuration config){
 		config.load();
 
-
 		//Durabilities
-		plainsCrystalDurability = config.getInt("Plains Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
-		desertCrystalDurability = config.getInt("Desert Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "");
-		mesaCrystalDurability = config.getInt("Mesa Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "");
-		mushroomCrystalDurability = config.getInt("Mushroom Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "");
-		netherCrystalDurability = config.getInt("Nether Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "");
-		endCrystalDurability = config.getInt("End Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "");
-        taigaCrystalDurability = config.getInt("Taiga Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "");
-        plainsIceCrystalDurability = config.getInt("Ice Plains Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "");
-        jungleCrystalDurability = config.getInt("Jungle Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "");
-        swampCrystalDurability = config.getInt("Swamp Crystal Durability", Configuration.CATEGORY_GENERAL, 7000, 1, Integer.MAX_VALUE, "");
+		plainsCrystalDurability = config.getInt("Plains Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "How many blocks can the crystal generate before breaking. Can go up to integer max.");
+		desertCrystalDurability = config.getInt("Desert Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
+		mesaCrystalDurability = config.getInt("Mesa Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
+		mushroomCrystalDurability = config.getInt("Mushroom Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
+		netherCrystalDurability = config.getInt("Nether Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
+		endCrystalDurability = config.getInt("End Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
+        taigaCrystalDurability = config.getInt("Taiga Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
+        plainsIceCrystalDurability = config.getInt("Ice Plains Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
+        jungleCrystalDurability = config.getInt("Jungle Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
+        swampCrystalDurability = config.getInt("Swamp Crystal Durability", ConfigurationFile.DURABILITY, 7000, 1, Integer.MAX_VALUE, "");
 
 
 		//Diameters
-		plainsCrystalDiameter = config.getInt("Plains Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "Odd numbers work best. Default: 11");
-		desertCrystalDiameter = config.getInt("Desert Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "");
-		mesaCrystalDiameter = config.getInt("Mesa Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "");
-		mushroomCrystalDiameter = config.getInt("Mushroom Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "");
-		netherCrystalDiameter = config.getInt("Nether Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "");
-		endCrystalDiameter = config.getInt("End Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "");
-        taigaCrystalDiameter = config.getInt("Taiga Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "");
-        plainsIceCrystalDiameter = config.getInt("Ice Plains Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "");
-        jungleCrystalDiameter = config.getInt("Jungle Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "");
-        swampCrystalDiameter = config.getInt("Swamp Crystal Diameter", Configuration.CATEGORY_GENERAL, 11, 1, 9999, "");
+		plainsCrystalDiameter = config.getInt("Plains Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "Odd numbers work best. Default: 11");
+		desertCrystalDiameter = config.getInt("Desert Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
+		mesaCrystalDiameter = config.getInt("Mesa Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
+		mushroomCrystalDiameter = config.getInt("Mushroom Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
+		netherCrystalDiameter = config.getInt("Nether Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
+		endCrystalDiameter = config.getInt("End Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
+        taigaCrystalDiameter = config.getInt("Taiga Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
+        plainsIceCrystalDiameter = config.getInt("Ice Plains Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
+        jungleCrystalDiameter = config.getInt("Jungle Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
+        swampCrystalDiameter = config.getInt("Swamp Crystal Diameter", ConfigurationFile.DIAMETER, 11, 1, 9999, "");
 
 
 		//Changes Biome
-		plainsCrystalChangesBiome = config.getBoolean("Plains Crystal Turns Other Biomes Plains", Configuration.CATEGORY_GENERAL, true, "Should this crystal transform other biomes when blocks spawn?");
-		desertCrystalChangesBiome = config.getBoolean("Desert Crystal Turns Other Biomes Desert", Configuration.CATEGORY_GENERAL, true, "");
-		mesaCrystalChangesBiome = config.getBoolean("Mesa Crystal Turns Other Biomes Mesa", Configuration.CATEGORY_GENERAL, true, "");
-		mushroomCrystalChangesBiome = config.getBoolean("Mushroom Crystal Turns Other Biomes Mushroom", Configuration.CATEGORY_GENERAL, true, "");
-		netherCrystalChangesBiome = config.getBoolean("Nether Crystal Turns Other Biomes Nether", Configuration.CATEGORY_GENERAL, true, "");
-		endCrystalChangesBiome = config.getBoolean("End Crystal Turns Other Biomes End", Configuration.CATEGORY_GENERAL, true, "");
-        taigaCrystalChangesBiome = config.getBoolean("Taiga Crystal Turns Other Biomes Cold Taiga", Configuration.CATEGORY_GENERAL, true, "");
-        plainsIceCrystalChangesBiome = config.getBoolean("Ice Plains Crystal Turns Other Biomes Ice Plains", Configuration.CATEGORY_GENERAL, true, "");
-        jungleCrystalChangesBiome = config.getBoolean("Jungle Crystal Turns Other Biomes Jungle", Configuration.CATEGORY_GENERAL, true, "");
-        swampCrystalChangesBiome = config.getBoolean("Swamp Crystal Turns Other Biomes Swamplands", Configuration.CATEGORY_GENERAL, true, "");
+		plainsCrystalChangesBiome = config.getBoolean("Plains Crystal Turns Other Biomes Plains", ConfigurationFile.BIOME_CONVERSION, true, "Should this crystal transform other biomes when blocks spawn?");
+		desertCrystalChangesBiome = config.getBoolean("Desert Crystal Turns Other Biomes Desert", ConfigurationFile.BIOME_CONVERSION, true, "");
+		mesaCrystalChangesBiome = config.getBoolean("Mesa Crystal Turns Other Biomes Mesa", ConfigurationFile.BIOME_CONVERSION, true, "");
+		mushroomCrystalChangesBiome = config.getBoolean("Mushroom Crystal Turns Other Biomes Mushroom", ConfigurationFile.BIOME_CONVERSION, true, "");
+		netherCrystalChangesBiome = config.getBoolean("Nether Crystal Turns Other Biomes Nether", ConfigurationFile.BIOME_CONVERSION, true, "");
+		endCrystalChangesBiome = config.getBoolean("End Crystal Turns Other Biomes End", ConfigurationFile.BIOME_CONVERSION, true, "");
+        taigaCrystalChangesBiome = config.getBoolean("Taiga Crystal Turns Other Biomes Cold Taiga", ConfigurationFile.BIOME_CONVERSION, true, "");
+        plainsIceCrystalChangesBiome = config.getBoolean("Ice Plains Crystal Turns Other Biomes Ice Plains", ConfigurationFile.BIOME_CONVERSION, true, "");
+        jungleCrystalChangesBiome = config.getBoolean("Jungle Crystal Turns Other Biomes Jungle", ConfigurationFile.BIOME_CONVERSION, true, "");
+        swampCrystalChangesBiome = config.getBoolean("Swamp Crystal Turns Other Biomes Swamplands", ConfigurationFile.BIOME_CONVERSION, true, "");
 
 
 		//Foliage
-		plainsCrystalGenerateTallGrass = config.getBoolean("Plains Crystal generate tall grass", Configuration.CATEGORY_GENERAL, true, "");
-		plainsCrystalGenerateTrees = config.getBoolean("Plains Crystal Spawns Trees", Configuration.CATEGORY_GENERAL, true, "Should the plains biome have a chance to spawn trees? Tall Grass must be enabled.");
-		desertCrystalGenerateCactus = config.getBoolean("Desert Crystal Generates Cactus", Configuration.CATEGORY_GENERAL, true, "");
-		endCrystalGenerateChorus = config.getBoolean("End Crystal Generates Chorus", Configuration.CATEGORY_GENERAL, true, "");
-        taigaCrystalGeneratesTrees = config.getBoolean("Taiga Crystal Generates Spruce Trees", Configuration.CATEGORY_GENERAL, true, "");
-        jungleCrystalGeneratesTrees = config.getBoolean("Jungle Crystal Generates Jungle Trees", Configuration.CATEGORY_GENERAL, true, "");
-        jungleCrystalGeneratesMelon = config.getBoolean("Jungle Crystal Generates Melon", Configuration.CATEGORY_GENERAL, true, "");
-        jungleCrystalGeneratesCocoa = config.getBoolean("Jungle Crystal Generates Cocoa Beans", Configuration.CATEGORY_GENERAL, true, "");
-        jungleCrystalGeneratesBushes = config.getBoolean("Jungle Crystal Generates small bushes", Configuration.CATEGORY_GENERAL, true, "");
-        swampCrystalGensWater = config.getBoolean("Swamp Crystal Generates water pools", Configuration.CATEGORY_GENERAL, true, "");
-        swampCrystalGensClay = config.getBoolean("Swamp Crystal Generates Clay", Configuration.CATEGORY_GENERAL, true, "");
+		plainsCrystalGenerateTallGrass = config.getBoolean("Plains Crystal generate tall grass", ConfigurationFile.DECORATION, true, "");
+		plainsCrystalGenerateTrees = config.getBoolean("Plains Crystal Spawns Trees", ConfigurationFile.DECORATION, true, "Should the plains biome have a chance to spawn trees? Tall Grass must be enabled.");
+		desertCrystalGenerateCactus = config.getBoolean("Desert Crystal Generates Cactus", ConfigurationFile.DECORATION, true, "");
+		endCrystalGenerateChorus = config.getBoolean("End Crystal Generates Chorus", ConfigurationFile.DECORATION, true, "");
+        taigaCrystalGeneratesTrees = config.getBoolean("Taiga Crystal Generates Spruce Trees", ConfigurationFile.DECORATION, true, "");
+        jungleCrystalGeneratesTrees = config.getBoolean("Jungle Crystal Generates Jungle Trees", ConfigurationFile.DECORATION, true, "");
+        jungleCrystalGeneratesMelon = config.getBoolean("Jungle Crystal Generates Melon", ConfigurationFile.DECORATION, true, "");
+        jungleCrystalGeneratesCocoa = config.getBoolean("Jungle Crystal Generates Cocoa Beans", ConfigurationFile.DECORATION, true, "");
+        jungleCrystalGeneratesBushes = config.getBoolean("Jungle Crystal Generates small bushes", ConfigurationFile.DECORATION, true, "");
+        swampCrystalGensWater = config.getBoolean("Swamp Crystal Generates water pools", ConfigurationFile.DECORATION, true, "");
+        swampCrystalGensClay = config.getBoolean("Swamp Crystal Generates Clay", ConfigurationFile.DECORATION, true, "");
 
 		//Nether Crystal
-		netherCrystalRestrictedToNether = config.getBoolean("If The Nether Crystal only works in the Nether", Configuration.CATEGORY_GENERAL, false, "");
+		netherCrystalRestrictedToNether = config.getBoolean("If The Nether Crystal only works in the Nether", ConfigurationFile.MISC, false, "");
 		//End Crystal
-		endCrystalRestrictedToEnd = config.getBoolean("End Crystal Restricted to End Dimension", Configuration.CATEGORY_GENERAL, false, "");
+		endCrystalRestrictedToEnd = config.getBoolean("End Crystal Restricted to End Dimension", ConfigurationFile.MISC, false, "");
 		//Misc
-		generateStone = config.getBoolean("Have the islands generate stone by default", Configuration.CATEGORY_GENERAL, true, "Forces stone to spawn beneath certain crystals");
-		generateOres = config.getBoolean("Have stone generating islands also spawn ore", Configuration.CATEGORY_GENERAL, false, "Generate stone must be enabled.");
+		generateStone = config.getBoolean("Have the islands generate stone by default", ConfigurationFile.MISC, true, "Forces stone to spawn beneath certain crystals");
+		generateOres = config.getBoolean("Have stone generating islands also spawn ore", ConfigurationFile.MISC, false, "Generate stone must be enabled.");
 		stoneSpawnDepth = config.getInt("How far down islands start to spawn stone. Does nothing if GenerateStone is not enabled.", Configuration.CATEGORY_GENERAL, 3, 2, 9999, "Must be at least 2. Keep within range of the island depth. Default: 3");
-		versionChecker = config.getBoolean("Version Checker Enabled", Configuration.CATEGORY_CLIENT, true, "If you want to be notified when a new version is available");
+		versionChecker = config.getBoolean("Version Checker Enabled", ConfigurationFile.MISC, true, "If you want to be notified when a new version is available");
 		if(config.hasChanged()){
 			config.save();
 		}
