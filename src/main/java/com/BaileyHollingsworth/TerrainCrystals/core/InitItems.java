@@ -171,5 +171,7 @@ public class InitItems {
         terrainCrystalPlainsIceSpikes.initModel();
         terrainCrystalJungle.initModel();
         terrainCrystalSwamp.initModel();
+		terrainCrystalRoofedForest.initModel();
+		terrainCrystalSavanna.initModel();
     }
 }

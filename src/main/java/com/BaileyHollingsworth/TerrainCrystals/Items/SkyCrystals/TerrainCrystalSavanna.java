@@ -3,7 +3,6 @@ package com.BaileyHollingsworth.TerrainCrystals.Items.SkyCrystals;
 import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
 import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
