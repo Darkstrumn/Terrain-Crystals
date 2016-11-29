@@ -47,6 +47,7 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 						worldIn.setBlockState(pos, Blocks.SOUL_SAND.getDefaultState());
 						decoratePlatform(worldIn, pos);
 					}else{
+						worldIn.setBlockState(pos.down(), Blocks.NETHERRACK.getDefaultState());
 						worldIn.setBlockState(pos, Blocks.GRAVEL.getDefaultState());
 					}
 					if(ConfigurationFile.netherCrystalChangesBiome){
