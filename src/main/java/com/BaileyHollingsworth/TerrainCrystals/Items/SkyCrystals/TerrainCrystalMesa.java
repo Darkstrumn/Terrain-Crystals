@@ -28,6 +28,7 @@ public class TerrainCrystalMesa extends TerrainCrystalAbstract{
 			int getMetaFromPlayerDistance = posY - pos.getY();
 			if(posY - pos.getY() == 1){
 				if(Math.random() < .7){
+					worldIn.setBlockState(pos.down(), Blocks.HARDENED_CLAY.getDefaultState());
 					worldIn.setBlockState(pos, Blocks.SAND.getStateFromMeta(1));
 					decoratePlatform(worldIn, pos);
 				}else{
