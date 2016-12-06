@@ -137,8 +137,6 @@ public class ConfigurationFile {
         swampCrystalGensClay = config.getBoolean("Swamp Crystal Generates Clay", ConfigurationFile.DECORATION, true, "");
         savannaCrystalGeneratesTrees = config.getBoolean("Savanna Crystal Generates Acacia Trees", ConfigurationFile.DECORATION, true, "");
         roofedForestGeneratesTrees = config.getBoolean("Roofed Forest Crystal Generates Dark Oak Trees", ConfigurationFile.DECORATION, true, "");
-
-
         //Nether Crystal
         netherCrystalRestrictedToNether = config.getBoolean("If The Nether Crystal only works in the Nether", ConfigurationFile.MISC, false, "");
         //End Crystal

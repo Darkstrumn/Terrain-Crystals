@@ -2,7 +2,6 @@ package com.BaileyHollingsworth.TerrainCrystals.Items;
 
 import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 import com.BaileyHollingsworth.TerrainCrystals.core.TerrainCrystals;
-import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -60,9 +59,10 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * world, player, diameter, desired biome type and the biome change boolean.
 	 */
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
-	    gatherBlockGenList(itemStackIn, worldIn, playerIn, getDiameter(), getBiomeType(), changesBiomeOnUse());
-		return new ActionResult(EnumActionResult.PASS, itemStackIn);
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+	{
+		gatherBlockGenList(playerIn.getHeldItem(handIn), worldIn, playerIn, getDiameter(), getBiomeType(), changesBiomeOnUse());
+		return new ActionResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
 	}
 	
 	/**
@@ -371,7 +371,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 */
 	protected boolean setBiome(World worldIn, BlockPos position, Biome desiredBiome, Boolean changeBiome) {
 		if(ConfigurationFile.onlyOverrideVoid){
-			if(changeBiome && (worldIn.getBiomeGenForCoords(position).equals(Biomes.VOID) || worldIn.getBiomeGenForCoords(position) == Biomes.VOID)){
+			if(changeBiome && (worldIn.getBiomeForCoordsBody(position).equals(Biomes.VOID) || worldIn.getBiomeForCoordsBody(position) == Biomes.VOID)){
 				Chunk chunk = worldIn.getChunkFromBlockCoords(position);
 				if ((chunk != null) && (chunk.isLoaded())) {
 					if (Biome.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != Biome.getIdForBiome(desiredBiome)) {

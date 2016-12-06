@@ -3,7 +3,7 @@ package com.BaileyHollingsworth.TerrainCrystals.core;
 import com.BaileyHollingsworth.TerrainCrystals.Items.TerrainCrystalAbstract;
 import com.BaileyHollingsworth.TerrainCrystals.core.VersionChecker.VersionChecker;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -17,15 +17,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class TerrainCrystals {
-	public static final String MODID = "terrainCrystals";
+	public static final String MODID = "terraincrystals";
 	public static final String MODNAME = "Terrain Crystals";
 	public static final String VERSION = "1.2.0";
 	public static final String URL = "https://raw.githubusercontent.com/DrasticDemise/Terrain-Crystals/master/1.9%20Update%20Handler";
 	
 	public static CreativeTabs tab = new CreativeTabs("Terrain Crystals") {
 		@Override
-		public Item getTabIconItem() {
-			return InitItems.terrainCrystalPlains;
+		public ItemStack getTabIconItem() {
+			return InitItems.terrainCrystalPlains.func_190903_i();
 		}
 		@Override
 		@SideOnly(Side.CLIENT)
