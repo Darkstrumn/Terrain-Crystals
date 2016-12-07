@@ -1,7 +1,7 @@
 {
   "parent": "builtin/generated",
   "textures": {
-    "layer0": "terrainCrystals:items/crystalEmptyMesa"
+    "layer0": "terrainCrystals:items/crystalemptymesa"
   },
   "display": {
     "thirdperson": {

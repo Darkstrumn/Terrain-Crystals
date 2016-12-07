@@ -1,7 +1,7 @@
 {
   "parent": "builtin/generated",
   "textures": {
-    "layer0": "terrainCrystals:items/crystalFullSwamp"
+    "layer0": "terrainCrystals:items/crystalfullswamp"
   },
   "display": {
     "thirdperson": {

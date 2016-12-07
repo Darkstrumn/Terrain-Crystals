@@ -36,7 +36,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	
 	public TerrainCrystalAbstract(String name){
 		this.isGroundCrystal = false;
-		setUnlocalizedName("terrainCrystal" + name);
+		setUnlocalizedName("terraincrystal" + name);
 		setRegistryName(getUnlocalizedName().substring(5));
 		setCreativeTab(TerrainCrystals.tab);
 		setMaxStackSize(1);
@@ -46,7 +46,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 	
 	public TerrainCrystalAbstract(String name, boolean isGroundCrystal){
 		this.isGroundCrystal = isGroundCrystal;
-		setUnlocalizedName("terrainCrystalGround" + name);
+		setUnlocalizedName("terraincrystalground" + name);
 		setRegistryName(getUnlocalizedName().substring(5));
 		setCreativeTab(TerrainCrystals.tab);
 		setMaxStackSize(1);
