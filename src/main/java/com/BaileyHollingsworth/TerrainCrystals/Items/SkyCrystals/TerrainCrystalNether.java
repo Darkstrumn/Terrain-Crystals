@@ -8,6 +8,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
@@ -70,8 +71,7 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 			if(playerIn.dimension == -1){
 				return true;
 			}else{
-				//TODO fix this text
-				//playerIn.addChatComponentMessage(new TextComponentTranslation("This crystal is only available for use in the Nether."));
+				playerIn.addChatComponentMessage(new TextComponentTranslation("This crystal is only available for use in the Nether."), true);
 				return false;
 			}
 		}

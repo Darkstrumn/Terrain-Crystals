@@ -19,8 +19,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TerrainCrystals {
 	public static final String MODID = "terraincrystals";
 	public static final String MODNAME = "Terrain Crystals";
-	public static final String VERSION = "1.2.0";
-	public static final String URL = "https://raw.githubusercontent.com/DrasticDemise/Terrain-Crystals/master/1.9%20Update%20Handler";
+	public static final String VERSION = "1.2.1";
+	public static final String URL = "https://raw.githubusercontent.com/baileyholl/Terrain-Crystals/master/1.11%20Update%20Handler";
 	
 	public static CreativeTabs tab = new CreativeTabs("Terrain Crystals") {
 		@Override
