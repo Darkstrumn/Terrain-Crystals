@@ -310,7 +310,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 			}
 		}
 		//Hacky-fix to the island not generating properly on a single call
-		for(int i = 0; i < 15; i++){
+		for(int i = 0; i < 10; i++){
 			blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
 		}
 		itemStackIn.damageItem(blocksGenerated, playerIn);
@@ -406,7 +406,6 @@ public abstract class TerrainCrystalAbstract extends Item{
 		chunk.setChunkModified();
 		worldIn.getChunkProvider().provideChunk(chunk.xPosition, chunk.zPosition);
 		worldIn.markBlockRangeForRenderUpdate(position, position);
-		System.out.println(position);
 	}
 	/**
 	 * Pass this method the position that the sapling will OCCUPY, not REST ON. Meaning Pos.UP of the platform position.
@@ -508,7 +507,6 @@ public abstract class TerrainCrystalAbstract extends Item{
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
-		tooltip.add("Relog for client sync.");
     }
 	
 	@SideOnly(Side.CLIENT)
