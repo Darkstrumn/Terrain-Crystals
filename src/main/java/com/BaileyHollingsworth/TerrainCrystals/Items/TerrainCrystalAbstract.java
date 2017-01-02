@@ -168,7 +168,8 @@ public abstract class TerrainCrystalAbstract extends Item{
 			if(posY - pos.getY() == 1){
 				setBiome(worldIn, pos, desiredBiome, changeBiome);
 				worldIn.setBlockState(pos, Blocks.GRASS.getDefaultState());
-				decoratePlatform(worldIn, pos);
+				if(!worldIn.isRemote)
+					decoratePlatform(worldIn, pos);
 			}else if(ConfigurationFile.generateStone && posY - pos.getY() >= ConfigurationFile.stoneSpawnDepth){
 				if(ConfigurationFile.generateOres && Math.random() < 0.05){
 					worldIn.setBlockState(pos, oreListHelper());
@@ -204,6 +205,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 		
 	/**
 	 * Optional implementation that needs to be called by generateBlocksInWorld on the SURFACE of the platform.
+     * MUST NOT BE SLAVE CLIENT!
 	 * @param worldIn The world
 	 * @param pos The SURFACE block to be decorated.
 	 */
@@ -275,45 +277,43 @@ public abstract class TerrainCrystalAbstract extends Item{
 	 * @return
 	 */
 	protected ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, Biome desiredBiome, Boolean changeBiome){
-		if(!worldIn.isRemote){
-			int blocksGenerated = 0;
-			int posX = MathHelper.floor_double(playerIn.posX); 
-			int posY = MathHelper.floor_double(playerIn.posY);
-			int posZ = MathHelper.floor_double(playerIn.posZ);
-			int center;
-			double radius = diameter/2.0;
-			if(diameter%2 != 0){
-				center = (int) (radius + 0.5);
-			}else{
-				center = (int) (radius);
-			}
-			int offsetXFirstHalf = (int) (posX + radius);
-			//Not sure why this has to be offset by 1 extra, but it does.
-			int offsetXSecondHalf = (int) (posX - radius + 1);
-			ArrayList<BlockPos> posList = new ArrayList<BlockPos>(68);
-			for(int i = 0; i < (center); i ++){
-				//Creates a circle and fills it
-				for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
-					//Fills across the circle
-					posList.add(new BlockPos(offsetXFirstHalf - i, posY - 1, posZ - i + placeInwards));
-					posList.add(new BlockPos(offsetXFirstHalf - i, posY - 1, posZ + i - placeInwards));
-				}
-			}
-			//Generates the second half
-			for(int i = 0; i < (center); i ++){
-				posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i)); 
-				posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i));
-				for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
-						posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards));
-						posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards));
-				}
-			}
-			//Hacky-fix to the island not generating properly on a single call
-			for(int i = 0; i < 15; i++){
-				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
-			}
-			itemStackIn.damageItem(blocksGenerated, playerIn);
+		int blocksGenerated = 0;
+		int posX = MathHelper.floor_double(playerIn.posX);
+		int posY = MathHelper.floor_double(playerIn.posY);
+		int posZ = MathHelper.floor_double(playerIn.posZ);
+		int center;
+		double radius = diameter/2.0;
+		if(diameter%2 != 0){
+			center = (int) (radius + 0.5);
+		}else{
+			center = (int) (radius);
 		}
+		int offsetXFirstHalf = (int) (posX + radius);
+		//Not sure why this has to be offset by 1 extra, but it does.
+		int offsetXSecondHalf = (int) (posX - radius + 1);
+		ArrayList<BlockPos> posList = new ArrayList<BlockPos>(68);
+		for (int i = 0; i < (center); i++) {
+			//Creates a circle and fills it
+			for (int placeInwards = 0; placeInwards < i + 1; placeInwards++) {
+				//Fills across the circle
+				posList.add(new BlockPos(offsetXFirstHalf - i, posY - 1, posZ - i + placeInwards));
+				posList.add(new BlockPos(offsetXFirstHalf - i, posY - 1, posZ + i - placeInwards));
+			}
+		}
+		//Generates the second half
+		for (int i = 0; i < (center); i++) {
+			posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i));
+			posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i));
+			for (int placeInwards = 0; placeInwards < i + 1; placeInwards++) {
+				posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards));
+				posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards));
+			}
+		}
+		//Hacky-fix to the island not generating properly on a single call
+		for(int i = 0; i < 15; i++){
+			blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
+		}
+		itemStackIn.damageItem(blocksGenerated, playerIn);
 		return itemStackIn;
 	}
 	
@@ -376,6 +376,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 				if ((chunk != null) && (chunk.isLoaded())) {
 					if (Biome.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != Biome.getIdForBiome(desiredBiome)) {
 						chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) Biome.getIdForBiome(desiredBiome);
+						setChunkModifiedAtPos(chunk, worldIn, position);
 						return true;
 					}
 				}
@@ -386,6 +387,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 				if ((chunk != null) && (chunk.isLoaded())) {
 					if (Biome.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != Biome.getIdForBiome(desiredBiome)) {
 						chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) Biome.getIdForBiome(desiredBiome);
+						setChunkModifiedAtPos(chunk, worldIn, position);
 						return true;
 					}
 				}
@@ -393,7 +395,19 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
         return false;
     }
-	
+
+	/**
+	 * Reloads the chunk for the client
+	 * @param chunk
+	 * @param worldIn
+	 * @param position
+	 */
+    protected void setChunkModifiedAtPos(Chunk chunk, World worldIn, BlockPos position){
+		chunk.setChunkModified();
+		worldIn.getChunkProvider().provideChunk(chunk.xPosition, chunk.zPosition);
+		worldIn.markBlockRangeForRenderUpdate(position, position);
+		System.out.println(position);
+	}
 	/**
 	 * Pass this method the position that the sapling will OCCUPY, not REST ON. Meaning Pos.UP of the platform position.
 	 * @param worldIn World

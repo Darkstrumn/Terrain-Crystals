@@ -27,8 +27,9 @@ public class TerrainCrystalMushroom extends TerrainCrystalAbstract{
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
 				worldIn.setBlockState(pos, Blocks.MYCELIUM.getDefaultState());
-				super.setBiome(worldIn, pos, desiredBiome, changeBiome);
-				decoratePlatform(worldIn, pos);
+				setBiome(worldIn, pos, desiredBiome, changeBiome);
+				if(!worldIn.isRemote)
+					decoratePlatform(worldIn, pos);
 			}else if(ConfigurationFile.generateStone && posY - pos.getY() >= ConfigurationFile.stoneSpawnDepth){
 				if(ConfigurationFile.generateOres && Math.random() < 0.05){
 					worldIn.setBlockState(pos, oreListHelper());

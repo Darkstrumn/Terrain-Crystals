@@ -42,7 +42,8 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 								worldIn.setBlockState(pos, Blocks.GLOWSTONE.getDefaultState());
 							}
 						}
-						decoratePlatform(worldIn, pos);
+						if(!worldIn.isRemote)
+							decoratePlatform(worldIn, pos);
 					}else if (Math.random() < 0.3){
 						worldIn.setBlockState(pos, Blocks.SOUL_SAND.getDefaultState());
 						decoratePlatform(worldIn, pos);

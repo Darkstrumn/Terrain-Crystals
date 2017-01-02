@@ -34,10 +34,12 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 					}else{
 						worldIn.setBlockState(pos, Blocks.GRASS.getDefaultState());
 					}
-					if(ConfigurationFile.taigaCrystalGeneratesTrees && Math.random() < 0.08){
-						growTree(worldIn, pos);
-					}else{
-						decoratePlatform(worldIn, pos);
+					if(!worldIn.isRemote) {
+						if (ConfigurationFile.taigaCrystalGeneratesTrees && Math.random() < 0.08) {
+							growTree(worldIn, pos);
+						} else {
+							decoratePlatform(worldIn, pos);
+						}
 					}
 				}else{
 					worldIn.setBlockState(pos, Blocks.DIRT.getStateFromMeta(2));

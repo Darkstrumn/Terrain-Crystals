@@ -36,8 +36,9 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 				int posY = MathHelper.floor_double(playerIn.posY);
 				if(posY - pos.getY() == 1){
 					worldIn.setBlockState(pos, Blocks.END_STONE.getDefaultState());
-					decoratePlatform(worldIn, pos);
-					super.setBiome(worldIn, pos, desiredBiome, changeBiome);
+					setBiome(worldIn, pos, desiredBiome, changeBiome);
+					if(!worldIn.isRemote)
+						decoratePlatform(worldIn, pos);
 				}else{
 					worldIn.setBlockState(pos, Blocks.END_STONE.getDefaultState());
 				}

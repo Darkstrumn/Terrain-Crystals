@@ -29,7 +29,8 @@ public class TerrainCrystalPlainsIceSpikes extends TerrainCrystalAbstract{
 			if(layer == 1){
 				setBiome(worldIn, pos, desiredBiome, changeBiome);
 				worldIn.setBlockState(pos, Blocks.SNOW.getDefaultState());
-				decoratePlatform(worldIn, pos);
+				if(!worldIn.isRemote)
+					decoratePlatform(worldIn, pos);
 			}else if(layer == 2){
 				if(Math.random() < .80){
 					worldIn.setBlockState(pos, Blocks.SNOW.getDefaultState());

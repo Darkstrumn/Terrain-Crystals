@@ -30,7 +30,8 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 				if(Math.random() < 0.7){
 					worldIn.setBlockState(pos.down(), Blocks.SANDSTONE.getDefaultState());
 					worldIn.setBlockState(pos, Blocks.SAND.getDefaultState());
-					decoratePlatform(worldIn, pos);	
+					if(!worldIn.isRemote)
+						decoratePlatform(worldIn, pos);
 				}else{
 					worldIn.setBlockState(pos, Blocks.SANDSTONE.getDefaultState());
 				}
@@ -50,7 +51,7 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 		}
 		return blocksGenerated;
 	}
-	
+
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos){
 		if(Blocks.CACTUS.canPlaceBlockAt(worldIn, pos.up()) && ConfigurationFile.desertCrystalGenerateCactus){

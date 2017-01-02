@@ -1,3 +1,11 @@
+classes
+saves
+config
+options.txt
+usercache.json
+usernamecache.json
+logs
+crash-reports
 # eclipse
 bin
 *.launch
@@ -5,7 +13,6 @@ bin
 .metadata
 .classpath
 .project
-
 # idea
 out
 *.ipr
