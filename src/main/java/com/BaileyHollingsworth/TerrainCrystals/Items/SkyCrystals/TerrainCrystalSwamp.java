@@ -20,25 +20,28 @@ public class TerrainCrystalSwamp extends TerrainCrystalAbstract{
 	
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
-		if(Math.random() <= 0.02 && ConfigurationFile.swampCrystalGensWater){
-			if(Math.random() < 0.75 && pos != null){
-				generateWater(worldIn, pos);
-				if(Math.random() < 0.8){
-					generateSand(worldIn, pos);
+		if(!worldIn.isRemote) {
+			if (Math.random() <= 0.02 && ConfigurationFile.swampCrystalGensWater) {
+				if (Math.random() < 0.75 && pos != null) {
+					generateWater(worldIn, pos);
+					if (Math.random() < 0.8) {
+						generateSand(worldIn, pos);
+					}
+					if (Math.random() < .10 && ConfigurationFile.swampCrystalGensClay) {
+						generateClay(worldIn, pos);
+					}
 				}
-				if(Math.random() < .10 && ConfigurationFile.swampCrystalGensClay){
-					generateClay(worldIn, pos);
+			} else {
+				try {
+					if (Blocks.SAPLING.canPlaceBlockAt(worldIn, pos.up()) && Math.random() <= 0.03 && spacedFarEnough(worldIn, pos.up())) {
+						worldIn.setBlockState(pos.up(), Blocks.SAPLING.getDefaultState());
+						bonemealTree(worldIn, pos);
+					} else if (Math.random() < 0.10) {
+						bonemeal(worldIn, pos);
+					}
+				} catch (Exception ignored) {
 				}
 			}
-		}else{
-			try{
-				if (Blocks.SAPLING.canPlaceBlockAt(worldIn, pos.up()) && Math.random() <= 0.03 && spacedFarEnough(worldIn, pos.up())){
-					worldIn.setBlockState(pos.up(), Blocks.SAPLING.getDefaultState());
-					bonemealTree(worldIn, pos);
-				}else if(Math.random() < 0.10){
-					bonemeal(worldIn, pos);
-				}
-			}catch(Exception ignored){}
 		}
 	}
 

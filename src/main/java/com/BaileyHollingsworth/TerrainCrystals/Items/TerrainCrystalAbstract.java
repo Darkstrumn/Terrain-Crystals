@@ -2,7 +2,6 @@ package com.BaileyHollingsworth.TerrainCrystals.Items;
 
 import com.BaileyHollingsworth.TerrainCrystals.core.ConfigurationFile;
 import com.BaileyHollingsworth.TerrainCrystals.core.TerrainCrystals;
-import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -168,7 +167,8 @@ public abstract class TerrainCrystalAbstract extends Item{
 			if(posY - pos.getY() == 1){
 				setBiome(worldIn, pos, desiredBiome, changeBiome);
 				worldIn.setBlockState(pos, Blocks.GRASS.getDefaultState());
-				decoratePlatform(worldIn, pos);
+				if(!worldIn.isRemote)
+					decoratePlatform(worldIn, pos);
 			}else if(ConfigurationFile.generateStone && posY - pos.getY() >= ConfigurationFile.stoneSpawnDepth){
 				if(ConfigurationFile.generateOres && Math.random() < 0.05){
 					worldIn.setBlockState(pos, oreListHelper());
@@ -212,13 +212,10 @@ public abstract class TerrainCrystalAbstract extends Item{
 	//Code taken from Lumien's Random Things Nature Core tile entity
 	/**
 	 * Bonemeals the grass at a given position
-	 * @param worldIn World
-	 * @param pos Pos
 	 */
 	protected void bonemeal(World worldIn, BlockPos pos){
 		IBlockState state = worldIn.getBlockState(pos);
 		Random rand = new Random();
-		//Try-catching our worries away!
 		try{
 			if (state.getBlock() instanceof IGrowable)
 			{
@@ -265,55 +262,46 @@ public abstract class TerrainCrystalAbstract extends Item{
 	}
 	
 	/**
-	 * Gathers the list of blocks to be generated 
-	 * @param itemStackIn
-	 * @param worldIn
-	 * @param playerIn
-	 * @param diameter
-	 * @param desiredBiome
-	 * @param changeBiome
-	 * @return
+	 * Gathers the list of blocks to be generated
 	 */
 	protected ItemStack gatherBlockGenList(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, int diameter, Biome desiredBiome, Boolean changeBiome){
-		if(!worldIn.isRemote){
-			int blocksGenerated = 0;
-			int posX = MathHelper.floor_double(playerIn.posX); 
-			int posY = MathHelper.floor_double(playerIn.posY);
-			int posZ = MathHelper.floor_double(playerIn.posZ);
-			int center;
-			double radius = diameter/2.0;
-			if(diameter%2 != 0){
-				center = (int) (radius + 0.5);
-			}else{
-				center = (int) (radius);
-			}
-			int offsetXFirstHalf = (int) (posX + radius);
-			//Not sure why this has to be offset by 1 extra, but it does.
-			int offsetXSecondHalf = (int) (posX - radius + 1);
-			ArrayList<BlockPos> posList = new ArrayList<BlockPos>(68);
-			for(int i = 0; i < (center); i ++){
-				//Creates a circle and fills it
-				for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
-					//Fills across the circle
-					posList.add(new BlockPos(offsetXFirstHalf - i, posY - 1, posZ - i + placeInwards));
-					posList.add(new BlockPos(offsetXFirstHalf - i, posY - 1, posZ + i - placeInwards));
-				}
-			}
-			//Generates the second half
-			for(int i = 0; i < (center); i ++){
-				posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i)); 
-				posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i));
-				for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
-						posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards));
-						posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards));
-				}
-			}
-			//Hacky-fix to the island not generating properly on a single call
-			for(int i = 0; i < 15; i++){
-				blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
-			}
-			itemStackIn.damageItem(blocksGenerated, playerIn);
+		int blocksGenerated = 0;
+		int posX = MathHelper.floor_double(playerIn.posX);
+		int posY = MathHelper.floor_double(playerIn.posY);
+		int posZ = MathHelper.floor_double(playerIn.posZ);
+		int center;
+		double radius = diameter/2.0;
+		if(diameter%2 != 0){
+			center = (int) (radius + 0.5);
+		}else{
+			center = (int) (radius);
 		}
+		int offsetXFirstHalf = (int) (posX + radius);
+		//Not sure why this has to be offset by 1 extra, but it does.
+		int offsetXSecondHalf = (int) (posX - radius + 1);
+		ArrayList<BlockPos> posList = new ArrayList<BlockPos>(68);
+		for(int i = 0; i < (center); i ++){
+			//Creates a circle and fills it
+			for(int placeInwards = 0; placeInwards < i+1; placeInwards++){
+				//Fills across the circle
+				posList.add(new BlockPos(offsetXFirstHalf - i, posY - 1, posZ - i + placeInwards));
+				posList.add(new BlockPos(offsetXFirstHalf - i, posY - 1, posZ + i - placeInwards));
+			}
+		}
+		//Generates the second half
+		for(int i = 0; i < (center); i ++){
+			posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ  + i));
+			posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i));
+			for(int placeInwards = 0; placeInwards < i + 1; placeInwards++){
+					posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ + i - placeInwards));
+					posList.add(new BlockPos(offsetXSecondHalf + i, posY - 1, posZ - i + placeInwards));
+			}
+		}
+		//Hacky-fix to the island not generating properly on a single call
+		for(int i = 0; i < 10; i++){
+			blocksGenerated = generateSpike(posList, worldIn, playerIn, blocksGenerated, itemStackIn, desiredBiome, changeBiome);
+		}
+		itemStackIn.damageItem(blocksGenerated, playerIn);
 		return itemStackIn;
 	}
 	
@@ -373,9 +361,10 @@ public abstract class TerrainCrystalAbstract extends Item{
 		if(ConfigurationFile.onlyOverrideVoid){
 			if(changeBiome && (worldIn.getBiomeGenForCoords(position).equals(Biomes.VOID) || worldIn.getBiomeGenForCoords(position) == Biomes.VOID)){
 				Chunk chunk = worldIn.getChunkFromBlockCoords(position);
-				if ((chunk != null) && (chunk.isLoaded())) {
+				if (chunk.isLoaded()) {
 					if (Biome.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != Biome.getIdForBiome(desiredBiome)) {
 						chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) Biome.getIdForBiome(desiredBiome);
+						setChunkModifiedAtPos(chunk, worldIn, position);
 						return true;
 					}
 				}
@@ -386,6 +375,7 @@ public abstract class TerrainCrystalAbstract extends Item{
 				if ((chunk != null) && (chunk.isLoaded())) {
 					if (Biome.getIdForBiome(worldIn.getChunkFromBlockCoords(position).getBiome(position, worldIn.getBiomeProvider())) != Biome.getIdForBiome(desiredBiome)) {
 						chunk.getBiomeArray()[((position.getZ() & 0xF) << 4 | position.getX() & 0xF)] = (byte) Biome.getIdForBiome(desiredBiome);
+						setChunkModifiedAtPos(chunk, worldIn, position);
 						return true;
 					}
 				}
@@ -393,7 +383,12 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
         return false;
     }
-	
+
+	protected void setChunkModifiedAtPos(Chunk chunk, World worldIn, BlockPos position){
+		chunk.setChunkModified();
+		worldIn.getChunkProvider().provideChunk(chunk.xPosition, chunk.zPosition);
+		worldIn.markBlockRangeForRenderUpdate(position, position);
+	}
 	/**
 	 * Pass this method the position that the sapling will OCCUPY, not REST ON. Meaning Pos.UP of the platform position.
 	 * @param worldIn World
@@ -481,6 +476,34 @@ public abstract class TerrainCrystalAbstract extends Item{
 		}
 		return true;
 	}
+
+    protected void handleDepthGeneration(World worldIn, BlockPos pos, int playerPosY){
+        if(!worldIn.isRemote) {
+            if (ConfigurationFile.generateStone && playerPosY - pos.getY() >= ConfigurationFile.stoneSpawnDepth) {
+                if (ConfigurationFile.generateOres && Math.random() < 0.05) {
+                    worldIn.setBlockState(pos, oreListHelper());
+                } else {
+                    worldIn.setBlockState(pos, Blocks.STONE.getDefaultState());
+                }
+            } else {
+                worldIn.setBlockState(pos, Blocks.DIRT.getDefaultState());
+            }
+        }
+    }
+
+    protected void handleDepthGeneration(World worldIn, BlockPos pos, int playerPosY, IBlockState state){
+        if(!worldIn.isRemote) {
+            if (ConfigurationFile.generateStone && playerPosY - pos.getY() >= ConfigurationFile.stoneSpawnDepth) {
+                if (ConfigurationFile.generateOres && Math.random() < 0.05) {
+                    worldIn.setBlockState(pos, oreListHelper());
+                } else {
+                    worldIn.setBlockState(pos, Blocks.STONE.getDefaultState());
+                }
+            } else {
+                worldIn.setBlockState(pos, state);
+            }
+        }
+    }
 	
 	protected abstract Boolean changesBiomeOnUse();
 	
@@ -494,9 +517,9 @@ public abstract class TerrainCrystalAbstract extends Item{
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
-		tooltip.add("Relog for client sync.");
     }
-	
+
+
 	@SideOnly(Side.CLIENT)
     public void initModel() {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));

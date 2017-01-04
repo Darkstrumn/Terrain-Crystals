@@ -24,14 +24,17 @@ public class TerrainCrystalPlains extends TerrainCrystalAbstract{
 	//Code taken from Lumien's Random Things Nature Core tile entity
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos){
-		try{
-			if(Math.random() < 0.06 && ConfigurationFile.plainsCrystalGenerateTallGrass){
-				bonemeal(worldIn, pos);
+		if(!worldIn.isRemote) {
+			try {
+				if (Math.random() < 0.06 && ConfigurationFile.plainsCrystalGenerateTallGrass) {
+					bonemeal(worldIn, pos);
+				}
+				if (Math.random() <= 0.01) {
+					growTree(worldIn, pos);
+				}
+			} catch (Exception ignored) {
 			}
-			if(Math.random() <= 0.01){
-				growTree(worldIn, pos);
-			}
-		}catch(Exception ignored){}
+		}
 	}
 	
 	private void growTree(World worldIn, BlockPos pos){

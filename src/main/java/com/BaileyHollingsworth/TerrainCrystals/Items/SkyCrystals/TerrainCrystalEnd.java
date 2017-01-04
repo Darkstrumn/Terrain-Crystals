@@ -31,14 +31,13 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			Biome desiredBiome, boolean changeBiome){
-		if(checkIfDimensionMatters(playerIn)){
+		if(checkIfDimensionMatters(playerIn, worldIn)){
 			if(eligibleStateLocation(worldIn, pos)){
 				int posY = MathHelper.floor_double(playerIn.posY);
 				if(posY - pos.getY() == 1){
-					worldIn.setBlockState(pos, Blocks.END_STONE.getDefaultState());
 					decoratePlatform(worldIn, pos);
-					super.setBiome(worldIn, pos, desiredBiome, changeBiome);
-				}else{
+					setBiome(worldIn, pos, desiredBiome, changeBiome);
+				}else if(!worldIn.isRemote){
 					worldIn.setBlockState(pos, Blocks.END_STONE.getDefaultState());
 				}
 				blocksGenerated += 1;
@@ -47,12 +46,14 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 		return blocksGenerated;
 	}
 
-	private boolean checkIfDimensionMatters(EntityPlayer playerIn){
+	private boolean checkIfDimensionMatters(EntityPlayer playerIn, World worldIn){
 		if(ConfigurationFile.endCrystalRestrictedToEnd){
 			if(playerIn.dimension == 1){
 				return true;
 			}else{
-				playerIn.addChatComponentMessage(new TextComponentTranslation("This crystal is only available for use in the End."));
+				if(!worldIn.isRemote) {
+                    playerIn.addChatComponentMessage(new TextComponentTranslation("This crystal is only available for use in the End."));
+                }
 				return false;
 			}
 		}
@@ -61,8 +62,8 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 	
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos){
-
-		if(ConfigurationFile.endCrystalGenerateChorus && spacedFarEnough(worldIn, pos.up())){
+		if(!worldIn.isRemote && ConfigurationFile.endCrystalGenerateChorus && spacedFarEnough(worldIn, pos.up())){
+            worldIn.setBlockState(pos, Blocks.END_STONE.getDefaultState());
 			if(Math.random() > .98){
 				try{
 					Random rand = new Random();	
@@ -99,6 +100,5 @@ public class TerrainCrystalEnd extends TerrainCrystalAbstract{
 		if(ConfigurationFile.endCrystalRestrictedToEnd){
 			tooltip.add("Can only be used in the End.");
 		}
-		tooltip.add("Relog for client sync.");
 	}
 }

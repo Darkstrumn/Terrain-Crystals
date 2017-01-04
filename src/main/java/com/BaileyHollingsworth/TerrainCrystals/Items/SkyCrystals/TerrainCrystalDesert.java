@@ -27,24 +27,11 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
 				super.setBiome(worldIn, pos, desiredBiome, changeBiome);
-				if(Math.random() < 0.7){
-					worldIn.setBlockState(pos.down(), Blocks.SANDSTONE.getDefaultState());
-					worldIn.setBlockState(pos, Blocks.SAND.getDefaultState());
-					decoratePlatform(worldIn, pos);	
-				}else{
-					worldIn.setBlockState(pos, Blocks.SANDSTONE.getDefaultState());
-				}
-			}else if (posY - pos.getY() < 4){
+				decoratePlatform(worldIn, pos);
+			}else if (posY - pos.getY() < 4 && !worldIn.isRemote){
                 worldIn.setBlockState(pos, Blocks.SANDSTONE.getDefaultState());
-			}else if(ConfigurationFile.generateStone && posY - pos.getY() >= ConfigurationFile.stoneSpawnDepth){
-                if(ConfigurationFile.generateOres && Math.random() < 0.05){
-                    worldIn.setBlockState(pos, oreListHelper());
-                }else{
-                    worldIn.setBlockState(pos, Blocks.STONE.getDefaultState());
-                }
-            }
-            else{
-                worldIn.setBlockState(pos, Blocks.SANDSTONE.getDefaultState());
+			}else {
+                handleDepthGeneration(worldIn, pos, posY, Blocks.SANDSTONE.getDefaultState());
             }
 			blocksGenerated += 1;
 		}
@@ -53,21 +40,29 @@ public class TerrainCrystalDesert extends TerrainCrystalAbstract{
 	
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos){
-		if(Blocks.CACTUS.canPlaceBlockAt(worldIn, pos.up()) && ConfigurationFile.desertCrystalGenerateCactus){
-			if(Math.random() < .10){
-				if(Math.random() < .5){
-					worldIn.setBlockState(pos.up(), Blocks.CACTUS.getDefaultState());
-					if(Math.random() < .5){
-						worldIn.setBlockState(pos.up(2), Blocks.CACTUS.getDefaultState());
-						if(Math.random() < .5){
-							worldIn.setBlockState(pos.up(3), Blocks.CACTUS.getDefaultState());
-						}
-					}
-				}else{
-					worldIn.setBlockState(pos.up(), Blocks.DEADBUSH.getDefaultState());
-				}
-			}
-		}
+        if(!worldIn.isRemote) {
+            if (Math.random() < 0.7) {
+                worldIn.setBlockState(pos.down(), Blocks.SANDSTONE.getDefaultState());
+                worldIn.setBlockState(pos, Blocks.SAND.getDefaultState());
+                if (Blocks.CACTUS.canPlaceBlockAt(worldIn, pos.up()) && ConfigurationFile.desertCrystalGenerateCactus) {
+                    if (Math.random() < .10) {
+                        if (Math.random() < .5) {
+                            worldIn.setBlockState(pos.up(), Blocks.CACTUS.getDefaultState());
+                            if (Math.random() < .5) {
+                                worldIn.setBlockState(pos.up(2), Blocks.CACTUS.getDefaultState());
+                                if (Math.random() < .5) {
+                                    worldIn.setBlockState(pos.up(3), Blocks.CACTUS.getDefaultState());
+                                }
+                            }
+                        } else {
+                            worldIn.setBlockState(pos.up(), Blocks.DEADBUSH.getDefaultState());
+                        }
+                    }
+                }
+            }else{
+                worldIn.setBlockState(pos, Blocks.SANDSTONE.getDefaultState());
+            }
+        }
 	}
 	
 	@Override
