@@ -20,14 +20,17 @@ public class TerrainCrystalRoofedForest extends TerrainCrystalAbstract{
 
     @Override
     protected void decoratePlatform(World worldIn, BlockPos pos) {
-        try{
-            if(Math.random() < 0.1){
-                bonemeal(worldIn, pos);
+        if(!worldIn.isRemote) {
+            try {
+                if (Math.random() < 0.1) {
+                    bonemeal(worldIn, pos);
+                }
+                if (Math.random() <= 0.04) {
+                    growTree(worldIn, pos);
+                }
+            } catch (Exception ignored) {
             }
-            if(Math.random() <= 0.04){
-                growTree(worldIn, pos);
-            }
-        }catch(Exception ignored){}
+        }
     }
     private void growTree(World worldIn, BlockPos pos){
         if(ConfigurationFile.roofedForestGeneratesTrees){

@@ -26,6 +26,7 @@ public class TerrainCrystalMushroom extends TerrainCrystalAbstract{
 		if(eligibleStateLocation(worldIn, pos)){
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
+<<<<<<< HEAD
 				worldIn.setBlockState(pos, Blocks.MYCELIUM.getDefaultState());
 				setBiome(worldIn, pos, desiredBiome, changeBiome);
 				if(!worldIn.isRemote)
@@ -38,6 +39,12 @@ public class TerrainCrystalMushroom extends TerrainCrystalAbstract{
 				}
 			}else{
 				worldIn.setBlockState(pos, Blocks.DIRT.getDefaultState());
+=======
+				setBiome(worldIn, pos, desiredBiome, changeBiome);
+				decoratePlatform(worldIn, pos);
+			}else {
+				handleDepthGeneration(worldIn, pos, posY);
+>>>>>>> master
 			}
 			blocksGenerated += 1;
 		}
@@ -46,22 +53,27 @@ public class TerrainCrystalMushroom extends TerrainCrystalAbstract{
 	
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos){
-		if(Blocks.BROWN_MUSHROOM.canPlaceBlockAt(worldIn, pos.up())){
-			if(Math.random() < .10){
-				if(Math.random() < .5){
-					worldIn.setBlockState(pos.up(), Blocks.BROWN_MUSHROOM.getDefaultState());
-					if(Math.random() < 0.1 && spacedFarEnough(worldIn, pos)){
-						bonemealBlockNoRemoval(worldIn, pos);
-					}
-				}else{
-					worldIn.setBlockState(pos.up(), Blocks.RED_MUSHROOM.getDefaultState());
-					if(Math.random() < 0.1&& spacedFarEnough(worldIn, pos)){
-						bonemealBlockNoRemoval(worldIn, pos);
-					}
-				}
-			}
-		}
+        if(!worldIn.isRemote) {
+            worldIn.setBlockState(pos, Blocks.MYCELIUM.getDefaultState());
+            if (Blocks.BROWN_MUSHROOM.canPlaceBlockAt(worldIn, pos.up())) {
+                worldIn.setBlockState(pos, Blocks.MYCELIUM.getDefaultState());
+                if (Math.random() < .10) {
+                    if (Math.random() < .5) {
+                        worldIn.setBlockState(pos.up(), Blocks.BROWN_MUSHROOM.getDefaultState());
+                        if (Math.random() < 0.1 && spacedFarEnough(worldIn, pos)) {
+                            bonemealBlockNoRemoval(worldIn, pos);
+                        }
+                    } else {
+                        worldIn.setBlockState(pos.up(), Blocks.RED_MUSHROOM.getDefaultState());
+                        if (Math.random() < 0.1 && spacedFarEnough(worldIn, pos)) {
+                            bonemealBlockNoRemoval(worldIn, pos);
+                        }
+                    }
+                }
+            }
+        }
 	}
+
 	
 	@Override
 	protected Boolean changesBiomeOnUse() {

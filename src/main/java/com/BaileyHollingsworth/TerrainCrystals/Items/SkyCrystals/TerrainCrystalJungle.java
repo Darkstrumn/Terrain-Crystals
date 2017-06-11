@@ -20,34 +20,36 @@ public class TerrainCrystalJungle extends TerrainCrystalAbstract{
 	
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
-		//Generate bush things
-		if(Math.random() < 0.01 && ConfigurationFile.jungleCrystalGeneratesBushes && spacedFarEnough(worldIn, pos.up())){
-			worldIn.setBlockState(pos.up(), Blocks.LEAVES.getDefaultState());
-			worldIn.setBlockState(pos.up(2), Blocks.LEAVES.getDefaultState());
-			worldIn.setBlockState(pos.up().east(), Blocks.LEAVES.getDefaultState());
-			worldIn.setBlockState(pos.up().north(), Blocks.LEAVES.getDefaultState());
-			worldIn.setBlockState(pos.up().south(), Blocks.LEAVES.getDefaultState());
-			worldIn.setBlockState(pos.up().west(), Blocks.LEAVES.getDefaultState());
-			if(Math.random() < .3){
-				worldIn.setBlockState(pos.up().north().east(), Blocks.LEAVES.getDefaultState());
-				worldIn.setBlockState(pos.up().north().west(), Blocks.LEAVES.getDefaultState());
-				worldIn.setBlockState(pos.up().south().east(), Blocks.LEAVES.getDefaultState());
-				worldIn.setBlockState(pos.up().south().west(), Blocks.LEAVES.getDefaultState());
+		if(!worldIn.isRemote) {
+			//Generate bush things
+			if (Math.random() < 0.01 && ConfigurationFile.jungleCrystalGeneratesBushes && spacedFarEnough(worldIn, pos.up())) {
+				worldIn.setBlockState(pos.up(), Blocks.LEAVES.getDefaultState());
+				worldIn.setBlockState(pos.up(2), Blocks.LEAVES.getDefaultState());
+				worldIn.setBlockState(pos.up().east(), Blocks.LEAVES.getDefaultState());
+				worldIn.setBlockState(pos.up().north(), Blocks.LEAVES.getDefaultState());
+				worldIn.setBlockState(pos.up().south(), Blocks.LEAVES.getDefaultState());
+				worldIn.setBlockState(pos.up().west(), Blocks.LEAVES.getDefaultState());
+				if (Math.random() < .3) {
+					worldIn.setBlockState(pos.up().north().east(), Blocks.LEAVES.getDefaultState());
+					worldIn.setBlockState(pos.up().north().west(), Blocks.LEAVES.getDefaultState());
+					worldIn.setBlockState(pos.up().south().east(), Blocks.LEAVES.getDefaultState());
+					worldIn.setBlockState(pos.up().south().west(), Blocks.LEAVES.getDefaultState());
+				}
+				worldIn.setBlockState(pos, Blocks.LOG.getStateFromMeta(3));
 			}
-			worldIn.setBlockState(pos, Blocks.LOG.getStateFromMeta(3));
-		}
-		//Decorate with tall grass
-		if(Math.random() < 0.08){
-			bonemeal(worldIn, pos);
-			
-			if(Math.random() < 0.05 && ConfigurationFile.jungleCrystalGeneratesMelon){
-				if(worldIn.getBlockState(pos.up()) == Blocks.AIR.getDefaultState())
-					worldIn.setBlockState(pos.up(), Blocks.MELON_BLOCK.getDefaultState());
+			//Decorate with tall grass
+			if (Math.random() < 0.08) {
+				bonemeal(worldIn, pos);
+
+				if (Math.random() < 0.05 && ConfigurationFile.jungleCrystalGeneratesMelon) {
+					if (worldIn.getBlockState(pos.up()) == Blocks.AIR.getDefaultState())
+						worldIn.setBlockState(pos.up(), Blocks.MELON_BLOCK.getDefaultState());
+				}
 			}
-		}
-		
-		if(Math.random() < 0.07 && ConfigurationFile.jungleCrystalGeneratesTrees && spacedFarEnough(worldIn, pos.up())){
-			growTree(worldIn, pos);
+
+			if (Math.random() < 0.07 && ConfigurationFile.jungleCrystalGeneratesTrees && spacedFarEnough(worldIn, pos.up())) {
+				growTree(worldIn, pos);
+			}
 		}
 	}
 	

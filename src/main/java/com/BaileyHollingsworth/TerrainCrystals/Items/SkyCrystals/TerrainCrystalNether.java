@@ -29,19 +29,20 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 	@Override
 	protected int generateBlocksInWorld(BlockPos pos, World worldIn, EntityPlayer playerIn, int blocksGenerated,
 			Biome desiredBiome, boolean changeBiome){
-		if(checkIfDimensionMatters(playerIn)){
+		if(checkIfDimensionMatters(playerIn, worldIn)){
 			if(eligibleStateLocation(worldIn, pos)){
 				int posY = MathHelper.floor_double(playerIn.posY);
 				if(posY - pos.getY() == 1){
-					if(Math.random() < .9){
-						worldIn.setBlockState(pos, Blocks.NETHERRACK.getDefaultState());
-						if(ConfigurationFile.generateOres && Math.random() < .05){
-							if(Math.random() < 0.5){
-								worldIn.setBlockState(pos, Blocks.QUARTZ_ORE.getDefaultState());
-							}else{
-								worldIn.setBlockState(pos, Blocks.GLOWSTONE.getDefaultState());
-							}
+					if(!worldIn.isRemote) {
+						if (Math.random() < .9) {
+							handleDepthGeneration(worldIn, pos);
+						} else if (Math.random() < 0.3) {
+							worldIn.setBlockState(pos, Blocks.SOUL_SAND.getDefaultState());
+						} else {
+							worldIn.setBlockState(pos.down(), Blocks.NETHERRACK.getDefaultState());
+							worldIn.setBlockState(pos, Blocks.GRAVEL.getDefaultState());
 						}
+<<<<<<< HEAD
 						if(!worldIn.isRemote)
 							decoratePlatform(worldIn, pos);
 					}else if (Math.random() < 0.3){
@@ -50,11 +51,14 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 					}else{
 						worldIn.setBlockState(pos.down(), Blocks.NETHERRACK.getDefaultState());
 						worldIn.setBlockState(pos, Blocks.GRAVEL.getDefaultState());
+=======
+>>>>>>> master
 					}
+					decoratePlatform(worldIn, pos);
 					if(ConfigurationFile.netherCrystalChangesBiome){
 						setBiome(worldIn, pos, desiredBiome, changeBiome);
 					}
-				}else{
+				}else if(!worldIn.isRemote){
 					if(Math.random() < .95){
 						worldIn.setBlockState(pos, Blocks.NETHERRACK.getDefaultState());
 					}else{
@@ -67,12 +71,18 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 		return blocksGenerated;
 	}
 	
-	private boolean checkIfDimensionMatters(EntityPlayer playerIn){
+	private boolean checkIfDimensionMatters(EntityPlayer playerIn, World worldIn){
 		if(ConfigurationFile.netherCrystalRestrictedToNether){
 			if(playerIn.dimension == -1){
 				return true;
 			}else{
+<<<<<<< HEAD
 				playerIn.addChatComponentMessage(new TextComponentTranslation("This crystal is only available for use in the Nether."), true);
+=======
+				if(!worldIn.isRemote) {
+					playerIn.addChatComponentMessage(new TextComponentTranslation("This crystal is only available for use in the Nether."));
+				}
+>>>>>>> master
 				return false;
 			}
 		}
@@ -81,7 +91,7 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 	
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos){
-		if(Blocks.BROWN_MUSHROOM.canPlaceBlockAt(worldIn, pos.up())){
+		if(Blocks.BROWN_MUSHROOM.canPlaceBlockAt(worldIn, pos.up()) && !worldIn.isRemote){
 			if(Math.random() < .10){
 				if(Math.random() < .3){
 					worldIn.setBlockState(pos.up(), Blocks.BROWN_MUSHROOM.getDefaultState());
@@ -91,7 +101,19 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 			}
 		}
 	}
-	
+
+	protected void handleDepthGeneration(World worldIn, BlockPos pos){
+		if(!worldIn.isRemote) {
+			worldIn.setBlockState(pos, Blocks.NETHERRACK.getDefaultState());
+			if (ConfigurationFile.generateOres && Math.random() < .05) {
+				if (Math.random() < 0.5) {
+					worldIn.setBlockState(pos, Blocks.QUARTZ_ORE.getDefaultState());
+				} else {
+					worldIn.setBlockState(pos, Blocks.GLOWSTONE.getDefaultState());
+				}
+			}
+		}
+	}
 	@Override
 	protected Boolean changesBiomeOnUse() {
 		return ConfigurationFile.netherCrystalChangesBiome;
@@ -119,6 +141,5 @@ public class TerrainCrystalNether extends TerrainCrystalAbstract{
 		if(ConfigurationFile.netherCrystalRestrictedToNether){
 			tooltip.add("Can only be used in Nether.");
 		}
-		tooltip.add("Relog for client sync.");
 	}
 }

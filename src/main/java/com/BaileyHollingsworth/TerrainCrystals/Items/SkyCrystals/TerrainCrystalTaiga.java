@@ -28,6 +28,7 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 			int posY = MathHelper.floor_double(playerIn.posY);
 			if(posY - pos.getY() == 1){
 				setBiome(worldIn, pos, desiredBiome, changeBiome);
+<<<<<<< HEAD
 				if(Math.random() < .4){
 					if(Math.random() < .5){
 						worldIn.setBlockState(pos, Blocks.DIRT.getStateFromMeta(1));
@@ -50,9 +51,12 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 				}else{
 					worldIn.setBlockState(pos, Blocks.STONE.getDefaultState());
 				}
+=======
+				decoratePlatform(worldIn, pos);
+>>>>>>> master
 			}else{
-				worldIn.setBlockState(pos, Blocks.DIRT.getDefaultState());
-			}
+                handleDepthGeneration(worldIn, pos, posY);
+            }
 			blocksGenerated += 1;
 		}
 		return blocksGenerated;
@@ -67,14 +71,24 @@ public class TerrainCrystalTaiga extends TerrainCrystalAbstract{
 	
 	@Override
 	protected void decoratePlatform(World worldIn, BlockPos pos) {
-		if(Math.random() < 0.3){
-			if(Math.random() < 0.50){
-				worldIn.setBlockState(pos.up(), Blocks.TALLGRASS.getStateFromMeta(2));
-			}else{
-				worldIn.setBlockState(pos.up(), Blocks.TALLGRASS.getStateFromMeta(1));
-			}
-		}
-		
+        if(!worldIn.isRemote) {
+            if (Math.random() < .4) {
+                worldIn.setBlockState(pos, Math.random() < .5 ? Blocks.DIRT.getStateFromMeta(1) : Blocks.GRASS.getDefaultState());
+                if (ConfigurationFile.taigaCrystalGeneratesTrees && Math.random() < 0.08) {
+                    growTree(worldIn, pos);
+                } else {
+                    if (Math.random() < 0.3) {
+                        if (Math.random() < 0.50) {
+                            worldIn.setBlockState(pos.up(), Blocks.TALLGRASS.getStateFromMeta(2));
+                        } else {
+                            worldIn.setBlockState(pos.up(), Blocks.TALLGRASS.getStateFromMeta(1));
+                        }
+                    }
+                }
+            } else {
+                worldIn.setBlockState(pos, Blocks.DIRT.getStateFromMeta(2));
+            }
+        }
 	}
 	
 	@Override
